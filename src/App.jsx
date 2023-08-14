@@ -8,15 +8,17 @@ import {
   News,
   Sports,
   Entertainment,
+  Login,
 } from "../src/Pages";
 import Nav from "./Components/Nav";
+
 function App() {
-  const [count, setCount] = useState(0);
+  const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />}>
+        <Route path="/" element={<Nav isAuth={isAuth} setIsAuth={setIsAuth} />}>
           <Route index element={<Latest />} />
           <Route path="News" element={<News />} />
           <Route path="Sports" element={<Sports />} />
@@ -24,6 +26,8 @@ function App() {
           <Route path="Music" element={<Music />} />
           <Route path="Movies" element={<Movies />} />
         </Route>
+
+        <Route path="Login" element={<Login setIsAuth={setIsAuth} />} />
       </Routes>
     </BrowserRouter>
   );

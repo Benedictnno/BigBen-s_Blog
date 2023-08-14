@@ -4,5 +4,6 @@ import Sports from "./Sports";
 import Music from "./Music";
 import Latest from "./Latest";
 import News from "./News";
+import Login from "./Login";
 
-export { Movies, News, Latest, Entertainment, Sports, Music };
+export { Login, Movies, News, Latest, Entertainment, Sports, Music };
