@@ -1,7 +1,11 @@
-import React from 'react'
+import React, {  } from "react";
+import { useSelector } from "react-redux";
+
 
 const Latest = () => {
-  return <div>Latest Latest</div>;
-}
+  const { getPostDatas } = useSelector((store) => store.post);
 
-export default Latest
+  return <div>Latest Latest</div>;
+};
+
+export default Latest;

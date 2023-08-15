@@ -4,7 +4,7 @@ const initialState = {
   userAuth: localStorage.getItem("isAuth"),
   userData:{},
 };
-const saved = localStorage.getItem("userData");
+let saved = localStorage.getItem("userData");
 const authSlice = createSlice({
   name: "auth",
   initialState,

@@ -18,11 +18,8 @@ const Nav = () => {
   ];
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {
-    userAuth,
-    userData: { photoURL, displayName },
-  } = useSelector((store) => store.auth);
-
+  const { userAuth, userData } = useSelector((store) => store.auth);
+  
   function LogOut() {
     signOut(auth).then(() => {
       localStorage.clear();
@@ -63,8 +60,8 @@ const Nav = () => {
               Log Out
             </button>
             <Link to="Profile" className="darkBtn links">
-              <img src={photoURL} alt="" />
-              <span>{displayName}</span>
+              <img src={userData?.photoURL} alt="" />
+              <span>{userData?.displayName}</span>
             </Link>
           </div>
         )}

@@ -11,14 +11,37 @@ import {
 } from "../src/Pages";
 import Nav from "./Components/Nav";
 import Profile from "./Pages/Profile";
-import { loadUser,  } from "./Slices/authSlice";
-import { useDispatch } from "react-redux";
+import { loadUser } from "./Slices/authSlice";
+import { useDispatch, useSelector } from "react-redux";
+import ProtectedRoute from "./Components/ProtectedRoute";
+import { deleteDoc, getDocs, doc, collection } from "firebase/firestore";
+import { db } from "./FirebaseConfig";
+import { getPostData } from "./Slices/postSlice";
+
 
 function App() {
   const dispatch = useDispatch();
-  useEffect(()=>{
+  const postCollectionRef = collection(db, "blog-posts");
+
+  async function getPost() {
+    const data = await getDocs(postCollectionRef);
+    /*
+    getData iterates through the data and get a selected list of data from the request
+    */
+    const getData = data.docs.map((items) => ({
+      ...items.data(),
+      id: items.id,
+    }));
+    dispatch(getPostData(getData));
+  }
+
+  useEffect(() => {
     dispatch(loadUser());
-  },[])
+    getPost()
+  }, []);
+
+ 
+
   return (
     <BrowserRouter>
       <Routes>
@@ -32,7 +55,14 @@ function App() {
         </Route>
 
         <Route path="Login" element={<Login />} />
-        <Route path="Profile" element={<Profile />} />
+        <Route
+          path="Profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
