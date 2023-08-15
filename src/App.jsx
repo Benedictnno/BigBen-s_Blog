@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./Pages/Home";
 import {
   Movies,
   Music,
@@ -11,14 +10,19 @@ import {
   Login,
 } from "../src/Pages";
 import Nav from "./Components/Nav";
+import Profile from "./Pages/Profile";
+import { loadUser,  } from "./Slices/authSlice";
+import { useDispatch } from "react-redux";
 
 function App() {
-  const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
-
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(loadUser());
+  },[])
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Nav isAuth={isAuth} setIsAuth={setIsAuth} />}>
+        <Route path="/" element={<Nav />}>
           <Route index element={<Latest />} />
           <Route path="News" element={<News />} />
           <Route path="Sports" element={<Sports />} />
@@ -27,7 +31,8 @@ function App() {
           <Route path="Movies" element={<Movies />} />
         </Route>
 
-        <Route path="Login" element={<Login setIsAuth={setIsAuth} />} />
+        <Route path="Login" element={<Login />} />
+        <Route path="Profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );

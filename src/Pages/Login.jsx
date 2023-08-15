@@ -2,23 +2,21 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, provider } from "../FirebaseConfig";
 import { signInWithPopup } from "firebase/auth"; // chooses the the mode at which google authetification happens
-import { loginAuth } from "../Slices/authSlice";
+import { setUserData, loginAuth } from "../Slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-useDispatch;
-const Login = ({ setIsAuth, isAuth }) => {
+const Login = () => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
-
-  //   const { loginAuth } = useSelector((store) => store.auth);
-  //   console.log(loginAuth);
   // handles the google authentication process
   // if signInWithPopup returns positive after passing the auth and the provider as arguments ; sets setIsAuth to true and create a storage space in the localstorage
   function googleSignIn() {
-    signInWithPopup(auth, provider).then((result) => {
+    signInWithPopup(auth, provider).then(({ user }) => {
       localStorage.setItem("isAuth", true);
-      setIsAuth(true);
-      console.log(result);
+      localStorage.setItem("userData", JSON.stringify(user));
+
+      dispatch(setUserData(user));
+      dispatch(loginAuth(true));
       navigate("/");
     });
   }

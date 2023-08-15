@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { BiLogIn, BiLogOut } from "react-icons/bi";
 import { auth } from "../FirebaseConfig";
 import { signOut } from "firebase/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { loadUser, loginAuth } from "../Slices/authSlice";
 
-const Nav = ({ isAuth, setIsAuth }) => {
+const Nav = () => {
   const data = [
     { text: "Latest", link: "/" },
     { text: "News", link: "News" },
@@ -14,12 +16,17 @@ const Nav = ({ isAuth, setIsAuth }) => {
     { text: "Music", link: "Music" },
     { text: "Movies", link: "Movies" },
   ];
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const {
+    userAuth,
+    userData: { photoURL, displayName },
+  } = useSelector((store) => store.auth);
 
   function LogOut() {
     signOut(auth).then(() => {
       localStorage.clear();
-      setIsAuth(false);
+      dispatch(loginAuth(false));
       navigate("/");
     });
   }
@@ -35,7 +42,7 @@ const Nav = ({ isAuth, setIsAuth }) => {
           <input type="text" placeholder="Search" className="Search_input" />
         </div>
 
-        {!isAuth ? (
+        {!userAuth ? (
           <div>
             <Link to={"Login"} className="lightBtn links">
               <span>
@@ -55,9 +62,10 @@ const Nav = ({ isAuth, setIsAuth }) => {
               </span>
               Log Out
             </button>
-            <button type="button" className="darkBtn">
-              Create post
-            </button>
+            <Link to="Profile" className="darkBtn links">
+              <img src={photoURL} alt="" />
+              <span>{displayName}</span>
+            </Link>
           </div>
         )}
       </nav>
