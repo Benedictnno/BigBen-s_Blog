@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addDoc, collection } from "firebase/firestore";
-import { db, auth } from "../FirebaseConfig";
+import { db, auth, storage } from "../FirebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../Slices/postSlice";
+import { ref, uploadBytes } from "firebase/storage";
 
 const Profile = () => {
   const {
-    userData: { photoURL, displayName },
+    userData: { photoURL, displayName, uuid },
     userAuth,
   } = useSelector((store) => store.auth);
 
   const {
-    post: { paragraphs, subtitle, title, category },
+    post: { paragraphs, subtitle, title, category, image },
   } = useSelector((store) => store.post);
 
   const form = [
@@ -29,9 +30,31 @@ const Profile = () => {
     let name = e.target.name;
     dispatch(postData({ name, value }));
   }
+  function handleFileChange(e) {
+    if (e.target.files[0]) {
+      let value = e.target.files[0];
+      let name = e.target.name;
+      dispatch(postData({ name, value }));
+    }
+  }
+
+  const handleUpload = () => {
+    if (image) {
+      const fileRef = ref(storage, `images/${image.name + uuid}`);
+      const metadata = {
+        contentType: "image/jpeg",
+      };
+
+      const uploadTask = uploadBytes(fileRef, image, metadata).then(
+        (snapshot) => {
+          console.log("Uploaded a blob or file!");
+        }
+      );
+      console.log(uploadTask);
+    }
+  };
 
   async function CreatePost() {
-
     try {
       await addDoc(postCollectionRef, {
         author: displayName,
@@ -43,9 +66,7 @@ const Profile = () => {
         title,
       });
       navigate("/");
-    }
-      
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
   }
@@ -82,7 +103,15 @@ const Profile = () => {
           <option value="Movies">Movies</option>
         </select>
 
-        <button type="button" onClick={CreatePost}>Submit</button>
+        <input type="file" name="image" onChange={handleFileChange} />
+        <button
+          type="button"
+          onClick={() => {
+            CreatePost(), handleUpload();
+          }}
+        >
+          Submit
+        </button>
       </form>
     </div>
   );

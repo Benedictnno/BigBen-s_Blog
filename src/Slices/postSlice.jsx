@@ -6,12 +6,13 @@ const initialState = {
     paragraphs: "",
     subtitle: "",
     title: "",
+    image:null
   },
 
   getPostDatas: [],
 };
 const postSlice = createSlice({
-  name: "auth",
+  name: "post",
   initialState,
   reducers: {
     postData: (state, { payload: { name, value } }) => {
