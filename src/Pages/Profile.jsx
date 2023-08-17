@@ -8,11 +8,10 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { db, auth, storage } from "../FirebaseConfig";
+import { db, storage } from "../FirebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../Slices/postSlice";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { UploadImage, getDownloadImageURL } from "../Hooks";
 import moment from "moment/moment";
 
 const Profile = () => {
@@ -54,11 +53,12 @@ const Profile = () => {
     const formattedData = moment(new Date()).format("MMMM d, YYYY");
     const bucket = `${BUCKET_URL}/${uid}/${formattedData}.jpg`;
     const fileRef = ref(storage, bucket);
-    await uploadBytes(fileRef, image);
+    await uploadBytes(fileRef, image)
     alert("Image uploaded");
     return bucket;
   }
 
+  
   async function CreatePost() {
     try {
       const bucket = await UploadImage(image, uid);
@@ -71,6 +71,7 @@ const Profile = () => {
         subtitle,
         title,
         imageBucket: bucket,
+        uid,
       });
       navigate("/");
     } catch (error) {
@@ -78,45 +79,21 @@ const Profile = () => {
     }
   }
 
-
-  async function getUserPost(uid) {
-    const receipts = query(
-      postCollectionRef,
-      where("uid", "==", uid),
-      orderBy("date", "desc")
-    );
-
-    const querySnapshot = getDocs(receipts);
-
-    let allPost = [];
-    for (const documentSnapshot of (await querySnapshot).docs) {
-      const userPost = documentSnapshot.data();
-      await allPost.push({
-        ...userPost,
-        date: userPost["date"].toDate(),
-        id: documentSnapshot.id,
-        imageUrl: await getDownloadImageURL(userPost["imageBucket"]),
-      });
-    }
-
-    return allPost;
-  }
-
-  useEffect(() => {
-    if (userAuth) {
-      async function getPost() {
-        setSpecUserPost(await getUserPost(uid));
-      }
-      getPost();
-    }
-  }, [userAuth]);
-
+  
   useEffect(() => {
     if (!userAuth) {
       navigate("/Login");
     }
   }, [userAuth]);
-console.log(specUserPost);
+
+
+  function displayImage(params) {
+
+  }
+
+  const { getPostDatas } = useSelector((store) => store.post);
+
+  const filteredPost = getPostDatas.filter((post) => post.uid === uid);
   return (
     <div>
       <img src={photoURL} alt="" />
@@ -154,7 +131,7 @@ console.log(specUserPost);
         </button>
       </form>
 
-      {specUserPost.map(({ title, id, subtitle, imageBucket }) => {
+      {filteredPost.map(({ title, id, subtitle, imageBucket, author }) => {
         return (
           <div key={id}>
             <h1>{title}</h1>
