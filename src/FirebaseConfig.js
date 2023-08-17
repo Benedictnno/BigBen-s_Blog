@@ -5,11 +5,6 @@ import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage,ref } from 'firebase/storage'
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDzbRTaKH4YKcVW8MAa2gbxwsJLegEm3_U",
   authDomain: "bigbens-blog.firebaseapp.com",
@@ -25,10 +20,9 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-export const storage = getStorage();
+export const storage = getStorage(app);
 
 // sets up the choosen mode of authetification ready
 export const provider = new GoogleAuthProvider();
-
 
 // Now you can use db.collection() and other Firestore methods

@@ -1,16 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addDoc, collection } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { db, auth, storage } from "../FirebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../Slices/postSlice";
-import { ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { UploadImage, getDownloadImageURL } from "../Hooks";
+import moment from "moment/moment";
 
 const Profile = () => {
+  const BUCKET_URL = "gs://bigbens-blog.appspot.com";
   const {
-    userData: { photoURL, displayName, uuid },
+    userData: { photoURL, displayName, uid },
     userAuth,
   } = useSelector((store) => store.auth);
+
+  const [specUserPost, setSpecUserPost] = useState([]);
 
   const {
     post: { paragraphs, subtitle, title, category, image },
@@ -38,24 +50,18 @@ const Profile = () => {
     }
   }
 
-  const handleUpload = () => {
-    if (image) {
-      const fileRef = ref(storage, `images/${image.name + uuid}`);
-      const metadata = {
-        contentType: "image/jpeg",
-      };
-
-      const uploadTask = uploadBytes(fileRef, image, metadata).then(
-        (snapshot) => {
-          console.log("Uploaded a blob or file!");
-        }
-      );
-      console.log(uploadTask);
-    }
-  };
+  async function UploadImage(image, uid) {
+    const formattedData = moment(new Date()).format("MMMM d, YYYY");
+    const bucket = `${BUCKET_URL}/${uid}/${formattedData}.jpg`;
+    const fileRef = ref(storage, bucket);
+    await uploadBytes(fileRef, image);
+    alert("Image uploaded");
+    return bucket;
+  }
 
   async function CreatePost() {
     try {
+      const bucket = await UploadImage(image, uid);
       await addDoc(postCollectionRef, {
         author: displayName,
         category,
@@ -64,23 +70,57 @@ const Profile = () => {
         paragraphs,
         subtitle,
         title,
+        imageBucket: bucket,
       });
       navigate("/");
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
   }
 
+
+  async function getUserPost(uid) {
+    const receipts = query(
+      postCollectionRef,
+      where("uid", "==", uid),
+      orderBy("date", "desc")
+    );
+
+    const querySnapshot = getDocs(receipts);
+
+    let allPost = [];
+    for (const documentSnapshot of (await querySnapshot).docs) {
+      const userPost = documentSnapshot.data();
+      await allPost.push({
+        ...userPost,
+        date: userPost["date"].toDate(),
+        id: documentSnapshot.id,
+        imageUrl: await getDownloadImageURL(userPost["imageBucket"]),
+      });
+    }
+
+    return allPost;
+  }
+
   useEffect(() => {
-    // acts as a prodected route for users who aren't signed in but want to access the createpost route
+    if (userAuth) {
+      async function getPost() {
+        setSpecUserPost(await getUserPost(uid));
+      }
+      getPost();
+    }
+  }, [userAuth]);
+
+  useEffect(() => {
     if (!userAuth) {
       navigate("/Login");
     }
   }, [userAuth]);
-
+console.log(specUserPost);
   return (
     <div>
       <img src={photoURL} alt="" />
+
       <span>{displayName}</span>
 
       <form action="">
@@ -107,12 +147,22 @@ const Profile = () => {
         <button
           type="button"
           onClick={() => {
-            CreatePost(), handleUpload();
+            CreatePost();
           }}
         >
           Submit
         </button>
       </form>
+
+      {specUserPost.map(({ title, id, subtitle, imageBucket }) => {
+        return (
+          <div key={id}>
+            <h1>{title}</h1>
+            <h4>{subtitle}</h4>
+            <img src={imageBucket} alt={author} />
+          </div>
+        );
+      })}
     </div>
   );
 };

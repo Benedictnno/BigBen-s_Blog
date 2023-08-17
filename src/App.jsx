@@ -31,6 +31,7 @@ function App() {
     /*
     getData iterates through the data and get a selected list of data from the request
     */
+
     const getData = data.docs.map((items) => ({
       ...items.data(),
       id: items.id,
@@ -38,28 +39,6 @@ function App() {
     dispatch(getPostData(getData));
   }
 
-  const { userData } = useSelector((store) => store.auth);
-
-  // Retrieve data for a specific user
-  // const userId = userData.uuid; // Replace with the user ID you want to retrieve data for
-
-  // const userRef = doc(postCollectionRef, userId);
-
-  // useEffect(() => {
-  //   userRef
-  //     .get()
-  //     .then((doc) => {
-  //       if (doc.exists) {
-  //         const userData = doc.data();
-  //         console.log(userData);
-  //       } else {
-  //         console.log("User does not exist");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, []);
 
   useEffect(() => {
     dispatch(loadUser());
