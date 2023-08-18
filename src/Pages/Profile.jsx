@@ -21,10 +21,9 @@ const Profile = () => {
     userAuth,
   } = useSelector((store) => store.auth);
 
-  const [specUserPost, setSpecUserPost] = useState([]);
-
+  const [imageUrls, setImageUrls] = useState([]);
   const {
-    post: { paragraphs, subtitle, title, category, image },
+    post: { paragraphs, subtitle, title, category, image, imageBucket },
   } = useSelector((store) => store.post);
 
   const form = [
@@ -53,12 +52,13 @@ const Profile = () => {
     const formattedData = moment(new Date()).format("MMMM d, YYYY");
     const bucket = `${BUCKET_URL}/${uid}/${formattedData}.jpg`;
     const fileRef = ref(storage, bucket);
-    await uploadBytes(fileRef, image)
+    await uploadBytes(fileRef, image);
+
     alert("Image uploaded");
+
     return bucket;
   }
 
-  
   async function CreatePost() {
     try {
       const bucket = await UploadImage(image, uid);
@@ -79,21 +79,29 @@ const Profile = () => {
     }
   }
 
-  
   useEffect(() => {
     if (!userAuth) {
       navigate("/Login");
     }
   }, [userAuth]);
-
-
-  function displayImage(params) {
-
-  }
-
   const { getPostDatas } = useSelector((store) => store.post);
-
   const filteredPost = getPostDatas.filter((post) => post.uid === uid);
+  
+   useEffect(() => {
+     async function fetchImageUrls() {
+       const urls = await Promise.all(
+         filteredPost.map(async ({ imageBucket }) => {
+           const fileRef = ref(storage, imageBucket);
+           const downloadUrl = await getDownloadURL(fileRef);
+           return downloadUrl;
+         })
+       );
+       setImageUrls(urls);
+     }
+
+     fetchImageUrls();
+   }, [filteredPost]);
+
   return (
     <div>
       <img src={photoURL} alt="" />
@@ -120,7 +128,12 @@ const Profile = () => {
           <option value="Movies">Movies</option>
         </select>
 
-        <input type="file" name="image" onChange={handleFileChange} />
+        <input
+          type="file"
+          accept="image"
+          name="image"
+          onChange={handleFileChange}
+        />
         <button
           type="button"
           onClick={() => {
@@ -132,11 +145,12 @@ const Profile = () => {
       </form>
 
       {filteredPost.map(({ title, id, subtitle, imageBucket, author }) => {
+       
         return (
           <div key={id}>
             <h1>{title}</h1>
             <h4>{subtitle}</h4>
-            <img src={imageBucket} alt={author} />
+            <img src={imageUrls} alt={author} />
           </div>
         );
       })}

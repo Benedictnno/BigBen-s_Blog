@@ -18,8 +18,10 @@ export async function UploadImage() {
   const fileRef = ref(storage, bucket);
   await uploadBytes(fileRef, image);
   alert("Image uploaded");
+  
   return bucket;
 }
+
 
 
 export async function getDownloadImageURL(bucket) {
