@@ -7,7 +7,7 @@ const Sports = () => {
   const { filteredPostDatas } = useSelector((store) => store.post);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(filterPostData("news"));
+    dispatch(filterPostData("Sports"));
   }, []);
 
   return (

@@ -34,6 +34,21 @@ const postSlice = createSlice({
           (data) => data.category === "News"
         );
       }
+      if (payload === "Sports") {
+        filterPostData = state.getPostDatas.filter(
+          (data) => data.category === "Sports"
+        );
+      }
+      if (payload === "Music") {
+        filterPostData = state.getPostDatas.filter(
+          (data) => data.category === "Music"
+        );
+      }
+      if (payload === "Movies") {
+        filterPostData = state.getPostDatas.filter(
+          (data) => data.category === "Movies"
+        );
+      }
       state.filteredPostDatas = filterPostData;
     },
   },

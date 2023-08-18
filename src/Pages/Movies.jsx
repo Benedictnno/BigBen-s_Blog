@@ -7,7 +7,7 @@ const Movies = () => {
   const { filteredPostDatas } = useSelector((store) => store.post);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(filterPostData("news"));
+    dispatch(filterPostData("Movies"));
   }, []);
 
   return (
