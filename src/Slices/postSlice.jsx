@@ -2,14 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   post: {
-    category: "",
+    category: "News",
     paragraphs: "",
     subtitle: "",
     title: "",
-    image:null
+    image: null,
   },
 
   getPostDatas: [],
+  filteredPostDatas: [],
 };
 const postSlice = createSlice({
   name: "post",
@@ -21,10 +22,24 @@ const postSlice = createSlice({
     getPostData: (state, { payload }) => {
       state.getPostDatas = payload;
     },
+    filterPostData: (state, { payload }) => {
+      let filterPostData;
+      if (payload === "Entertainment") {
+        filterPostData = state.getPostDatas.filter(
+          (data) => data.category === "Entertainment"
+        );
+      }
+      if (payload === "news") {
+        filterPostData = state.getPostDatas.filter(
+          (data) => data.category === "News"
+        );
+      }
+      state.filteredPostDatas = filterPostData;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { postData, getPostData } = postSlice.actions;
+export const { postData, getPostData, filterPostData } = postSlice.actions;
 
 export default postSlice.reducer;

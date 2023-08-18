@@ -27,3 +27,15 @@ export async function UploadImage() {
 export async function getDownloadImageURL(bucket) {
     return await getDownloadURL(ref(storage,bucket))
 }
+
+
+export async function fetchImageUrls(filteredPost, setImageUrls) {
+  const urls = await Promise.all(
+    filteredPost.map(async ({ imageBucket }) => {
+      const fileRef = ref(storage, imageBucket);
+      const downloadUrl = await getDownloadURL(fileRef);
+      return downloadUrl;
+    })
+  );
+  setImageUrls(urls);
+}

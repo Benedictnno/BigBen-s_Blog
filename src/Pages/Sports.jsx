@@ -1,7 +1,22 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import MainCard from "../Components/MainCard";
+import { filterPostData } from "../Slices/postSlice";
 
 const Sports = () => {
-  return <div>Sports Sports</div>;
-}
+  const { filteredPostDatas } = useSelector((store) => store.post);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(filterPostData("news"));
+  }, []);
 
-export default Sports
+  return (
+    <div>
+      {filteredPostDatas.map((details) => {
+        return <MainCard {...details} />;
+      })}
+    </div>
+  );
+};
+
+export default Sports;

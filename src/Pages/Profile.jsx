@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addDoc,
-  collection,
-  getDocs,
-  orderBy,
-  query,
-  where,
-} from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { db, storage } from "../FirebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../Slices/postSlice";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes } from "firebase/storage";
 import moment from "moment/moment";
+import { fetchImageUrls } from "../Hooks";
 
 const Profile = () => {
   const BUCKET_URL = "gs://bigbens-blog.appspot.com";
@@ -49,7 +43,7 @@ const Profile = () => {
   }
 
   async function UploadImage(image, uid) {
-    const formattedData = moment(new Date()).format("MMMM d, YYYY");
+    const formattedData = moment(new Date()).format("MMMM Do YYYY, h:mm:ss a");
     const bucket = `${BUCKET_URL}/${uid}/${formattedData}.jpg`;
     const fileRef = ref(storage, bucket);
     await uploadBytes(fileRef, image);
@@ -86,21 +80,10 @@ const Profile = () => {
   }, [userAuth]);
   const { getPostDatas } = useSelector((store) => store.post);
   const filteredPost = getPostDatas.filter((post) => post.uid === uid);
-  
-   useEffect(() => {
-     async function fetchImageUrls() {
-       const urls = await Promise.all(
-         filteredPost.map(async ({ imageBucket }) => {
-           const fileRef = ref(storage, imageBucket);
-           const downloadUrl = await getDownloadURL(fileRef);
-           return downloadUrl;
-         })
-       );
-       setImageUrls(urls);
-     }
 
-     fetchImageUrls();
-   }, [filteredPost]);
+  useEffect(() => {
+    fetchImageUrls(filteredPost, setImageUrls);
+  }, [filteredPost]);
 
   return (
     <div>
@@ -144,13 +127,12 @@ const Profile = () => {
         </button>
       </form>
 
-      {filteredPost.map(({ title, id, subtitle, imageBucket, author }) => {
-       
+      {filteredPost.map(({ title, id, subtitle, author }, index) => {
         return (
           <div key={id}>
             <h1>{title}</h1>
             <h4>{subtitle}</h4>
-            <img src={imageUrls} alt={author} />
+            <img src={imageUrls[index]} alt={author} />
           </div>
         );
       })}
