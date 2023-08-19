@@ -4,12 +4,9 @@ import { addDoc, collection } from "firebase/firestore";
 import { db, storage } from "../FirebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { postData } from "../Slices/postSlice";
-import { ref, uploadBytes } from "firebase/storage";
-import moment from "moment/moment";
-import { fetchImageUrls } from "../Hooks";
+import { UploadImage, fetchImageUrls } from "../Hooks";
 
 const Profile = () => {
-  const BUCKET_URL = "gs://bigbens-blog.appspot.com";
   const {
     userData: { photoURL, displayName, uid },
     userAuth,
@@ -42,16 +39,6 @@ const Profile = () => {
     }
   }
 
-  async function UploadImage(image, uid) {
-    const formattedData = moment(new Date()).format("MMMM Do YYYY, h:mm:ss a");
-    const bucket = `${BUCKET_URL}/${uid}/${formattedData}.jpg`;
-    const fileRef = ref(storage, bucket);
-    await uploadBytes(fileRef, image);
-
-    alert("Image uploaded");
-
-    return bucket;
-  }
 
   async function CreatePost() {
     try {

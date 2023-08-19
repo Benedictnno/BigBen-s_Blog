@@ -11,9 +11,9 @@ const Movies = () => {
   }, []);
 
   return (
-    <div>
+    <div>``
       {filteredPostDatas.map((details) => {
-        return <MainCard {...details} />;
+        return <MainCard key={details.id} {...details} />;
       })}
     </div>
   );

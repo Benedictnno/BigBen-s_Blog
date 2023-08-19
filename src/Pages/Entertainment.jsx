@@ -12,7 +12,7 @@ const Entertainment = () => {
   return (
     <div>
       {filteredPostDatas.map((details) => {
-        return <MainCard {...details} />;
+        return  <MainCard key={details.id} {...details} />;
       })}
     </div>
   );

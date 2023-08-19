@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchImageUrls } from "../Hooks";
+import { Link } from "react-router-dom";
+import SinglePageComponent from "./SinglePageComponent";
 
 const MainCard = ({
   subtitle,
@@ -11,24 +13,59 @@ const MainCard = ({
   imageBucket,
 }) => {
   const [imageUrl, setImageUrls] = useState("");
-  const eachPost =[ {
+  const eachPost = [
+    {
+      subtitle,
+      category,
+      author,
+      paragraphs,
+      comments,
+      title,
+      imageBucket,
+    },
+  ];
+  useEffect(() => {
+    fetchImageUrls(eachPost, setImageUrls);
+  }, []);
+
+  function setPage(
     subtitle,
     category,
     author,
     paragraphs,
     comments,
     title,
-    imageBucket,
-  }];
-  useEffect(() => {
-    fetchImageUrls(eachPost, setImageUrls);
-  }, []);
+    imageUrl
+  ) {
+   
+    return <SinglePageComponent subtitle={subtitle}
+      category={category}
+      author={author}
+      paragraphs={paragraphs}
+      comments={comments}
+      title={title}
+      imageUrl/>
+  }
 
   return (
-    <article>
-      <h1>{title}</h1>
-      <h4>{subtitle}</h4>
-      <img src={imageUrl} alt={author} />
+    <article
+      onClick={() =>
+        setPage(
+          subtitle,
+          category,
+          author,
+          paragraphs,
+          comments,
+          title,
+          imageUrl
+        )
+      }
+    >
+      <Link to={"SinglePage"}>
+        <h1>{title}</h1>
+        <h4>{subtitle}</h4>
+        <img src={imageUrl} alt={author} />
+      </Link>
     </article>
   );
 };

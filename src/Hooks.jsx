@@ -5,22 +5,16 @@ import { storage } from "./FirebaseConfig";
 
 const BUCKET_URL = "gs://bigbens-blog.appspot.com";
 
-export async function UploadImage() {
-  const {
-    userData: { uid },
-  } = useSelector((store) => store.auth);
-  const {
-    post: { image },
-  } = useSelector((store) => store.post);
+ export async function UploadImage(image, uid) {
+   const formattedData = moment(new Date()).format("MMMM Do YYYY, h:mm:ss a");
+   const bucket = `${BUCKET_URL}/${uid}/${formattedData}.jpg`;
+   const fileRef = ref(storage, bucket);
+   await uploadBytes(fileRef, image);
 
-  const formattedData = moment(new Date()).format("MMMM d, YYYY");
-  const bucket = `${BUCKET_URL}/${uid}/${formattedData}.jpg`;
-  const fileRef = ref(storage, bucket);
-  await uploadBytes(fileRef, image);
-  alert("Image uploaded");
-  
-  return bucket;
-}
+   alert("Image uploaded");
+
+   return bucket;
+ }
 
 
 

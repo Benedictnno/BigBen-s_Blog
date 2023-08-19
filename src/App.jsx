@@ -21,6 +21,7 @@ import { deleteDoc, getDocs, doc, collection } from "firebase/firestore";
 import { db } from "./FirebaseConfig";
 import { getPostData } from "./Slices/postSlice";
 import Home from "./Pages/Home";
+import SinglePage from "./Pages/SinglePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -54,10 +55,11 @@ function App() {
           <Route path="Sports" element={<Sports />} />
           <Route path="Entertainment" element={<Entertainment />} />
           <Route path="Music" element={<Music />} />
+          <Route path="Movies" element={<Movies />} />
         </Route>
 
-        <Route path="Movies" element={<Movies />} />
         <Route path="/Login" element={<Login />} />
+        <Route path="/SinglePage" element={<SinglePage />} />
         <Route
           path="/Profile"
           element={
