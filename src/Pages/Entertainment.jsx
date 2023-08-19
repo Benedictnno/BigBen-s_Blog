@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import MainCard from "../Components/MainCard";
 import { filterPostData } from "../Slices/postSlice";
 const Entertainment = () => {
-   const { filteredPostDatas } = useSelector((store) => store.post);
+   const { filteredPost } = useSelector((store) => store.post);
    const dispatch = useDispatch();
    useEffect(() => {
      dispatch(filterPostData("Entertainment"));
@@ -11,8 +11,8 @@ const Entertainment = () => {
 
   return (
     <div>
-      {filteredPostDatas.map((details) => {
-        return  <MainCard key={details.id} {...details} />;
+      {filteredPost.map((details) => {
+        return <MainCard key={details.id} {...details} />;
       })}
     </div>
   );

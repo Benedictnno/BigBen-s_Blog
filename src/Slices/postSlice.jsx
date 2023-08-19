@@ -8,9 +8,12 @@ const initialState = {
     title: "",
     image: null,
   },
-
+  isLoading: false,
+  searchValue: "",
   getPostDatas: [],
   filteredPostDatas: [],
+  filteredPost: [],
+  singlePageData: {},
 };
 const postSlice = createSlice({
   name: "post",
@@ -21,6 +24,27 @@ const postSlice = createSlice({
     },
     getPostData: (state, { payload }) => {
       state.getPostDatas = payload;
+      state.filteredPost = payload;
+    },
+    singlePage: (state, { payload }) => {
+      state.singlePageData = { ...payload };
+    },
+    searchValues: (state, { payload }) => {
+      state.searchValue = payload;
+    },
+    setLoading : (state, { payload }) => {
+      state.isLoading = payload;
+    },
+    clearValues: (state) => {
+      return { ...state, ...post };
+    },
+    search: (state) => {
+      const Filtered = state.filteredPost.filter((item) => {
+        const itemName = item.title.toLowerCase();
+        return itemName.includes(state.searchValue);
+      });
+
+      state.filteredPost = Filtered;
     },
     filterPostData: (state, { payload }) => {
       let filterPostData;
@@ -50,11 +74,21 @@ const postSlice = createSlice({
         );
       }
       state.filteredPostDatas = filterPostData;
+      state.filteredPost = filterPostData;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { postData, getPostData, filterPostData } = postSlice.actions;
+export const {
+  postData,
+  searchValues,
+  clearValues,
+  search,
+  getPostData,
+  singlePage,
+  filterPostData,
+  setLoading,
+} = postSlice.actions;
 
 export default postSlice.reducer;

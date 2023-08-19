@@ -4,7 +4,7 @@ import MainCard from "../Components/MainCard";
 import { filterPostData } from "../Slices/postSlice";
 
 const Music = () => {
-  const { filteredPostDatas } = useSelector((store) => store.post);
+  const { filteredPost } = useSelector((store) => store.post);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(filterPostData("Music"));
@@ -12,7 +12,7 @@ const Music = () => {
 
   return (
     <div>
-      {filteredPostDatas.map((details) => {
+      {filteredPost.map((details) => {
         return <MainCard key={details.id} {...details} />;
       })}
     </div>

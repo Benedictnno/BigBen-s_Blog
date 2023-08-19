@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { BiLogIn, BiLogOut } from "react-icons/bi";
@@ -6,6 +6,7 @@ import { auth } from "../FirebaseConfig";
 import { signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser, loginAuth } from "../Slices/authSlice";
+import { search, searchValues } from "../Slices/postSlice";
 
 const Nav = () => {
   const data = [
@@ -19,7 +20,8 @@ const Nav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userAuth, userData } = useSelector((store) => store.auth);
-  
+  const { searchValue } = useSelector((store) => store.post);
+
   function LogOut() {
     signOut(auth).then(() => {
       localStorage.clear();
@@ -27,6 +29,25 @@ const Nav = () => {
       navigate("/");
     });
   }
+
+  function handleSearch(e) {
+    dispatch(searchValues(e.target.value));
+    dispatch(search());
+  }
+
+  function debounce() {
+    let timeOutId;
+    return (e) => {
+      setLocalSearch(e.target.value);
+      clearTimeout(timeOutId);
+      timeOutId = setTimeout(() => {
+       dispatch(search());
+      }, 1500);
+    };
+  }
+
+  const optimizedDebounce = useMemo(() => debounce(), []);
+
   return (
     <section>
       <nav className="Nav">
@@ -36,7 +57,13 @@ const Nav = () => {
           <span>
             <BsSearch />
           </span>
-          <input type="text" placeholder="Search" className="Search_input" />
+          <input
+            type="text"
+            placeholder="Search"
+            className="Search_input"
+            value={searchValue}
+            onChange={handleSearch}
+          />
         </div>
 
         {!userAuth ? (

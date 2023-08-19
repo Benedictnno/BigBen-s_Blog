@@ -4,13 +4,12 @@ import MainCard from "../Components/MainCard";
 
 
 const Latest = () => {
-  const { getPostDatas } = useSelector((store) => store.post);
+  const { filteredPost } = useSelector((store) => store.post);
 
   return (
     <section>
-      {getPostDatas.map((details) => {
-       
-        return <MainCard {...details} />;
+      {filteredPost.map((details,index) => {
+        return <MainCard key={index} {...details} />;
       })}
       <h1>Latest</h1>
     </section>
