@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   userAuth: localStorage.getItem("isAuth"),
-  userData:{},
+  userData: {},
+  form: { password: "", email: "" },
 };
 let saved = localStorage.getItem("userData");
 const authSlice = createSlice({
@@ -16,12 +17,15 @@ const authSlice = createSlice({
       state.userData = payload;
     },
     loadUser: (state) => {
-      state.userData = JSON.parse(saved)
+      state.userData = JSON.parse(saved);
+    },
+    authForm: (state, { payload: { name,value } }) => {
+      state.form[name] = value
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { loginAuth, setUserData, loadUser } = authSlice.actions;
+export const { loginAuth, setUserData, loadUser, authForm } = authSlice.actions;
 
 export default authSlice.reducer;

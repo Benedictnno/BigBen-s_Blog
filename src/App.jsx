@@ -51,7 +51,7 @@ function App() {
     getPost();
     dispatch(setLoading(true));
   }, []);
-console.log(urlArr(title));
+// console.log(urlArr(title));
   
   if (isLoading) {
     return <Loading />;
@@ -62,15 +62,15 @@ console.log(urlArr(title));
       <Routes>
         <Route path="/" element={<Home />}>
           <Route index element={<Latest />} />
-          <Route path="News" element={<News />}></Route>
-          <Route path="Sports" element={<Sports />}></Route>
-          <Route path="Entertainment" element={<Entertainment />}></Route>
-          <Route path="Music" element={<Music />}></Route>
-          <Route path="Movies" element={<Movies />}></Route>
+          <Route path="/News" element={<News />}></Route>
+          <Route path="/Sports" element={<Sports />}></Route>
+          <Route path="/Entertainment" element={<Entertainment />}></Route>
+          <Route path="/Music" element={<Music />}></Route>
+          <Route path="/Movies" element={<Movies />}></Route>
         </Route>
 
         <Route path="/Login" element={<Login />} />
-        <Route path={`/${urlArr(title)}`} element={<SinglePage />} />
+        <Route path={`/title`} element={<SinglePage />} />
         <Route path="/CreatePost" element={<Profile />} />
         <Route
           path="/Profile"

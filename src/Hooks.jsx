@@ -5,10 +5,11 @@ import {
   uploadBytes,
 } from "firebase/storage";
 import moment from "moment/moment";
-import { db, storage } from "./FirebaseConfig";
+import { auth, db, storage } from "./FirebaseConfig";
 import { collection, deleteDoc, doc } from "firebase/firestore";
 import { setLoading } from "./Slices/postSlice";
 import { toast } from "react-toastify";
+
 
 const BUCKET_URL = "gs://bigbens-blog.appspot.com";
 const postCollectionRef = collection(db, "blog-posts");
@@ -78,3 +79,5 @@ export async function deletePost(id) {
   const postDoc = doc(db, "blog-posts", id);
   await deleteDoc(postDoc);
 }
+
+
