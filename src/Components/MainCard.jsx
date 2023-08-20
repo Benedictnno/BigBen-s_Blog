@@ -3,6 +3,7 @@ import { fetchImageUrls } from "../Hooks";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { singlePage } from "../Slices/postSlice";
+import { urlArr } from "../utils";
 
 const MainCard = ({
   subtitle,
@@ -31,6 +32,7 @@ const MainCard = ({
 
   const dispatch = useDispatch();
 
+  
   return (
     <article
       onClick={() =>
@@ -47,7 +49,7 @@ const MainCard = ({
         )
       }
     >
-      <Link to={`/${title}`}>
+      <Link to={`/${urlArr(title)}`}>
         <h1>{title}</h1>
         <h4>{subtitle}</h4>
         <img src={imageUrl} alt={author} />

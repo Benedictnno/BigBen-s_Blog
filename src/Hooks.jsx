@@ -1,8 +1,14 @@
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 import moment from "moment/moment";
 import { db, storage } from "./FirebaseConfig";
-import { collection } from "firebase/firestore";
+import { collection, deleteDoc, doc } from "firebase/firestore";
 import { setLoading } from "./Slices/postSlice";
+import { toast } from "react-toastify";
 
 const BUCKET_URL = "gs://bigbens-blog.appspot.com";
 const postCollectionRef = collection(db, "blog-posts");
@@ -16,6 +22,21 @@ export async function UploadImage(image, uid, dispatch) {
   alert("Image uploaded");
 
   return bucket;
+}
+
+export function DeletePostImage(imageUrl) {
+  const desertRef = ref(storage, imageUrl);
+  // Delete the file
+  deleteObject(desertRef)
+    .then(() => {
+      alert("post deleted");
+      toast.success("post deleted");
+      // File deleted successfully
+    })
+    .catch((error) => {
+      console.error(error);
+      // Uh-oh, an error occurred!
+    });
 }
 
 export async function getDownloadImageURL(bucket) {
@@ -53,3 +74,7 @@ export async function CreatePost() {
   }
 }
 
+export async function deletePost(id) {
+  const postDoc = doc(db, "blog-posts", id);
+  await deleteDoc(postDoc);
+}

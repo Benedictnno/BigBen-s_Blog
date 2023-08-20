@@ -23,6 +23,7 @@ import SinglePage from "./Pages/SinglePage";
 import ProfilePage from "./Pages/ProfilePage";
 import Loading from "../src/Components/Loading";
 import { ToastContainer, toast } from "react-toastify";
+import { urlArr } from "./utils";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,7 +34,6 @@ function App() {
     /*
     getData iterates through the data and get a selected list of data from the request
     */
-
     const getData = data.docs.map((items) => ({
       ...items.data(),
       id: items.id,
@@ -44,7 +44,6 @@ function App() {
 
   const {
     singlePageData: { title },
-    searchValue,
   } = useSelector((store) => store.post);
 
   useEffect(() => {
@@ -52,7 +51,8 @@ function App() {
     getPost();
     dispatch(setLoading(true));
   }, []);
-
+console.log(urlArr(title));
+  
   if (isLoading) {
     return <Loading />;
   }
@@ -70,7 +70,7 @@ function App() {
         </Route>
 
         <Route path="/Login" element={<Login />} />
-        <Route path={`/${title}`} element={<SinglePage />} />
+        <Route path={`/${urlArr(title)}`} element={<SinglePage />} />
         <Route path="/CreatePost" element={<Profile />} />
         <Route
           path="/Profile"
