@@ -34,30 +34,7 @@ const MainCard = ({
 
   const dispatch = useDispatch();
 
-  
   return (
-    // <article
-    //   onClick={() =>
-    //     dispatch(
-    //       singlePage({
-    //         subtitle,
-    //         category,
-    //         author,
-    //         paragraphs,
-    //         comments,
-    //         title,
-    //         imageUrl,
-    //       })
-    //     )
-    //   }
-    // >
-    //   <Link to={`/${urlArr(title)}`}>
-    //     <h1>{title}</h1>
-    //     <h4>{subtitle}</h4>
-    //     <img src={imageUrl} alt={author} />
-    //   </Link>
-    // </article>
-
     <CartStyle>
       <Link
         to={`/${urlArr(title)}`}
@@ -76,7 +53,10 @@ const MainCard = ({
           )
         }
       >
-        <div class="avatar"></div>
+        <div>
+          <div class="avatar"></div>
+          <span>{author}</span>
+        </div>
         <a href="#" class="title">
           {title}
         </a>
@@ -138,6 +118,5 @@ const MainCard = ({
     </CartStyle>
   );
 };
-
 
 export default MainCard;

@@ -7,7 +7,7 @@ const Latest = () => {
   const { filteredPost } = useSelector((store) => store.post);
 
   return (
-    <section>
+    <section className='card_container'>
       {filteredPost.map((details,index) => {
         return <MainCard key={index} {...details} />;
       })}

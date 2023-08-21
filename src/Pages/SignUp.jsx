@@ -1,20 +1,16 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, provider } from "../FirebaseConfig";
-import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signInWithPopup,
-} from "firebase/auth"; // chooses the the mode at which google authetification happens
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth"; // chooses the the mode at which google authetification happens
 import { setUserData, loginAuth, authForm } from "../Slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AiOutlineMail } from "react-icons/ai";
 import { LoginStyle } from "../Styles/LoginStyle";
+import { sendEmail } from "../utils";
 
-const Login = () => {
+const SignUp = () => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
-
   const {
     form: { password, email },
   } = useSelector((store) => store.auth);
@@ -38,24 +34,27 @@ const Login = () => {
     dispatch(authForm({ name, value }));
   }
 
-  function logUp() {
-    signInWithEmailAndPassword(auth, email, password)
+  function SignUp() {
+    console.log(email, password);
+    createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        localStorage.setItem("userData", JSON.stringify(user));
-
-        dispatch(setUserData(user));
-        dispatch(loginAuth(true));
-        navigate("/");
+        console.log(user);
+        // localStorage.setItem("userData", JSON.stringify(user));
+        // sendEmail();
+        // dispatch(setUserData(user));
+        // dispatch(loginAuth(true));
+        // navigate("/");
         // ...
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        console.log(errorCode);
+        console.log(errorMessage);
       });
   }
-
   return (
     <LoginStyle>
       <form action="" method="post">
@@ -73,10 +72,12 @@ const Login = () => {
           value={password}
           onChange={handleChange}
         />
-        <button type="button" onClick={logUp} >Submit</button>
+        <button type="button" onClick={() => SignUp()}>
+          Submit
+        </button>
       </form>
     </LoginStyle>
   );
 };
 
-export default Login;
+export default SignUp;

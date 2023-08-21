@@ -74,9 +74,15 @@ const Nav = () => {
               </span>
               Log In
             </Link>
-            <button type="button" className="darkBtn">
+            <Link to={"SignUp"} className="darkBtn links">
+              <span>
+                <BiLogOut />
+              </span>
+              Sign UP
+            </Link>
+            {/* <button type="button" className="darkBtn">
               Sign Up
-            </button>
+            </button> */}
           </div>
         ) : (
           <div>
