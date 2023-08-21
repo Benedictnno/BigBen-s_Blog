@@ -31,7 +31,7 @@ export function DeletePostImage(imageUrl) {
   deleteObject(desertRef)
     .then(() => {
       alert("post deleted");
-      toast.success("post deleted");
+      // toast.success("post deleted");
       // File deleted successfully
     })
     .catch((error) => {

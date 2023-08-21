@@ -1,4 +1,4 @@
-import { sendEmailVerification } from "firebase/auth";
+import { sendEmailVerification, updateProfile } from "firebase/auth";
 import { auth } from "./FirebaseConfig";
 
 export function urlArr(url) {
@@ -14,4 +14,19 @@ export function sendEmail() {
     // ...
     console.log('email sent');
   });
+}
+
+export function updateUserProfile({ displayName, photoURL }) {
+  updateProfile(auth.currentUser, {
+    displayName: "Jane Q. User",
+    photoURL: "https://example.com/jane-q-user/profile.jpg",
+  })
+    .then(() => {
+      // Profile updated!
+      // ...
+    })
+    .catch((error) => {
+      // An error occurred
+      // ...
+    });
 }

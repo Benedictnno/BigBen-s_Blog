@@ -15,7 +15,7 @@ const ProfilePage = () => {
     fetchImageUrls(filteredPost, setImageUrls);
   }, [filteredPost]);
 
-  function DeleteSinglePost(params) {}
+  
   return (
     <div>
       <button type="button">

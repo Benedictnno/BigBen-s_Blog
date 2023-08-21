@@ -75,7 +75,7 @@ function App() {
         <Route path={`/title`} element={<SinglePage />} />
         <Route path="/CreatePost" element={<Profile />} />
         <Route
-          path="/Profile"
+          path="/ProfilePage"
           element={
             // <ProtectedRoute>
               <ProfilePage />
