@@ -55,6 +55,7 @@ export async function fetchImageUrls(filteredPost, setImageUrls) {
   setImageUrls(urls);
 }
 
+
 export async function CreatePost() {
   try {
     const bucket = await UploadImage(image, uid);

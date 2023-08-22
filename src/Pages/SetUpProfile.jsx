@@ -1,18 +1,72 @@
-import React from "react";
+import React, { useState } from "react";
 import { SetUpProfileStyles } from "../Styles/SetUpProfile";
 import { useDispatch, useSelector } from "react-redux";
 import { profileData } from "../Slices/ProfileSlice";
+import { UploadImage, fetchImageUrls } from "../Hooks";
+import { updateProfile } from "firebase/auth";
+import { auth, db } from "../FirebaseConfig";
+import { addDoc, collection } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
+import { setLoading } from "../Slices/postSlice";
+import { fetchSingleUrls } from "../Helpers/SingleImageProcessing";
 
 const SetUpProfile = () => {
   const dispatch = useDispatch();
+  const [imageUrl, setImageUrls] = useState("");
   const {
     Profile: { image, fullName, PhoneNumber, Gender, Bio, Date },
   } = useSelector((store) => store.profile);
+  const {
+    userData: { uid },
+  } = useSelector((store) => store.auth);
+  const userCollectionRef = collection(db, "User-Profile");
 
+  const navigate = useNavigate();
   function handleChange(e) {
     const name = e.target.name;
     const value = e.target.value;
     dispatch(profileData({ name, value }));
+  }
+
+  function handleFileChange(e) {
+    if (e.target.files[0]) {
+      let value = e.target.files[0];
+      let name = e.target.name;
+      dispatch(profileData({ name, value }));
+    }
+  }
+
+  async function createProfile() {
+    try {
+      const bucket = await UploadImage(image, uid, dispatch);
+      fetchSingleUrls(bucket, setImageUrls);
+      console.log(imageUrl);
+      updateProfile(auth.currentUser, {
+        displayName: fullName,
+        photoURL: imageUrl,
+      })
+        .then(() => {
+          console.log("profile created");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+
+      await addDoc(userCollectionRef, {
+        image: imageUrl,
+        fullName,
+        Gender,
+        Bio,
+        DateOfBirth: Date,
+      });
+
+      //   toast.success("Profile added successfully");
+      navigate("/");
+      dispatch(setLoading(false));
+    } catch (error) {
+      console.log(error.message);
+      //   toast.error("Post error");
+    }
   }
 
   return (
@@ -20,7 +74,12 @@ const SetUpProfile = () => {
       <section className="container">
         <header>Set Up Your Profile</header>
 
-        <input type="file" name="profilePic" id="" />
+        <input
+          type="file"
+          accept="image"
+          name="image"
+          onChange={handleFileChange}
+        />
 
         <form className="form" action="#">
           <div className="input-box">
@@ -35,17 +94,17 @@ const SetUpProfile = () => {
             />
           </div>
           <div className="column">
-            <div className="input-box">
-              <label>Phone Number</label>
-              <input
-                required=""
-                placeholder="Enter phone number"
-                type="telephone"
-                name="PhoneNumber"
-                value={PhoneNumber}
-                onChange={handleChange}
-              />
-            </div>
+            <select
+              name="Gender"
+              id=""
+              onChange={handleChange}
+              className="gender"
+            >
+              <option>Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Prefer">Prefer not to say</option>
+            </select>
             <div className="input-box">
               <label>Birth Date</label>
               <input
@@ -58,7 +117,8 @@ const SetUpProfile = () => {
               />
             </div>
           </div>
-          <div className="gender-box">
+
+          {/* <div className="gender-box">
             <label>Gender</label>
             <div className="gender-option">
               <div className="gender">
@@ -74,7 +134,7 @@ const SetUpProfile = () => {
                 <label for="check-other">Prefer not to say</label>
               </div>
             </div>
-          </div>
+          </div> */}
           <div className="input-box address">
             <label>Write Up a Bio</label>
 
@@ -87,7 +147,9 @@ const SetUpProfile = () => {
             ></textarea>
           </div>
 
-          <button>Submit</button>
+          <button type="button" onClick={createProfile}>
+            Submit
+          </button>
         </form>
       </section>
     </SetUpProfileStyles>

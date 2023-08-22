@@ -8,6 +8,7 @@ import { UploadImage } from "../Hooks";
 import ReactMarkdown from "react-markdown";
 import { toast } from "react-toastify";
 import Loading from "../Components/Loading";
+import { CreatePostStyles } from "../Styles/CreatePostStyles";
 
 const Profile = () => {
   const {
@@ -73,14 +74,21 @@ const Profile = () => {
   if (isLoading) {
     return <Loading />;
   }
+
+  
   return (
-    <main>
+    <CreatePostStyles>
       <section className="markdown">
+        {/* <div>
         <img src={photoURL} alt="" />
 
         <span>{displayName}</span>
 
+        </div> */}
+
         <form action="">
+          <div>
+
           {form.map(({ name, value }) => {
             return (
               <input
@@ -106,6 +114,7 @@ const Profile = () => {
             name="image"
             onChange={handleFileChange}
           />
+          </div>
 
           <textarea
             className="input"
@@ -114,19 +123,23 @@ const Profile = () => {
             onChange={handleChange}
           ></textarea>
           <article className="result">
-            <ReactMarkdown>{paragraphs}</ReactMarkdown>
           </article>
           <button
             type="button"
             onClick={() => {
               CreatePost();
             }}
-          >
+            >
             Submit
           </button>
         </form>
+        <div>
+          <img src={image} alt="" />
+            <ReactMarkdown>{paragraphs}</ReactMarkdown>
+
+        </div>
       </section>
-    </main>
+    </CreatePostStyles>
   );
 };
 
