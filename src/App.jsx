@@ -25,6 +25,7 @@ import Loading from "../src/Components/Loading";
 import { ToastContainer, toast } from "react-toastify";
 import { urlArr } from "./utils";
 import SignUp from "./Pages/SignUp";
+import SetUpProfile from "./Pages/SetUpProfile";
 
 function App() {
   const dispatch = useDispatch();
@@ -74,11 +75,12 @@ function App() {
         <Route path="/SignUp" element={<SignUp />} />
         <Route path={`/title`} element={<SinglePage />} />
         <Route path="/CreatePost" element={<Profile />} />
+        <Route path="/SetUpProfile" element={<SetUpProfile />} />
         <Route
           path="/ProfilePage"
           element={
             // <ProtectedRoute>
-              <ProfilePage />
+            <ProfilePage />
             // </ProtectedRoute>
           }
         />
