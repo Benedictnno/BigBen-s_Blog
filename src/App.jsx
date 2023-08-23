@@ -30,7 +30,7 @@ import SetUpProfile from "./Pages/SetUpProfile";
 function App() {
   const dispatch = useDispatch();
   const postCollectionRef = collection(db, "blog-posts");
-  const { isLoading } = useSelector((store) => store.post);
+  const { isLoading, setPage } = useSelector((store) => store.post);
   async function getPost() {
     const data = await getDocs(postCollectionRef);
     /*
@@ -52,7 +52,7 @@ function App() {
     dispatch(loadUser());
     getPost();
     dispatch(setLoading(true));
-  }, []);
+  }, [setPage]);
   // console.log(urlArr(title));
 
   if (isLoading) {

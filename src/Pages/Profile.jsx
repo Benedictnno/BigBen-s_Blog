@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../FirebaseConfig";
 import { useNavigate } from "react-router-dom";
-import { clearValues, postData, setLoading } from "../Slices/postSlice";
+import { clearValues, postData, setLoading, setPage } from "../Slices/postSlice";
 import { UploadImage } from "../Hooks";
 import ReactMarkdown from "react-markdown";
 import { toast } from "react-toastify";
@@ -22,8 +22,8 @@ const Profile = () => {
   } = useSelector((store) => store.post);
 
   const form = [
-    { name: "subtitle", value: subtitle },
     { name: "title", value: title },
+    { name: "subtitle", value: subtitle },
   ];
   const postCollectionRef = collection(db, "blog-posts");
   let navigate = useNavigate();
@@ -44,6 +44,8 @@ const Profile = () => {
 
   async function CreatePost() {
     try {
+      dispatch(setPage(false));
+
       const bucket = await UploadImage(image, uid, dispatch);
       await addDoc(postCollectionRef, {
         author: displayName,
@@ -59,6 +61,7 @@ const Profile = () => {
       toast.success("Post added successfully");
       navigate("/");
       dispatch(setLoading(false));
+      dispatch(setPage(true));
     } catch (error) {
       console.log(error.message);
       toast.error("Post error");
@@ -74,8 +77,8 @@ const Profile = () => {
   if (isLoading) {
     return <Loading />;
   }
+  console.log(image);
 
-  
   return (
     <CreatePostStyles>
       <section className="markdown">
@@ -87,33 +90,38 @@ const Profile = () => {
         </div> */}
 
         <form action="">
-          <div>
+          <div className="title_container">
+            {form.map(({ name, value }) => {
+              return (
+                <div>
+                  <h4 htmlFor="">{name}</h4>
+                  <input
+                    key={name}
+                    name={name}
+                    value={value}
+                    onChange={handleChange}
+                  />
+                </div>
+              );
+            })}
+            <div>
+              <h4>Categories</h4>
+              <select name="category" id="" onChange={handleChange}>
+                <option value="News">News</option>
+                <option value="Sports">Sports</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Music">Music</option>
+                <option value="Movies">Movies</option>
+              </select>
+            </div>
 
-          {form.map(({ name, value }) => {
-            return (
-              <input
-                key={name}
-                name={name}
-                value={value}
-                onChange={handleChange}
-              />
-            );
-          })}
-
-          <select name="category" id="" onChange={handleChange}>
-            <option value="News">News</option>
-            <option value="Sports">Sports</option>
-            <option value="Entertainment">Entertainment</option>
-            <option value="Music">Music</option>
-            <option value="Movies">Movies</option>
-          </select>
-
-          <input
-            type="file"
-            accept="image"
-            name="image"
-            onChange={handleFileChange}
-          />
+            <input
+              type="file"
+              accept="image"
+              name="image"
+              required
+              onChange={handleFileChange}
+            />
           </div>
 
           <textarea
@@ -122,21 +130,21 @@ const Profile = () => {
             value={paragraphs}
             onChange={handleChange}
           ></textarea>
-          <article className="result">
-          </article>
+          <article className="result"></article>
           <button
             type="button"
             onClick={() => {
               CreatePost();
             }}
-            >
+          >
             Submit
           </button>
         </form>
         <div>
-          <img src={image} alt="" />
-            <ReactMarkdown>{paragraphs}</ReactMarkdown>
-
+          <img src={image?.name} alt="" />
+          <h1>{title}</h1>
+          <h4>{subtitle}</h4>
+          <ReactMarkdown>{paragraphs}</ReactMarkdown>
         </div>
       </section>
     </CreatePostStyles>

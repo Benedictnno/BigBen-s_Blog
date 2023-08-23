@@ -93,7 +93,7 @@ const Nav = () => {
               Log Out
             </button>
             <Link to="ProfilePage" className="darkBtn links">
-              <img src={userData?.photoURL} alt="" />
+              { userData?.photoURL && <img src={userData?.photoURL} alt="" className="PhotoUrl"  />}
               <span>{userData?.displayName}</span>
             </Link>
           </div>

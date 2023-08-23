@@ -7,8 +7,12 @@ export const CreatePostStyles = styled.div`
   form {
     display: flex;
     flex-direction: column;
-  }
+}
 
+.title_container {
+    display: flex;
+    margin-bottom: 1rem; 
+  }
   .markdown {
     padding: 4rem;
     display: grid;

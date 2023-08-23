@@ -9,6 +9,7 @@ const initialState = {
     image: null,
   },
   isLoading: false,
+  setPage : false,
   searchValue: "",
   getPostDatas: [],
   filteredPostDatas: [],
@@ -34,6 +35,9 @@ const postSlice = createSlice({
     },
     setLoading : (state, { payload }) => {
       state.isLoading = payload;
+    },
+    setPage : (state, { payload }) => {
+      state.setPage = payload;
     },
     clearValues: (state) => {
       return { ...state, ...post };
@@ -89,6 +93,7 @@ export const {
   singlePage,
   filterPostData,
   setLoading,
+  setPage,
 } = postSlice.actions;
 
 export default postSlice.reducer;
