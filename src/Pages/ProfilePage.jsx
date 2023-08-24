@@ -15,8 +15,8 @@ const ProfilePage = () => {
   const filteredPost = getPostDatas.filter((post) => post.uid === uid);
   useEffect(() => {
     fetchImageUrls(filteredPost, setImageUrls);
-  }, [filteredPost]);
-ProfilePageStyles
+  }, [filteredPost, getPostDatas]);
+
   return (
     <ProfilePageStyles>
       <button type="button">

@@ -26,6 +26,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { urlArr } from "./utils";
 import SignUp from "./Pages/SignUp";
 import SetUpProfile from "./Pages/SetUpProfile";
+import "react-toastify/dist/ReactToastify.css";
+
 
 function App() {
   const dispatch = useDispatch();

@@ -42,29 +42,37 @@ const Profile = () => {
     }
   }
 
+  
   async function CreatePost() {
-    try {
-      dispatch(setPage(false));
+    if (image) {
+      try {
+        dispatch(setPage(false));
+  
+        const bucket = await UploadImage(image, uid, dispatch);
+        await addDoc(postCollectionRef, {
+          author: displayName,
+          category,
+          comments: [],
+          likes: 0,
+          paragraphs,
+          subtitle,
+          title,
+          imageBucket: bucket,
+          uid,
+        });
+        toast.success("Post added successfully");
+        navigate("/");
+        dispatch(setLoading(false));
+        dispatch(setPage(true));
+        dispatch(clearValues());
+      } catch (error) {
+        console.log(error.message);
+        toast.error("Post error");
+      }
+    }
 
-      const bucket = await UploadImage(image, uid, dispatch);
-      await addDoc(postCollectionRef, {
-        author: displayName,
-        category,
-        comments: [],
-        likes: 0,
-        paragraphs,
-        subtitle,
-        title,
-        imageBucket: bucket,
-        uid,
-      });
-      toast.success("Post added successfully");
-      navigate("/");
-      dispatch(setLoading(false));
-      dispatch(setPage(true));
-    } catch (error) {
-      console.log(error.message);
-      toast.error("Post error");
+    else {
+    toast.error(' Please add an image')
     }
   }
 
