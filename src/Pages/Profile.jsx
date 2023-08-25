@@ -3,12 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../FirebaseConfig";
 import { useNavigate } from "react-router-dom";
-import { clearValues, postData, setLoading, setPage } from "../Slices/postSlice";
+import {
+  clearValues,
+  postData,
+  setLoading,
+  setPage,
+} from "../Slices/postSlice";
 import { UploadImage } from "../Hooks";
 import ReactMarkdown from "react-markdown";
 import { toast } from "react-toastify";
 import Loading from "../Components/Loading";
 import { CreatePostStyles } from "../Styles/CreatePostStyles";
+import { updatePostDataEdit } from "../Slices/updateSlice";
+import { updatePost } from "../Helpers/UpdateDoc";
 
 const Profile = () => {
   const {
@@ -20,10 +27,11 @@ const Profile = () => {
     post: { paragraphs, subtitle, title, category, image, imageBucket },
     isLoading,
   } = useSelector((store) => store.post);
+  const { update, isEditing } = useSelector((store) => store.update);
 
   const form = [
-    { name: "title", value: title },
-    { name: "subtitle", value: subtitle },
+    { name: "title", value: title || update.title },
+    { name: "subtitle", value: subtitle || update.subtitle },
   ];
   const postCollectionRef = collection(db, "blog-posts");
   let navigate = useNavigate();
@@ -32,7 +40,11 @@ const Profile = () => {
   function handleChange(e) {
     let value = e.target.value;
     let name = e.target.name;
-    dispatch(postData({ name, value }));
+    if (isEditing) {
+      dispatch(updatePostDataEdit({ name, value }));
+    } else {
+      dispatch(postData({ name, value }));
+    }
   }
   function handleFileChange(e) {
     if (e.target.files[0]) {
@@ -42,12 +54,11 @@ const Profile = () => {
     }
   }
 
-  
   async function CreatePost() {
     if (image) {
       try {
         dispatch(setPage(false));
-  
+
         const bucket = await UploadImage(image, uid, dispatch);
         await addDoc(postCollectionRef, {
           author: displayName,
@@ -69,10 +80,8 @@ const Profile = () => {
         console.log(error.message);
         toast.error("Post error");
       }
-    }
-
-    else {
-    toast.error(' Please add an image')
+    } else {
+      toast.error(" Please add an image");
     }
   }
 
@@ -135,24 +144,35 @@ const Profile = () => {
           <textarea
             className="input"
             name={"paragraphs"}
-            value={paragraphs}
+            value={paragraphs || update.paragraphs}
             onChange={handleChange}
           ></textarea>
           <article className="result"></article>
-          <button
-            type="button"
-            onClick={() => {
-              CreatePost();
-            }}
-          >
-            Submit
-          </button>
+          {isEditing ? (
+            <button
+              type="button"
+              onClick={() => {
+                updatePost(update.id,update);
+              }}
+            >
+              Submit Edited Post
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                CreatePost();
+              }}
+            >
+              Submit Post
+            </button>
+          )}
         </form>
         <div>
-          <img src={image?.name} alt="" />
-          <h1>{title}</h1>
-          <h4>{subtitle}</h4>
-          <ReactMarkdown>{paragraphs}</ReactMarkdown>
+          <img src={image?.name || update.image} alt="" />
+          <h1>{title || update.title}</h1>
+          <h4>{subtitle || update.subtitle}</h4>
+          <ReactMarkdown>{paragraphs || update.paragraphs}</ReactMarkdown>
         </div>
       </section>
     </CreatePostStyles>

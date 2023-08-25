@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { DeletePostImage, deletePost, fetchImageUrls } from "../Hooks";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ProfilePageStyles } from "../Styles/ProfilePageStyles";
+import { updatePost, updatePostDatas } from "../Helpers/UpdateDoc";
 
 const ProfilePage = () => {
   const [imageUrls, setImageUrls] = useState([]);
@@ -10,12 +11,13 @@ const ProfilePage = () => {
     userData: { uid },
     userData,
   } = useSelector((store) => store.auth);
-
+  const dispatch = useDispatch();
   const { getPostDatas } = useSelector((store) => store.post);
   const filteredPost = getPostDatas.filter((post) => post.uid === uid);
   useEffect(() => {
     fetchImageUrls(filteredPost, setImageUrls);
   }, [filteredPost, getPostDatas]);
+  const navigate = useNavigate();
 
   return (
     <ProfilePageStyles>
@@ -31,7 +33,10 @@ const ProfilePage = () => {
 
       <h2>Your Post</h2>
       {filteredPost?.map(
-        ({ title, id, subtitle, author, imageBucket }, index) => {
+        (
+          { title, id, subtitle, author, paragraphs, imageBucket, category },
+          index
+        ) => {
           return (
             <div key={id} className="singlePostDetail_container">
               <img src={imageUrls[index]} alt={author} />
@@ -44,15 +49,26 @@ const ProfilePage = () => {
                     deletePost(id), DeletePostImage(imageBucket);
                   }}
                   className="darkBtn"
-                  >
+                >
                   Delete Post
                 </button>
                 <button
                   type="button"
                   className="lightBtn"
-                  // onClick={() => {
-                  //   deletePost(id), DeletePostImage(imageBucket);
-                  // }}
+                  onClick={() => {
+                    updatePostDatas(
+                      {
+                        title,
+                        id,
+                        subtitle,
+                        paragraphs,
+                        imageUrls,
+                        category,
+                      },
+                      dispatch,
+                      navigate
+                    );
+                  }}
                 >
                   Edit Post
                 </button>
