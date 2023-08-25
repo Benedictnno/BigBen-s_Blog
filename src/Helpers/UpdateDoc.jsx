@@ -9,11 +9,12 @@ import { toast } from "react-toastify";
 // Set the "capital" field of the city 'DC'
 
 export function updatePostDatas(
-  { category, paragraphs, subtitle, title, imageUrls ,id },
-  dispatch,navigate
+  { category, paragraphs, subtitle, title, imageUrls, id },
+  dispatch,
+  navigate
 ) {
-console.log(category, paragraphs, subtitle, title, imageUrls);
-  
+  console.log(category, paragraphs, subtitle, title, imageUrls);
+
   dispatch(
     updatePostData({
       id,
@@ -24,14 +25,14 @@ console.log(category, paragraphs, subtitle, title, imageUrls);
       imageUrls,
     })
   );
- navigate("/CreatePost");
+  navigate("/CreatePost");
 }
 
 export async function updatePost(id, data) {
   const postUpdateRef = doc(db, "blog-posts", id);
-console.log(id,{...data});
+  console.log(id, { ...data });
   await updateDoc(postUpdateRef, {
     ...data,
   });
-  toast.success('post updated successfully')
+  toast.success("post updated successfully");
 }

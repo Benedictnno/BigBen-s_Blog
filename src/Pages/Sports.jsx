@@ -11,7 +11,7 @@ const Sports = () => {
   }, []);
 
   return (
-    <div>
+    <div className="card_container">
       {filteredPostDatas.map((details) => {
         return <MainCard {...details} />;
       })}

@@ -11,7 +11,7 @@ const Music = () => {
   }, []);
 
   return (
-    <div>
+    <div className="card_container">
       {filteredPost.map((details) => {
         return <MainCard key={details.id} {...details} />;
       })}

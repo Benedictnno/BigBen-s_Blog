@@ -3,9 +3,9 @@ import styled from "styled-components";
 export const CartStyle = styled.div`
 
   .post-card {
-    width: 500px;
+    width: 45vw;
     height: auto;
-
+    margin: 1rem;
     background: lightgrey;
     background-color: rgb(24 27 32);
     border: 1px solid rgb(84 90 106);
@@ -53,12 +53,12 @@ export const CartStyle = styled.div`
     min-height: 150px;
     width: 100%;
     border-radius: 20px;
-    background-color: blueviolet;
-    background-image: linear-gradient(
+    /* background-color: blueviolet; */
+    /* background-image: linear-gradient(
       to top left,
       blueviolet,
       rgb(73, 31, 112)
-    );
+    ); */
     margin-bottom: 4px;
   }
 
@@ -75,13 +75,15 @@ export const CartStyle = styled.div`
 
   .comment-like span {
     cursor: pointer;
-    height: 40px;
+    height: 45px;
     width: 50px;
     padding: 0 3px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 900;
+    font-size: 1.2rem;
+    padding : 5px;
     border-radius: 10px;
     background-color: transparent;
     transition: all 0.15s ease;

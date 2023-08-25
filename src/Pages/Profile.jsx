@@ -169,7 +169,7 @@ const Profile = () => {
           )}
         </form>
         <div>
-          <img src={image?.name || update.image} alt="" />
+          <img src={image?.name || update.image[1]} alt="" />
           <h1>{title || update.title}</h1>
           <h4>{subtitle || update.subtitle}</h4>
           <ReactMarkdown>{paragraphs || update.paragraphs}</ReactMarkdown>
