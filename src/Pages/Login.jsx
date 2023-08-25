@@ -10,10 +10,10 @@ import {
 } from "firebase/auth"; // chooses the the mode at which google authetification happens
 import { setUserData, loginAuth, authForm } from "../Slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { AiOutlineMail } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaFacebook } from "react-icons/fa";
 import { LoginStyle } from "../Styles/LoginStyle";
+import { githubAuth, twitterSignIn } from "../Helpers/authHelpers";
 
 const Login = () => {
   let navigate = useNavigate();
@@ -185,7 +185,7 @@ const Login = () => {
           title="Sign In"
           type="button"
           class="sign-in_apl"
-          onClick={() => twitterSignIn()}
+          onClick={() => twitterSignIn(dispatch, navigate)}
         >
           <FaApple />
           <span>Sign In with twitter</span>
@@ -203,7 +203,7 @@ const Login = () => {
           title="Sign In"
           type="button"
           class="sign-in_apl"
-          onClick={() => twitterSignIn()}
+          onClick={() => githubAuth(dispatch, navigate)}
         >
           <FaFacebook />
           <span>Sign In with GitHub</span>

@@ -5,7 +5,7 @@ import MainCard from "../Components/MainCard";
 
 const Latest = () => {
   const { filteredPost } = useSelector((store) => store.post);
-  const { userData:{photoUrl} } = useSelector((store) => store.auth);
+  // const { userData:{photoUrl} } = useSelector((store) => store.auth);
 
   return (
     <>
@@ -13,7 +13,7 @@ const Latest = () => {
     <section className='card_container'>
       {filteredPost.map((details,index) => {
         console.log(details);
-        return <MainCard key={index} {...details} photoUrl={photoUrl} />;
+        return <MainCard key={index} {...details}  />;
       })}
     </section>
     </>

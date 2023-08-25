@@ -1,7 +1,8 @@
 import { signInWithPopup, GithubAuthProvider, TwitterAuthProvider } from "firebase/auth";
 import { GithubProvider, auth, twitterProvider } from "../FirebaseConfig";
+import { loginAuth, setUserData } from "../Slices/authSlice";
 
-export function githubAuth() {
+export function githubAuth(dispatch, navigate) {
   signInWithPopup(auth, GithubProvider)
     .then((result) => {
       // This gives you a GitHub Access Token. You can use it to access the GitHub API.
@@ -13,12 +14,12 @@ export function githubAuth() {
       // IdP data available using getAdditionalUserInfo(result)
       // ...
 
-       localStorage.setItem("isAuth", true);
-       localStorage.setItem("userData", JSON.stringify(user));
+      localStorage.setItem("isAuth", true);
+      localStorage.setItem("userData", JSON.stringify(user));
 
-       dispatch(setUserData(user));
-       dispatch(loginAuth(true));
-       navigate("/");
+      dispatch(setUserData(user));
+      dispatch(loginAuth(true));
+      navigate("/");
     })
     .catch((error) => {
       // Handle Errors here.

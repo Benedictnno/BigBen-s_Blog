@@ -21,7 +21,6 @@ const MainCard = (
     created_at,
     author_image,
   },
-  { photoUrl }
 ) => {
   const [imageUrl, setImageUrls] = useState("");
   const eachPost = [
@@ -44,7 +43,7 @@ const MainCard = (
   return (
     <CartStyle>
       <section
-        class="post-card"
+        className="post-card"
         onClick={() =>
           dispatch(
             singlePage({
@@ -60,7 +59,7 @@ const MainCard = (
         }
       >
         <div>
-          <img src={author_image} class="avatar">
+          <img src={author_image} className="avatar">
             {/* <img src={photoUrl} alt="" /> */}
           </img>
           <span>{author}</span>
@@ -69,11 +68,11 @@ const MainCard = (
         <Link to={`/${urlArr(title)}`} class="title">
           {title}
         </Link>
-        <span class="datetime">{category}</span>
-        <div class="image-preview">
+        <span className="datetime">{category}</span>
+        <div className="image-preview">
           <img src={imageUrl} alt={author} />
         </div>
-        <div class="comment-like">
+        <div className="comment-like">
           <span>
             <FaRegHeart />
             {likes}
