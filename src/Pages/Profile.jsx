@@ -16,6 +16,8 @@ import Loading from "../Components/Loading";
 import { CreatePostStyles } from "../Styles/CreatePostStyles";
 import { updatePostDataEdit } from "../Slices/updateSlice";
 import { updatePost } from "../Helpers/UpdateDoc";
+import moment from "moment";
+import { userProfilePost } from "../Helpers/userProfilePost";
 
 const Profile = () => {
   const {
@@ -69,6 +71,8 @@ const Profile = () => {
           subtitle,
           title,
           imageBucket: bucket,
+          author_image: photoURL,
+          created_at: moment(new Date()).format("MMMM Do YYYY, h:mm:ss a"),
           uid,
         });
         toast.success("Post added successfully");
@@ -99,13 +103,6 @@ const Profile = () => {
   return (
     <CreatePostStyles>
       <section className="markdown">
-        {/* <div>
-        <img src={photoURL} alt="" />
-
-        <span>{displayName}</span>
-
-        </div> */}
-
         <form action="">
           <div className="title_container">
             {form.map(({ name, value }) => {
@@ -152,7 +149,7 @@ const Profile = () => {
             <button
               type="button"
               onClick={() => {
-                updatePost(update.id,update);
+                updatePost(update.id, update);
               }}
             >
               Submit Edited Post
@@ -161,7 +158,15 @@ const Profile = () => {
             <button
               type="button"
               onClick={() => {
-                CreatePost();
+                CreatePost(),
+                  userProfilePost(image, {
+                    displayName,
+                    category,
+                    paragraphs,
+                    subtitle,
+                    title,
+                    uid,
+                  });
               }}
             >
               Submit Post
@@ -169,7 +174,7 @@ const Profile = () => {
           )}
         </form>
         <div>
-          <img src={image?.name || update.image[1]} alt="" />
+          <img src={image?.name || update.image} alt="" />
           <h1>{title || update.title}</h1>
           <h4>{subtitle || update.subtitle}</h4>
           <ReactMarkdown>{paragraphs || update.paragraphs}</ReactMarkdown>

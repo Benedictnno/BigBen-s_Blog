@@ -3,7 +3,10 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { deleteObject, getStorage,ref } from 'firebase/storage'
+import { deleteObject, getStorage, ref } from "firebase/storage";
+import { FacebookAuthProvider } from "firebase/auth";
+import { TwitterAuthProvider } from "firebase/auth";
+import { GithubAuthProvider } from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDzbRTaKH4YKcVW8MAa2gbxwsJLegEm3_U",
@@ -18,11 +21,15 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-export const auth = getAuth();
+export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 
-// sets up the choosen mode of authetification ready
+export const GithubProvider = new GithubAuthProvider();
+export const facebookProvider = new FacebookAuthProvider();
+
+export const twitterProvider = new TwitterAuthProvider();
+// sets up the chosen mode of authentication ready
 export const provider = new GoogleAuthProvider();
 
 // Now you can use db.collection() and other Firestore methods
