@@ -14,7 +14,6 @@ import { AiOutlineMail } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { FaApple, FaFacebook } from "react-icons/fa";
 import { LoginStyle } from "../Styles/LoginStyle";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
 const Login = () => {
   let navigate = useNavigate();
