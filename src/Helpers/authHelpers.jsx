@@ -12,6 +12,13 @@ export function githubAuth() {
       const user = result.user;
       // IdP data available using getAdditionalUserInfo(result)
       // ...
+
+       localStorage.setItem("isAuth", true);
+       localStorage.setItem("userData", JSON.stringify(user));
+
+       dispatch(setUserData(user));
+       dispatch(loginAuth(true));
+       navigate("/");
     })
     .catch((error) => {
       // Handle Errors here.
@@ -26,7 +33,7 @@ export function githubAuth() {
 }
 
 
- export function twitterSignIn() {
+ export function twitterSignIn(dispatch, navigate) {
    signInWithPopup(auth, twitterProvider)
      .then((result) => {
        console.log(result);
@@ -38,6 +45,12 @@ export function githubAuth() {
 
        // The signed-in user info.
        const user = result.user;
+       localStorage.setItem("isAuth", true);
+       localStorage.setItem("userData", JSON.stringify(user));
+
+       dispatch(setUserData(user));
+       dispatch(loginAuth(true));
+       navigate("/");
 
        console.log(user);
        // IdP data available using getAdditionalUserInfo(result)
