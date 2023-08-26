@@ -81,9 +81,9 @@ function App() {
         <Route
           path="/ProfilePage"
           element={
-            // <ProtectedRoute>
+           
             <ProfilePage />
-            // </ProtectedRoute>
+          
           }
         />
       </Routes>

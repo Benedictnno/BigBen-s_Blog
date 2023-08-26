@@ -31,8 +31,13 @@ export function updatePostDatas(
 export async function updatePost(id, data) {
   const postUpdateRef = doc(db, "blog-posts", id);
   console.log(id, { ...data });
+ 
   await updateDoc(postUpdateRef, {
-    ...data,
+    category: data.category,
+    Sports: data.Sports,
+    paragraphs: data.paragraphs,
+    subtitle: data.subtitle,
+    title: data.title
   });
   toast.success("post updated successfully");
 }

@@ -58,11 +58,12 @@ const MainCard = (
           )
         }
       >
-        <div>
-          <img src={author_image} className="avatar">
+        <div className="profile_container">
+          <div className="profile">
+            <img src={author_image} className="avatar" />
             {/* <img src={photoUrl} alt="" /> */}
-          </img>
-          <span>{author}</span>
+            <span className="profile_name">{author}</span>
+          </div>
           <span>{moment(created_at.seconds).format("LLLL")}</span>
         </div>
         <Link to={`/${urlArr(title)}`} class="title">

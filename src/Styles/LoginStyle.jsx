@@ -1,50 +1,13 @@
 import styled from "styled-components";
 
 export const LoginStyle = styled.div`
-  width: 100%;
-  height: 100%;
-
-  /* background-image: url("Images/blob-scene-haikei.svg"); */
-  display: grid;
-  place-content: center;
-  /* background-color: blue; */
-
-  .form_container {
-    width: fit-content;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    padding: 50px 40px 20px 40px;
-    background-color: #ffffff;
-    box-shadow: 0px 106px 42px rgba(0, 0, 0, 0.01),
-      0px 59px 36px rgba(0, 0, 0, 0.05), 0px 26px 26px rgba(0, 0, 0, 0.09),
-      0px 7px 15px rgba(0, 0, 0, 0.1), 0px 0px 0px rgba(0, 0, 0, 0.1);
-    border-radius: 11px;
-    font-family: "Inter", sans-serif;
-    margin: 2rem 0;
-  }
-
-  svg {
-    display: block;
-    margin: auto 0;
-  }
-  .logo_container {
-    box-sizing: border-box;
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(
-      180deg,
-      rgba(248, 248, 248, 0) 50%,
-      #f8f8f888 100%
-    );
-    border: 1px solid #f7f7f8;
-    filter: drop-shadow(0px 0.5px 0.5px #efefef)
-      drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
-    border-radius: 11px;
-  }
+  display: block;
+  margin: auto 0;
+  font-size: 1.5rem;
+  position: absolute;
+  transform: translate(50, -50%);
+  left: 33%;
+  top: 30%;
 
   .title_container {
     display: flex;
@@ -135,11 +98,33 @@ export const LoginStyle = styled.div`
     outline: none;
     color: #242424;
     border: 1px solid #e5e5e5;
+    font-size: 1.2rem;
+    padding: 1.5rem;
+    margin: 1rem 0;
     filter: drop-shadow(0px 1px 0px #efefef)
       drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
     cursor: pointer;
   }
 
+  .sign-in_face {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #8dd;
+    border-radius: 7px;
+    outline: none;
+    color: #ffffff;
+    border: 1px solid #e5e5e5;
+    font-size: 1.2rem;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    filter: drop-shadow(0px 1px 0px #efefef)
+      drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
+    cursor: pointer;
+  }
   .sign-in_apl {
     width: 100%;
     height: 40px;
@@ -152,11 +137,17 @@ export const LoginStyle = styled.div`
     outline: none;
     color: #ffffff;
     border: 1px solid #e5e5e5;
+    font-size: 1.2rem;
+    padding: 1.5rem;
+    margin: 1rem 0;
     filter: drop-shadow(0px 1px 0px #efefef)
       drop-shadow(0px 1px 0.5px rgba(239, 239, 239, 0.5));
     cursor: pointer;
   }
 
+  span {
+    font-size: 1.4rem;
+  }
   .separator {
     width: 100%;
     display: flex;

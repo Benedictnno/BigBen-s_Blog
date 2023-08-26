@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const CartStyle = styled.div`
-
   .post-card {
     width: 45vw;
     height: auto;
@@ -28,7 +27,19 @@ export const CartStyle = styled.div`
     );
   }
 
-  .title {
+  .profile_container {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem 0.5rem 0.75rem 0;
+  }
+  .profile {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .profile_name{
+    margin: .3rem .5rem
+  } .title {
     font-size: 20px;
     line-height: 22px;
     font-weight: 600;
@@ -43,7 +54,7 @@ export const CartStyle = styled.div`
   }
 
   .datetime {
-    font-size: 12px;
+    
     color: rgb(168 179 207);
     margin: 10px 0;
   }
@@ -83,7 +94,7 @@ export const CartStyle = styled.div`
     justify-content: center;
     font-weight: 900;
     font-size: 1.2rem;
-    padding : 5px;
+    padding: 5px;
     border-radius: 10px;
     background-color: transparent;
     transition: all 0.15s ease;
