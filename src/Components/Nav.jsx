@@ -7,6 +7,7 @@ import { signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser, loginAuth } from "../Slices/authSlice";
 import { search, searchValues } from "../Slices/postSlice";
+import { getProfilePost } from "../Helpers/getProfilePost";
 
 const Nav = () => {
   const data = [
@@ -80,9 +81,6 @@ const Nav = () => {
               </span>
               Sign UP
             </Link>
-            {/* <button type="button" className="darkBtn">
-              Sign Up
-            </button> */}
           </div>
         ) : (
           <div>
@@ -92,8 +90,14 @@ const Nav = () => {
               </span>
               Log Out
             </button>
-            <Link to="ProfilePage" className="darkBtn links">
-              { userData?.photoURL && <img src={userData?.photoURL} alt="" className="PhotoUrl"  />}
+            <Link
+              to="ProfilePage"
+              className="darkBtn links"
+              onClick={() => getProfilePost(userData.uid, dispatch)}
+            >
+              {userData?.photoURL && (
+                <img src={userData?.photoURL} alt="" className="PhotoUrl" />
+              )}
               <span>{userData?.displayName}</span>
             </Link>
           </div>

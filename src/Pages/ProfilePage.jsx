@@ -4,6 +4,7 @@ import { DeletePostImage, deletePost, fetchImageUrls } from "../Hooks";
 import { Link, useNavigate } from "react-router-dom";
 import { ProfilePageStyles } from "../Styles/ProfilePageStyles";
 import { updatePost, updatePostDatas } from "../Helpers/UpdateDoc";
+import { getProfilePost } from "../Helpers/getProfilePost";
 
 const ProfilePage = () => {
   const [imageUrls, setImageUrls] = useState([]);
@@ -12,13 +13,20 @@ const ProfilePage = () => {
     userData,
   } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
-  const { getPostDatas } = useSelector((store) => store.post);
-  const filteredPost = getPostDatas.filter((post) => post.uid === uid);
+  const { getPostDatas, getProfilePostData } = useSelector(
+    (store) => store.post
+  );
+  
+  // const filteredPost = getPostDatas.filter(+(post) => post.uid === uid);
+
   useEffect(() => {
-    fetchImageUrls(filteredPost, setImageUrls);
-  }, [filteredPost, getPostDatas]);
+    fetchImageUrls(getProfilePostData, setImageUrls);
+    getProfilePost(uid,dispatch)
+  }, []);
   const navigate = useNavigate();
 
+  console.log(getProfilePostData);
+  console.log(imageUrls);
   return (
     <ProfilePageStyles>
       <button type="button">
@@ -32,7 +40,7 @@ const ProfilePage = () => {
       </div>
 
       <h2>Your Post</h2>
-      {filteredPost?.map(
+      {getProfilePostData.map(
         (
           { title, id, subtitle, author, paragraphs, imageBucket, category },
           index
@@ -46,7 +54,7 @@ const ProfilePage = () => {
                 <button
                   type="button"
                   onClick={() => {
-                    deletePost(id), DeletePostImage(imageBucket);
+                    deletePost(id, "blog-posts"), DeletePostImage(imageBucket);
                   }}
                   className="darkBtn"
                 >

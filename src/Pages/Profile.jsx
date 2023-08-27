@@ -98,7 +98,7 @@ const Profile = () => {
   if (isLoading) {
     return <Loading />;
   }
-  console.log(image);
+ 
 
   return (
     <CreatePostStyles>
@@ -159,7 +159,7 @@ const Profile = () => {
               type="button"
               onClick={() => {
                 CreatePost(),
-                  userProfilePost(image, {
+                  userProfilePost(image, dispatch,{
                     displayName,
                     category,
                     paragraphs,

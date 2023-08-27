@@ -9,9 +9,10 @@ const initialState = {
     image: null,
   },
   isLoading: false,
-  setPage : false,
+  setPage: false,
   searchValue: "",
   getPostDatas: [],
+  getProfilePostData: [],
   filteredPostDatas: [],
   filteredPost: [],
   singlePageData: {},
@@ -26,6 +27,10 @@ const postSlice = createSlice({
     getPostData: (state, { payload }) => {
       state.getPostDatas = payload;
       state.filteredPost = payload;
+    },
+    getProfilePostData: (state, { payload }) => {
+      state.getProfilePostData = payload;
+      // state.filteredPost = payload;
     },
     singlePage: (state, { payload }) => {
       state.singlePageData = { ...payload };
@@ -94,6 +99,7 @@ export const {
   filterPostData,
   setLoading,
   setPage,
+  getProfilePostData,
 } = postSlice.actions;
 
 export default postSlice.reducer;

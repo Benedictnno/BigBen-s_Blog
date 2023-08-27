@@ -10,7 +10,6 @@ import { collection, deleteDoc, doc } from "firebase/firestore";
 import { setLoading } from "./Slices/postSlice";
 import { toast } from "react-toastify";
 
-
 const BUCKET_URL = "gs://bigbens-blog.appspot.com";
 const postCollectionRef = collection(db, "blog-posts");
 
@@ -44,9 +43,9 @@ export async function getDownloadImageURL(bucket) {
   return await getDownloadURL(ref(storage, bucket));
 }
 
-export async function fetchImageUrls(filteredPost, setImageUrls) {
+export async function fetchImageUrls(getProfilePostData, setImageUrls) {
   const urls = await Promise.all(
-    filteredPost.map(async ({ imageBucket }) => {
+    getProfilePostData.map(async ({ imageBucket }) => {
       const fileRef = ref(storage, imageBucket);
       const downloadUrl = await getDownloadURL(fileRef);
       return downloadUrl;
@@ -54,7 +53,6 @@ export async function fetchImageUrls(filteredPost, setImageUrls) {
   );
   setImageUrls(urls);
 }
-
 
 export async function CreatePost() {
   try {
@@ -76,9 +74,7 @@ export async function CreatePost() {
   }
 }
 
-export async function deletePost(id) {
-  const postDoc = doc(db, "blog-posts", id);
+export async function deletePost(id, path, ) {
+  const postDoc = doc(db, path, id);
   await deleteDoc(postDoc);
 }
-
-

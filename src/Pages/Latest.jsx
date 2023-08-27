@@ -12,7 +12,7 @@ const Latest = () => {
       <h1>Latest</h1>
     <section className='card_container'>
       {filteredPost.map((details,index) => {
-        console.log(details);
+      
         return <MainCard key={index} {...details}  />;
       })}
     </section>

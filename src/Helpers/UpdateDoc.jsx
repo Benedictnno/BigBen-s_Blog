@@ -28,16 +28,22 @@ export function updatePostDatas(
   navigate("/CreatePost");
 }
 
-export async function updatePost(id, data) {
+export async function updatePost(
+  id,
+  { category, paragraphs, subtitle, title }
+) {
   const postUpdateRef = doc(db, "blog-posts", id);
-  console.log(id, { ...data });
- 
-  await updateDoc(postUpdateRef, {
-    category: data.category,
-    Sports: data.Sports,
-    paragraphs: data.paragraphs,
-    subtitle: data.subtitle,
-    title: data.title
-  });
-  toast.success("post updated successfully");
+
+
+  await updateDoc(
+    postUpdateRef,
+    {
+     "category": category,
+    //  "Sports": Sports,
+     "paragraphs": paragraphs,
+     "subtitle": subtitle,
+     "title": title,
+    }
+  );
+  // toast.success("post updated successfully");
 }
