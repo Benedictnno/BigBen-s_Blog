@@ -13,20 +13,16 @@ const ProfilePage = () => {
     userData,
   } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
-  const { getPostDatas, getProfilePostData } = useSelector(
-    (store) => store.post
-  );
-  
+  const { getProfilePostData } = useSelector((store) => store.post);
+
   // const filteredPost = getPostDatas.filter(+(post) => post.uid === uid);
 
   useEffect(() => {
     fetchImageUrls(getProfilePostData, setImageUrls);
-    getProfilePost(uid,dispatch)
+    getProfilePost(uid, dispatch);
   }, []);
   const navigate = useNavigate();
 
-  console.log(getProfilePostData);
-  console.log(imageUrls);
   return (
     <ProfilePageStyles>
       <button type="button">
@@ -54,7 +50,9 @@ const ProfilePage = () => {
                 <button
                   type="button"
                   onClick={() => {
-                    deletePost(id, "blog-posts"), DeletePostImage(imageBucket);
+                    deletePost(id, "blog-posts"),
+                      deletePost(id, "blog-posts"),
+                      DeletePostImage(imageBucket);
                   }}
                   className="darkBtn"
                 >

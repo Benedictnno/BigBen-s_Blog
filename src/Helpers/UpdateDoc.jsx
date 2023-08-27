@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 // Set the "capital" field of the city 'DC'
 
 export function updatePostDatas(
-  { category, paragraphs, subtitle, title, imageUrls, id },
+  { category, paragraphs, subtitle, title, imageUrls, id, likes },
   dispatch,
   navigate
 ) {
@@ -23,6 +23,7 @@ export function updatePostDatas(
       subtitle,
       title,
       imageUrls,
+      likes
     })
   );
   navigate("/CreatePost");
@@ -30,20 +31,18 @@ export function updatePostDatas(
 
 export async function updatePost(
   id,
-  { category, paragraphs, subtitle, title }
+  { category, paragraphs, subtitle, title,likes,views }
 ) {
   const postUpdateRef = doc(db, "blog-posts", id);
 
-
-  await updateDoc(
-    postUpdateRef,
-    {
-     "category": category,
+  await updateDoc(postUpdateRef, {
+    category: category,
     //  "Sports": Sports,
-     "paragraphs": paragraphs,
-     "subtitle": subtitle,
-     "title": title,
-    }
-  );
+    paragraphs: paragraphs,
+    subtitle: subtitle,
+    title: title,
+    likes: likes,
+    views: views,
+  });
   // toast.success("post updated successfully");
 }

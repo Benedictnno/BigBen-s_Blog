@@ -74,7 +74,7 @@ export async function CreatePost() {
   }
 }
 
-export async function deletePost(id, path, ) {
+export async function deletePost(id, path) {
   const postDoc = doc(db, path, id);
   await deleteDoc(postDoc);
 }
