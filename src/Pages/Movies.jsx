@@ -12,7 +12,7 @@ const Movies = () => {
 
   return (
     <div className="card_container">
-      ``
+      
       {filteredPost.map((details) => {
         return <MainCard key={details.id} {...details} />;
       })}

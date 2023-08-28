@@ -37,9 +37,10 @@ export const CartStyle = styled.div`
     justify-content: space-between;
   }
 
-  .profile_name{
-    margin: .3rem .5rem
-  } .title {
+  .profile_name {
+    margin: 0.3rem 0.5rem;
+  }
+  .title {
     font-size: 20px;
     line-height: 22px;
     font-weight: 600;
@@ -54,7 +55,6 @@ export const CartStyle = styled.div`
   }
 
   .datetime {
-    
     color: rgb(168 179 207);
     margin: 10px 0;
   }
@@ -107,5 +107,11 @@ export const CartStyle = styled.div`
   .comment-like span svg {
     fill: rgb(255, 255, 255);
     margin-right: 2px;
+  }
+
+  .LikeBtn {
+    background-color: red;
+    color: red;
+    
   }
 `;

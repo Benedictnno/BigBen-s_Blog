@@ -24,8 +24,7 @@ const MainCard = ({
   id,
 }) => {
   const [imageUrl, setImageUrls] = useState("");
-  const [ifLiked ,setIfLiked] = useState(false)
-  const [ifViewed ,setIfViewed] = useState(false)
+  const [ifLiked, setIfLiked] = useState(false);
   const eachPost = [
     {
       subtitle,
@@ -43,31 +42,28 @@ const MainCard = ({
 
   const dispatch = useDispatch();
   const [userLiked, setUserLiked] = useState(likes);
-  const [userView, setUserView] = useState(views);
 
-  function Viewed() {
-    if (!ifLiked) {
-      setUserView((prev) => prev + 1);
-     setIfViewed(true);
-      updatePost(id, {
-        subtitle,
-        category,
-        author,
-        paragraphs,
-        comments,
-        title,
-        likes: userLiked,
-        views: userView,
-        imageBucket,
-        
-        created_at,
-        author_image,
-        id,
-      });
-      
-    }
-    
-  }
+  // function Viewed() {
+  //   if (!ifLiked) {
+  //     setUserView((prev) => prev + 1);
+  //     setIfViewed(true);
+  //     updatePost(id, {
+  //       subtitle,
+  //       category,
+  //       author,
+  //       paragraphs,
+  //       comments,
+  //       title,
+  //       likes: userLiked,
+  //       views: userView,
+  //       imageBucket,
+
+  //       created_at,
+  //       author_image,
+  //       id,
+  //     });
+  //   }
+  // }
   function liked() {
     if (!ifLiked) {
       setUserLiked((prev) => prev + 1);
@@ -86,42 +82,31 @@ const MainCard = ({
         author_image,
         id,
       });
-      
     }
-    console.log({
-      subtitle,
-      category,
-      author,
-      paragraphs,
-      comments,
-      title,
-      likes:userLiked,
-      imageBucket,
-      views,
-      created_at,
-      author_image,
-      id,
-    });
   }
   return (
     <CartStyle>
       <section
         className="post-card"
-        onClick={
-          (() =>
-            dispatch(
-              singlePage({
-                subtitle,
-                category,
-                author,
-                paragraphs,
-                comments,
-                title,
-                imageUrl,
-              })
-            )
-         )
-        }
+        onClick={() => {
+          dispatch(
+            singlePage({
+              subtitle,
+              category,
+              author,
+              paragraphs,
+              comments,
+              title,
+              imageUrl,
+              views,
+              id,
+              imageBucket,
+              likes,
+              created_at,
+              author_image,
+            })
+          );
+        }}
       >
         <div className="profile_container">
           <div className="profile">
@@ -131,7 +116,7 @@ const MainCard = ({
           </div>
           <span>{moment(created_at.seconds).format("LLLL")}</span>
         </div>
-        <Link to={`/${urlArr(title)}`} class="title">
+        <Link to={`/Details`} className="title">
           {title}
         </Link>
         <span className="datetime">{category}</span>
@@ -139,8 +124,12 @@ const MainCard = ({
           <img src={imageUrl} alt={author} />
         </div>
         <div className="comment-like">
-          <span className="LikeBtn" onClick={() => liked()}>
-            <FaRegHeart />
+          <span onClick={() => liked()}>
+
+            <span className={ifLiked & "LikeBtn" }>
+              <FaRegHeart />
+            </span>
+
             {userLiked}
           </span>
           <span>
@@ -149,7 +138,7 @@ const MainCard = ({
           </span>
           <span>
             <FaRegEye />
-            {userView}
+            {views}
           </span>
         </div>
       </section>

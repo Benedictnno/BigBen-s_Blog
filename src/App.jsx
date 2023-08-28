@@ -75,17 +75,10 @@ function App() {
 
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
-        <Route path={`/jjj`} element={<SinglePage />} />
+        <Route path={`/Details`} element={<SinglePage />} />
         <Route path="/CreatePost" element={<Profile />} />
         <Route path="/SetUpProfile" element={<SetUpProfile />} />
-        <Route
-          path="/ProfilePage"
-          element={
-           
-            <ProfilePage />
-          
-          }
-        />
+        <Route path="/ProfilePage" element={<ProfilePage />} />
       </Routes>
 
       <ToastContainer />
