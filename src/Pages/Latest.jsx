@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import MainCard from "../Components/MainCard";
 
-
 const Latest = () => {
   const { filteredPost } = useSelector((store) => store.post);
   // const { userData:{photoUrl} } = useSelector((store) => store.auth);
@@ -10,12 +9,11 @@ const Latest = () => {
   return (
     <>
       <h1>Latest</h1>
-    <section className='card_container'>
-      {filteredPost.map((details,index) => {
-      
-        return <MainCard key={index} {...details}  />;
-      })}
-    </section>
+      <section className="card_container">
+        {filteredPost.map((details, index) => {
+          return <MainCard key={index} {...details} />;
+        })}
+      </section>
     </>
   );
 };

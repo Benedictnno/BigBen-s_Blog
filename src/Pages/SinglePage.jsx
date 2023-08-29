@@ -3,6 +3,7 @@ import SinglePageComponent from "../Components/SinglePageComponent";
 import { useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
 import { updatePost } from "../Helpers/UpdateDoc";
+import { SinglePageStyles } from "../Styles/SinglePageStyles";
 
 const SinglePage = () => {
   const {
@@ -54,12 +55,19 @@ const SinglePage = () => {
   }, []);
 
   return (
-    <div>
+    <SinglePageStyles>
+      <section>
+
+      <hr />
       <h1>{title}</h1>
-      <h4>{subtitle}</h4>
-      <img src={imageUrl} alt={author} />
-      <ReactMarkdown>{paragraphs}</ReactMarkdown>
-    </div>
+      <hr />
+      <img src={imageUrl} alt={author} className="single_page_img" />
+      <h3>{subtitle}</h3>
+      </section>
+      <ReactMarkdown className="Single_text">
+        {paragraphs}
+        </ReactMarkdown>
+    </SinglePageStyles>
   );
 };
 

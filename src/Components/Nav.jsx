@@ -31,24 +31,27 @@ const Nav = () => {
     });
   }
 
-  function handleSearch(e) {
-    dispatch(searchValues(e.target.value));
-    dispatch(search());
-  }
+  // function handleSearch(e) {
+  //   dispatch(searchValues(e.target.value));
+  //   dispatch(search());
+  // }
 
   function debounce() {
     let timeOutId;
     return (e) => {
-      setLocalSearch(e.target.value);
+      dispatch(searchValues(e.target.value));
       clearTimeout(timeOutId);
       timeOutId = setTimeout(() => {
-       dispatch(search());
+        dispatch(search());
       }, 1500);
     };
   }
 
   const optimizedDebounce = useMemo(() => debounce(), []);
-
+  // console.log(optimizedDebounce);
+  // useEffect(() => {
+  //   optimizedDebounce()
+  // }, []);
   return (
     <section>
       <nav className="Nav">
@@ -63,7 +66,7 @@ const Nav = () => {
             placeholder="Search"
             className="Search_input"
             value={searchValue}
-            onChange={handleSearch}
+            onChange={optimizedDebounce}
           />
         </div>
 
