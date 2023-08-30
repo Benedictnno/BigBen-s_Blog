@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { collection, getFirestore } from "firebase/firestore";
 import { deleteObject, getStorage, ref } from "firebase/storage";
 import { FacebookAuthProvider } from "firebase/auth";
 import { TwitterAuthProvider } from "firebase/auth";
@@ -31,5 +31,6 @@ export const facebookProvider = new FacebookAuthProvider();
 export const twitterProvider = new TwitterAuthProvider();
 // sets up the chosen mode of authentication ready
 export const provider = new GoogleAuthProvider();
+export const postCollectionRef = collection(db, "blog-posts");
 
 // Now you can use db.collection() and other Firestore methods

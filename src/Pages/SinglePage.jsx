@@ -1,66 +1,69 @@
 import React, { useEffect, useState } from "react";
-import SinglePageComponent from "../Components/SinglePageComponent";
 import { useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
-import { updatePost } from "../Helpers/UpdateDoc";
 import { SinglePageStyles } from "../Styles/SinglePageStyles";
-import Home from "../Pages/Home";
 import { getProfilePost } from "../Helpers/getProfilePost";
 import { Link } from "react-router-dom";
 import { BiLogIn, BiLogOut } from "react-icons/bi";
 import { motion, useScroll } from "framer-motion";
+import { fetchSingleUrls } from "../Helpers/SingleImageProcessing";
 
 const SinglePage = () => {
   const {
     singlePageData: {
       subtitle,
-      category,
       author,
       paragraphs,
-      comments,
       title,
       imageUrl,
+      imageBucket,
       views,
       id,
-      imageBucket,
-      likes,
-      created_at,
       author_image,
     },
   } = useSelector((store) => store.post);
   const [ifViewed, setIfViewed] = useState(false);
   const [userView, setUserView] = useState(views);
   const { scrollYProgress } = useScroll();
+  const [SingleImage, setImageUrl] = useState("");
+  // const q = query(postCollectionRef, where("id", "==", id));
+  // console.log(q);
 
-  function Viewed() {
-    if (!ifViewed) {
-      setUserView((prev) => prev + 1);
-      setIfViewed(true);
-      updatePost(id, {
-        subtitle,
-        category,
-        author,
-        paragraphs,
-        comments,
-        title,
-        likes,
-        views: userView,
-        imageBucket,
-        created_at,
-        author_image,
-        id,
-      });
-    }
-  }
+  // function Viewed() {
+  //   if (!ifViewed) {
+  //     setUserView((prev) => prev + 1);
+  //     setIfViewed(true);
+  //     updatePost(id, {
+  //       subtitle,
+  //       category,
+  //       author,
+  //       paragraphs,
+  //       comments,
+  //       title,
+  //       likes,
+  //       views: userView,
+  //       imageBucket,
+  //       created_at,
+  //       author_image,
+  //       id,
+  //     });
+  //   }
+  // }
 
-
-  console.log(ifViewed);
-  console.log(userView);
+  // console.log(ifViewed);
+  // console.log(userView);
+  // useEffect(() => {
+  //   Viewed();
+  // }, []);
   useEffect(() => {
-    Viewed();
+   setImageUrl("");
+    fetchSingleUrls(imageBucket, setImageUrl);
+    // return () => {
+    //   setImageUrl('');
+    // };
   }, []);
   const { userAuth, userData } = useSelector((store) => store.auth);
-
+  console.log(SingleImage);
   return (
     <SinglePageStyles>
       <motion.div
@@ -102,7 +105,7 @@ const SinglePage = () => {
         <hr />
         <h1>{title}</h1>
         <hr />
-        <img src={imageUrl} alt={author} className="single_page_img" />
+        <img src={SingleImage} alt={author} className="single_page_img" />
         <h3>{subtitle}</h3>
       </section>
       <ReactMarkdown className="Single_text">{paragraphs}</ReactMarkdown>

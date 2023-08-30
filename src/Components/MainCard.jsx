@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { fetchImageUrls } from "../Hooks";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { singlePage } from "../Slices/postSlice";
 import { urlArr } from "../utils";
 import { CartStyle } from "../Styles/CartStyle";
 import { FaRegEye, FaRegHeart, FaRegCommentDots } from "react-icons/fa";
 import moment from "moment/moment";
 import { updatePost } from "../Helpers/UpdateDoc";
+import { get } from "../Helpers/GetSinglePost";
+import { profilePost } from "../Helpers/getProfilePost";
 
 const MainCard = ({
   subtitle,
@@ -38,10 +39,13 @@ const MainCard = ({
   ];
   useEffect(() => {
     fetchImageUrls(eachPost, setImageUrls);
+   
   }, []);
 
   const dispatch = useDispatch();
   const [userLiked, setUserLiked] = useState(likes);
+
+
 
   // function Viewed() {
   //   if (!ifLiked) {
@@ -89,32 +93,16 @@ const MainCard = ({
       <section
         className="post-card"
         onClick={() => {
-          dispatch(
-            singlePage({
-              subtitle,
-              category,
-              author,
-              paragraphs,
-              comments,
-              title,
-              imageUrl,
-              views,
-              id,
-              imageBucket,
-              likes,
-              created_at,
-              author_image,
-            })
-          );
+          get(id, dispatch);
         }}
       >
-        <div className="profile_container">
+        <div className="profile_container" onClick={() => profilePost(author)}>
           <div className="profile">
             <img src={author_image} className="avatar" />
             {/* <img src={photoUrl} alt="" /> */}
             <span className="profile_name">{author}</span>
           </div>
-          <span>{moment(created_at.seconds).format("LLLL")}</span>
+          <span>{moment(created_at.nanoseconds).format("LLLL")}</span>
         </div>
         <Link to={`/Details`} className="title">
           {title}
@@ -125,8 +113,7 @@ const MainCard = ({
         </div>
         <div className="comment-like">
           <span onClick={() => liked()}>
-
-            <span className={ifLiked & "LikeBtn" }>
+            <span className={ifLiked & "LikeBtn"}>
               <FaRegHeart />
             </span>
 

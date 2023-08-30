@@ -1,6 +1,8 @@
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../FirebaseConfig";
 import { getProfilePostData } from "../Slices/postSlice";
+import { query, where } from "firebase/firestore";
+import { postCollectionRef } from "../FirebaseConfig";
 
 export async function getProfilePost(uid, dispatch) {
   const postCollectionRef = collection(db, uid);
@@ -16,4 +18,17 @@ export async function getProfilePost(uid, dispatch) {
   dispatch(getProfilePostData(getData));
   //   dispatch(setLoading(false));
   console.log(getData);
+}
+
+
+export async function profilePost(author) {
+  console.log("hi");
+  const q = query(postCollectionRef, where("author", "==", author));
+
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, " => ", doc.data());
+    console.log(doc);
+  });
 }
