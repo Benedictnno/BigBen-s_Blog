@@ -1,13 +1,12 @@
 import React, { useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { BsSearch } from "react-icons/bs";
 import { BiLogIn, BiLogOut } from "react-icons/bi";
 import { auth } from "../FirebaseConfig";
 import { signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUser, loginAuth } from "../Slices/authSlice";
-import { search, searchValues } from "../Slices/postSlice";
 import { getProfilePost } from "../Helpers/getProfilePost";
+import SearchComponent from "./SearchComponent";
 
 const Nav = () => {
   const data = [
@@ -21,7 +20,6 @@ const Nav = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userAuth, userData } = useSelector((store) => store.auth);
-  const { searchValue } = useSelector((store) => store.post);
 
   function LogOut() {
     signOut(auth).then(() => {
@@ -31,23 +29,9 @@ const Nav = () => {
     });
   }
 
-  // function handleSearch(e) {
-  //   dispatch(searchValues(e.target.value));
-  //   dispatch(search());
-  // }
+  
 
-  function debounce() {
-    let timeOutId;
-    return (e) => {
-      dispatch(searchValues(e.target.value));
-      clearTimeout(timeOutId);
-      timeOutId = setTimeout(() => {
-        dispatch(search());
-      }, 1500);
-    };
-  }
-
-  const optimizedDebounce = useMemo(() => debounce(), []);
+  
   // console.log(optimizedDebounce);
   // useEffect(() => {
   //   optimizedDebounce()
@@ -55,21 +39,7 @@ const Nav = () => {
   return (
     <section>
       <nav className="Nav">
-        <h2>BigBen's Blog</h2>
-
-        <div className="Search_container">
-          <span>
-            <BsSearch />
-          </span>
-          <input
-            type="text"
-            placeholder="Search"
-            className="Search_input"
-            value={searchValue}
-            onChange={optimizedDebounce}
-          />
-        </div>
-
+        <SearchComponent/>
         {!userAuth ? (
           <div>
             <Link to={"Login"} className="lightBtn links">

@@ -35,7 +35,7 @@ export async function updatePost(
 ) {
   const postUpdateRef = doc(db, "blog-posts", id);
 
-  await updateDoc(postUpdateRef, {
+  await updateDoc(postUpdateRef  , {
     category: category,
     //  "Sports": Sports,
     paragraphs: paragraphs,

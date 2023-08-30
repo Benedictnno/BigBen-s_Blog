@@ -4,6 +4,11 @@ import { useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
 import { updatePost } from "../Helpers/UpdateDoc";
 import { SinglePageStyles } from "../Styles/SinglePageStyles";
+import Home from "../Pages/Home";
+import { getProfilePost } from "../Helpers/getProfilePost";
+import { Link } from "react-router-dom";
+import { BiLogIn, BiLogOut } from "react-icons/bi";
+import { motion, useScroll } from "framer-motion";
 
 const SinglePage = () => {
   const {
@@ -25,6 +30,7 @@ const SinglePage = () => {
   } = useSelector((store) => store.post);
   const [ifViewed, setIfViewed] = useState(false);
   const [userView, setUserView] = useState(views);
+  const { scrollYProgress } = useScroll();
 
   function Viewed() {
     if (!ifViewed) {
@@ -44,29 +50,74 @@ const SinglePage = () => {
         author_image,
         id,
       });
-     
     }
   }
+
 
   console.log(ifViewed);
   console.log(userView);
   useEffect(() => {
     Viewed();
   }, []);
+  const { userAuth, userData } = useSelector((store) => store.auth);
 
   return (
     <SinglePageStyles>
-      <section>
+      <motion.div
+        className="progress-bar"
+        style={{ scaleX: scrollYProgress }}
+      />
+      <div className="SinglePage_nav">
+        <h1>BigBen's Blog</h1>
 
-      <hr />
-      <h1>{title}</h1>
-      <hr />
-      <img src={imageUrl} alt={author} className="single_page_img" />
-      <h3>{subtitle}</h3>
+        {userAuth ? (
+          <Link
+            to="ProfilePage"
+            className="darkBtn links"
+            onClick={() => getProfilePost(userData.uid, dispatch)}
+          >
+            {userData?.photoURL && (
+              <img src={userData?.photoURL} alt="" className="PhotoUrl" />
+            )}
+            <span>{userData?.displayName}</span>
+          </Link>
+        ) : (
+          <div>
+            <Link to={"/Login"} className="lightBtn links">
+              <span>
+                <BiLogOut />
+              </span>
+              Log In
+            </Link>
+            <Link to={"/SignUp"} className="darkBtn links">
+              <span>
+                <BiLogOut />
+              </span>
+              Sign UP
+            </Link>
+          </div>
+        )}
+      </div>
+      <section>
+        <hr />
+        <h1>{title}</h1>
+        <hr />
+        <img src={imageUrl} alt={author} className="single_page_img" />
+        <h3>{subtitle}</h3>
       </section>
-      <ReactMarkdown className="Single_text">
-        {paragraphs}
-        </ReactMarkdown>
+      <ReactMarkdown className="Single_text">{paragraphs}</ReactMarkdown>
+      <div>
+        <h3>Author :</h3>
+        <div>
+          <img src={author_image} alt={author} className="single_page_img" />
+          <p>{author}</p>
+        </div>
+      </div>
+      <div>
+        <h4>Leave a comment</h4>
+        <textarea name="" id="" cols="50" rows="20"></textarea>
+        <button type="button">Submit</button>
+      </div>
     </SinglePageStyles>
   );
 };

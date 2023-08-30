@@ -288,7 +288,7 @@ body{
   border-radius: 7px;
   border: 1px solid;
   padding:.7rem 1rem;
-  margin-right: .5rem;
+  margin: 10rem .5rem;
   background-color: #fff;
   font-size: var(--main-font-size);
   font-family: var(--main-fontFamily);
@@ -299,6 +299,7 @@ body{
 .darkBtn{
   background-color: var(--main-color);
   color: azure;
+  
 }
 
 
@@ -307,6 +308,7 @@ body{
   color: var(--text-link-color);
   font-family: var(--main-font-size);
   font-weight: 600;
+  font-size: 1.2rem;
 }
 
 .PhotoUrl{
