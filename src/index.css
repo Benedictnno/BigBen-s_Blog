@@ -298,8 +298,8 @@ body{
 
 .darkBtn{
   background-color: var(--main-color);
-  color: azure;
-  
+  color:var(--text-link-color);
+ 
 }
 
 

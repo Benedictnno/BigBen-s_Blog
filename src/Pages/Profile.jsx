@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../FirebaseConfig";
@@ -18,6 +18,7 @@ import { updatePostDataEdit } from "../Slices/updateSlice";
 import { updatePost } from "../Helpers/UpdateDoc";
 import moment from "moment";
 import { userProfilePost } from "../Helpers/userProfilePost";
+import { fetchSingleUrls } from "../Helpers/SingleImageProcessing";
 
 const Profile = () => {
   const {
@@ -38,6 +39,7 @@ const Profile = () => {
   const postCollectionRef = collection(db, "blog-posts");
   let navigate = useNavigate();
   const dispatch = useDispatch();
+  const [imageUrl, setImageUrl] = useState("");
 
   function handleChange(e) {
     let value = e.target.value;
@@ -62,6 +64,7 @@ const Profile = () => {
         dispatch(setPage(false));
 
         const bucket = await UploadImage(image, uid, dispatch);
+        fetchSingleUrls(bucket, setImageUrl);
         await addDoc(postCollectionRef, {
           author: displayName,
           category,
@@ -70,7 +73,7 @@ const Profile = () => {
           paragraphs,
           subtitle,
           title,
-          imageBucket: bucket,
+          imageBucket: imageUrl,
           author_image: photoURL,
           created_at: moment(new Date()).format("MMMM Do YYYY, h:mm:ss a"),
           uid,
@@ -98,7 +101,6 @@ const Profile = () => {
   if (isLoading) {
     return <Loading />;
   }
- 
 
   return (
     <CreatePostStyles>
@@ -159,7 +161,7 @@ const Profile = () => {
               type="button"
               onClick={() => {
                 CreatePost(),
-                  userProfilePost(image, dispatch,{
+                  userProfilePost(image, dispatch, {
                     displayName,
                     category,
                     paragraphs,

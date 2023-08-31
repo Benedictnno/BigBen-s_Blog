@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { fetchImageUrls } from "../Hooks";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { DeletePostImage, deletePost, fetchImageUrls } from "../Hooks";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { urlArr } from "../utils";
 import { CartStyle } from "../Styles/CartStyle";
 import { FaRegEye, FaRegHeart, FaRegCommentDots } from "react-icons/fa";
 import moment from "moment/moment";
-import { updatePost } from "../Helpers/UpdateDoc";
+import { updatePost, updatePostDatas } from "../Helpers/UpdateDoc";
 import { get } from "../Helpers/GetSinglePost";
 import { profilePost } from "../Helpers/getProfilePost";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const MainCard = ({
   subtitle,
@@ -22,6 +23,7 @@ const MainCard = ({
   views,
   created_at,
   author_image,
+  uid,
   id,
 }) => {
   const [imageUrl, setImageUrls] = useState("");
@@ -39,13 +41,16 @@ const MainCard = ({
   ];
   useEffect(() => {
     fetchImageUrls(eachPost, setImageUrls);
-   
   }, []);
 
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userLiked, setUserLiked] = useState(likes);
-
-
+  const {
+    // userData: { uid },
+    userData,
+    userAuth,
+  } = useSelector((store) => store.auth);
 
   // function Viewed() {
   //   if (!ifLiked) {
@@ -88,6 +93,8 @@ const MainCard = ({
       });
     }
   }
+  
+
   return (
     <CartStyle>
       <section
@@ -109,7 +116,13 @@ const MainCard = ({
         </Link>
         <span className="datetime">{category}</span>
         <div className="image-preview">
-          <img src={imageUrl} alt={author} />
+          <LazyLoadImage
+      alt={author}
+      // height={image.height}
+      src={imageUrl} // use normal <img> attributes as props
+      // width={image.width}
+       />
+          {/* <img src={imageUrl} alt={author} /> */}
         </div>
         <div className="comment-like">
           <span onClick={() => liked()}>
@@ -128,6 +141,42 @@ const MainCard = ({
             {views}
           </span>
         </div>
+        {userAuth && userData.uid === uid ? (
+          <div>
+            <button
+              type="button"
+              onClick={() => {
+                deletePost(id, "blog-posts"), DeletePostImage(imageBucket);
+              }}
+              className="darkBtn"
+            >
+              Delete Post
+            </button>
+            <button
+              type="button"
+              className="lightBtn"
+              onClick={() => {
+                updatePostDatas(
+                  {
+                    title,
+                    id,
+                    subtitle,
+                    paragraphs,
+                    imageUrl,
+                    category,
+                  },
+                  dispatch,
+                  navigate
+                );
+              }}
+            >
+              Edit Post
+            </button>
+            {/* <p>
+              {userData.uid} and {uid}{" "}
+            </p> */}
+          </div>
+        ) : null}
       </section>
     </CartStyle>
   );
