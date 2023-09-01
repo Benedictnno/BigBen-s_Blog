@@ -10,6 +10,8 @@ import { updatePost, updatePostDatas } from "../Helpers/UpdateDoc";
 import { get } from "../Helpers/GetSinglePost";
 import { profilePost } from "../Helpers/getProfilePost";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import ShowProfile from "../Pages/ShowProfile";
+import { authorName } from "../Slices/ProfileSlice";
 
 const MainCard = ({
   subtitle,
@@ -93,7 +95,6 @@ const MainCard = ({
       });
     }
   }
-  
 
   return (
     <CartStyle>
@@ -107,7 +108,12 @@ const MainCard = ({
           <div className="profile">
             <img src={author_image} className="avatar" />
             {/* <img src={photoUrl} alt="" /> */}
-            <span className="profile_name">{author}</span>
+            <span
+              className="profile_name"
+              onClick={() => dispatch(authorName(author))}
+            >
+              <Link to={"/Profile"}>{author}</Link>
+            </span>
           </div>
           <span>{moment(created_at.nanoseconds).format("LLLL")}</span>
         </div>
@@ -117,11 +123,11 @@ const MainCard = ({
         <span className="datetime">{category}</span>
         <div className="image-preview">
           <LazyLoadImage
-      alt={author}
-      // height={image.height}
-      src={imageUrl} // use normal <img> attributes as props
-      // width={image.width}
-       />
+            alt={author}
+            // height={image.height}
+            src={imageUrl} // use normal <img> attributes as props
+            // width={image.width}
+          />
           {/* <img src={imageUrl} alt={author} /> */}
         </div>
         <div className="comment-like">

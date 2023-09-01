@@ -8,7 +8,8 @@ const initialState={
         Gender: '',
         Date: '',
         Bio:''
-    }
+    },
+    author: '',
 }
 
 const profileSlice = createSlice({
@@ -18,8 +19,11 @@ const profileSlice = createSlice({
     profileData: (state, { payload: { name, value } }) => {
       state.Profile[name] = value;
     },
+    authorName: (state, { payload }) => {
+      state.author = payload;
+    },
   },
 });
 
-export const {profileData}= profileSlice.actions
+export const { profileData, authorName } = profileSlice.actions;
 export default profileSlice.reducer

@@ -20,16 +20,15 @@ export async function getProfilePost(uid, dispatch) {
   console.log(getData);
 }
 
-
 export async function profilePost(author, dispatch) {
-  console.log("hi");
+  console.log(author);
   const q = query(postCollectionRef, where("author", "==", author));
   let ProfilePostData = [];
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data());
-    console.log(doc);
+    // console.log(doc.id, " => ", doc.data());
+    // console.log(doc);
 
     ProfilePostData.push(doc.data());
   });

@@ -4,7 +4,7 @@ import { BiLogIn, BiLogOut } from "react-icons/bi";
 import { auth } from "../FirebaseConfig";
 import { signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { loadUser, loginAuth } from "../Slices/authSlice";
+import { loginAuth } from "../Slices/authSlice";
 import { getProfilePost } from "../Helpers/getProfilePost";
 import SearchComponent from "./SearchComponent";
 
@@ -39,21 +39,16 @@ const Nav = () => {
   return (
     <section>
       <nav className="Nav">
-        <SearchComponent/>
+        <SearchComponent />
         {!userAuth ? (
           <div>
             <Link to={"Login"} className="lightBtn links">
               <span>
                 <BiLogOut />
               </span>
-              Log In
+              Log In / Sign Up
             </Link>
-            <Link to={"SignUp"} className="darkBtn links">
-              <span>
-                <BiLogOut />
-              </span>
-              Sign UP
-            </Link>
+     
           </div>
         ) : (
           <div>
