@@ -6,7 +6,7 @@
 :root{
   --main-color: #232323;
   --text-link-color: #9d9d9d;;
-  --main-font-size: 1rem;
+  --main-font-size: 1.2rem;
   --main-fontFamily: ABCFavorit,
     Arial,
     Helvetica,
@@ -299,7 +299,7 @@ body{
 .darkBtn{
   background-color: var(--main-color);
   color:var(--text-link-color);
- 
+ text-align: center;
 }
 
 
@@ -330,4 +330,19 @@ body{
  
   margin-right: 0.5rem ;
   border-radius: 50%;
+}
+
+.ErrorPage_container{
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  position: absolute;
+  top: 25%;
+  left: 27%;
+}
+
+.ErrorPage_container>img{
+  width: 15rem;
+  height: 20rem;
+  margin: 0 0 0 1rem;
 }

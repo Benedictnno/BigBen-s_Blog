@@ -18,20 +18,43 @@ export const ProfilePageStyles = styled.section`
     grid-template-columns: repeat(2, 1fr);
     margin: 3rem auto;
   }
-  .CreatePost{
-    margin: 4rem 0;
-    color : #fff;
-  } .Profile_Container {
+  .CreatePost {
+    margin: 4rem 0.3rem;
+    color: #fff;
+  }
+  .Profile_Container {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    background: var(--clr-primary-1);
+    color: #fff;
+    padding: 1rem;
+    border-radius: 7px;
+    margin:-2rem;
   }
 
   .Profile_Form {
-    display: grid;
-    
+    display: flex;
+    font-size: var(--main-font-size);
+    font-family: var(--main-fontFamily);
+    margin: 0 0 0 -10rem;
   }
-  .Profile_Form input {
-    width: 10rem;
+
+  .Profile_Form > div {
+    display: flex;
+    flex-direction: column;
+  }
+  /* .Profile_Form > button {
+   margin:0 2rem;
+   width: auto;
+   height: 2rem;
+   padding : 5px;
+  } */
+  .fullName {
+    width: 17rem;
+    padding: 0.5rem;
+    border-radius: 7px;
+    font-size: var(--main-font-size);
   }
 `;

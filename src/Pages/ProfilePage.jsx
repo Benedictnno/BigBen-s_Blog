@@ -36,31 +36,40 @@ const ProfilePage = () => {
         </div>
         <form action="" className="Profile_Form">
           <div>
+            <label htmlFor="">
+              FullName :{" "}
+              <input
+                type="text"
+                disabled={userAuth ? false : true}
+                className="fullName"
+              />
+            </label>
 
-          <label htmlFor="">
-            FullName : <input type="text" />
-          </label>
-
-          <label htmlFor="">
-            Date of Birth : <input type="date" />
-          </label>
-          <span>Gender : </span>
-          <select name="" id="">
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Rather">Rather Not Say</option>
-          </select>
+            <label htmlFor="">
+              Date of Birth :{" "}
+              <input type="date" disabled={userAuth ? false : true} />
+            </label>
+            <span>Gender : </span>
+            <select name="" id="" disabled={userAuth ? false : true}>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Rather">Rather Not Say</option>
+            </select>
           </div>
           <label htmlFor="">
-            Bio : <textarea name="" id="" cols="30" rows="10"></textarea>
+            <span> Bio :</span>{" "}
+            <textarea name="" id="" cols="30" rows="10"></textarea>
           </label>
-
-          <button type="button">Upload Profile</button>
         </form>
+        <div>
+          <button type="button" className="darkBtn links CreatePost">
+            Upload Profile
+          </button>
 
-        <button type="button" className="lightBtn links CreatePost">
-          <Link to={"/CreatePost"}> Create Post</Link>
-        </button>
+          <button type="button" className="lightBtn links CreatePost">
+            <Link to={"/CreatePost"}> Create Post</Link>
+          </button>
+        </div>
       </div>
 
       <section className="profile_post_container">
@@ -71,9 +80,8 @@ const ProfilePage = () => {
               <Link to={"/CreatePost"}> Create Post</Link>
             </button>
           </>
-        ) : (
-          <h2>Your Post</h2>
-        )}
+        ) : // <h2>Your Post</h2>
+        null}
         {getProfilePostData.map((detail, index) => {
           return <MainCard key={index} {...detail} />;
         })}

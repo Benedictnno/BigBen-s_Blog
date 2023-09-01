@@ -27,7 +27,7 @@ import { urlArr } from "./utils";
 import SignUp from "./Pages/SignUp";
 import SetUpProfile from "./Pages/SetUpProfile";
 import "react-toastify/dist/ReactToastify.css";
-
+import ErrorPage from "./Pages/ErrorPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -72,13 +72,15 @@ function App() {
           <Route path="/Music" element={<Music />}></Route>
           <Route path="/Movies" element={<Movies />}></Route>
         </Route>
-
+        <Route path={`/Details`} element={<SinglePage />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
-        <Route path={`/Details`} element={<SinglePage />} />
-        <Route path="/CreatePost" element={<Profile />} />
-        <Route path="/SetUpProfile" element={<SetUpProfile />} />
-        <Route path="/ProfilePage" element={<ProfilePage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/CreatePost" element={<Profile />} />
+          <Route path="/SetUpProfile" element={<SetUpProfile />} />
+          <Route path="/ProfilePage" element={<ProfilePage />} />
+        </Route>
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
 
       <ToastContainer />
