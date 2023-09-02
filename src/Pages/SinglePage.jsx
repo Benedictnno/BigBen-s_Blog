@@ -57,7 +57,7 @@ const SinglePage = () => {
   // }, []);
   useEffect(() => {
    setImageUrl("");
-    fetchSingleUrls(imageBucket, setImageUrl);
+    // fetchSingleUrls(imageBucket, setImageUrl);
     // return () => {
     //   setImageUrl('');
     // };
@@ -105,7 +105,7 @@ const SinglePage = () => {
         <hr />
         <h1>{title}</h1>
         <hr />
-        <img src={SingleImage} alt={author} className="single_page_img" />
+        <img src={imageBucket} alt={author} className="single_page_img" />
         <h3>{subtitle}</h3>
       </section>
       <ReactMarkdown className="Single_text">{paragraphs}</ReactMarkdown>

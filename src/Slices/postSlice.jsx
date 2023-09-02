@@ -6,6 +6,7 @@ const initialState = {
     paragraphs: "",
     subtitle: "",
     title: "",
+    views:0,
     image: null,
   },
   isLoading: false,

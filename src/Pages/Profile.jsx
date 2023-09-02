@@ -64,7 +64,8 @@ const Profile = () => {
         dispatch(setPage(false));
 
         const bucket = await UploadImage(image, uid, dispatch);
-        fetchSingleUrls(bucket, setImageUrl);
+    
+        console.log(bucket);
         await addDoc(postCollectionRef, {
           author: displayName,
           category,
@@ -73,7 +74,7 @@ const Profile = () => {
           paragraphs,
           subtitle,
           title,
-          imageBucket: imageUrl,
+          imageBucket: bucket,
           author_image: photoURL,
           created_at: moment(new Date()).format("MMMM Do YYYY, h:mm:ss a"),
           uid,

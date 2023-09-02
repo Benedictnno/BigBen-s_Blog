@@ -32,5 +32,6 @@ export const twitterProvider = new TwitterAuthProvider();
 // sets up the chosen mode of authentication ready
 export const provider = new GoogleAuthProvider();
 export const postCollectionRef = collection(db, "blog-posts");
+export const profileCollectionRef = collection(db, "User-Profile");
 
 // Now you can use db.collection() and other Firestore methods

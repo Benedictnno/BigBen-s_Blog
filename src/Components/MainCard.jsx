@@ -147,7 +147,7 @@ const MainCard = ({
             {views}
           </span>
         </div>
-        {userAuth && userData.uid === uid ? (
+        {userAuth && userData.uid === uid && (
           <div>
             <button
               type="button"
@@ -182,7 +182,7 @@ const MainCard = ({
               {userData.uid} and {uid}{" "}
             </p> */}
           </div>
-        ) : null}
+        ) }
       </section>
     </CartStyle>
   );

@@ -6,6 +6,8 @@ import { ProfilePageStyles } from "../Styles/ProfilePageStyles";
 import { updatePost, updatePostDatas } from "../Helpers/UpdateDoc";
 import { getProfilePost, profilePost } from "../Helpers/getProfilePost";
 import MainCard from "../Components/MainCard";
+import { profileData } from "../Slices/ProfileSlice";
+import { UploadProfile } from "../Helpers/UploadProfile";
 
 const ProfilePage = () => {
   const [imageUrls, setImageUrls] = useState([]);
@@ -16,14 +18,32 @@ const ProfilePage = () => {
   } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const { getProfilePostData } = useSelector((store) => store.post);
+  const {
+    Profile: { fullName, Gender, Bio, Date },
+  } = useSelector((store) => store.profile);
   const author = userData?.displayName;
-  // const filteredPost = getPostDatas.filter(+(post) => post.uid === uid);
-  profilePost;
   useEffect(() => {
     fetchImageUrls(getProfilePostData, setImageUrls);
     profilePost(author, dispatch);
-  }, [getProfilePostData]);
+  }, []);
   const navigate = useNavigate();
+
+  function handleChange(e) {
+    let value = e.target.value;
+    let name = e.target.name;
+
+    dispatch(profileData({ name, value }));
+  }
+  function handleSubmit() {
+    UploadProfile(dispatch, navigate, {
+      fullName,
+      Gender,
+      Bio,
+      Date,
+      uid,
+      image: userData.photoURL,
+    });
+  }
 
   return (
     <ProfilePageStyles key={userData.id}>
@@ -41,28 +61,53 @@ const ProfilePage = () => {
               <input
                 type="text"
                 disabled={userAuth ? false : true}
+                name="fullName"
+                value={fullName}
+                onChange={handleChange}
                 className="fullName"
               />
             </label>
-
             <label htmlFor="">
               Date of Birth :{" "}
-              <input type="date" disabled={userAuth ? false : true} />
+              <input
+                type="date"
+                name="Date"
+                value={Date}
+                onChange={handleChange}
+                disabled={userAuth ? false : true}
+              />
             </label>
             <span>Gender : </span>
-            <select name="" id="" disabled={userAuth ? false : true}>
+
+            <select
+              name="Gender"
+              onChange={handleChange}
+              value={Gender}
+              disabled={userAuth ? false : true}
+            >
               <option value="Male">Male</option>
               <option value="Female">Female</option>
-              <option value="Rather">Rather Not Say</option>
+              {/* <option value="Rather">Rather Not Say</option> */}
             </select>
           </div>
           <label htmlFor="">
             <span> Bio :</span>{" "}
-            <textarea name="" id="" cols="30" rows="10"></textarea>
+            <textarea
+              name="Bio"
+              value={Bio}
+              onChange={handleChange}
+              cols="30"
+              rows="10"
+            ></textarea>
           </label>
         </form>
+
         <div>
-          <button type="button" className="darkBtn links CreatePost">
+          <button
+            type="button"
+            className="darkBtn links CreatePost"
+            onClick={handleSubmit}
+          >
             Upload Profile
           </button>
 

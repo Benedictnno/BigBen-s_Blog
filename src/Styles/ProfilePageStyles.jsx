@@ -57,4 +57,7 @@ export const ProfilePageStyles = styled.section`
     border-radius: 7px;
     font-size: var(--main-font-size);
   }
+  .authorDetails{
+    color: #fff;
+  }
 `;

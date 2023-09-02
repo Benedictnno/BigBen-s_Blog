@@ -9,18 +9,23 @@ import { auth, db, storage } from "./FirebaseConfig";
 import { collection, deleteDoc, doc } from "firebase/firestore";
 import { setLoading } from "./Slices/postSlice";
 import { toast } from "react-toastify";
+import { fetchSingleUrls } from "./Helpers/SingleImageProcessing";
 
 const BUCKET_URL = "gs://bigbens-blog.appspot.com";
 const postCollectionRef = collection(db, "blog-posts");
 
 export async function UploadImage(image, uid, dispatch) {
   const formattedData = moment(new Date()).format("MMMM Do YYYY, h:mm:ss a");
-  const bucket = `${BUCKET_URL}/${uid}/${formattedData}.jpg`;
+  let bucket = `${BUCKET_URL}/${uid}/${formattedData}.jpg`;
   const fileRef = ref(storage, bucket);
   await uploadBytes(fileRef, image);
+  bucket = await getDownloadURL(fileRef);
+  
   dispatch(setLoading(true));
   alert("Image uploaded");
 
+
+  // fetchSingleUrls(bucket, setImageUrl);
   return bucket;
 }
 

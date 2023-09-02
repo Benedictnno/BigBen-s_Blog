@@ -21,7 +21,7 @@ export async function getProfilePost(uid, dispatch) {
 }
 
 export async function profilePost(author, dispatch) {
-  console.log(author);
+ 
   const q = query(postCollectionRef, where("author", "==", author));
   let ProfilePostData = [];
   const querySnapshot = await getDocs(q);

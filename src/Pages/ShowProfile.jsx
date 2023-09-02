@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ProfilePageStyles } from "../Styles/ProfilePageStyles";
 import { getProfilePost, profilePost } from "../Helpers/getProfilePost";
 import MainCard from "../Components/MainCard";
+import { getAuthorProfile } from "../Helpers/GetSinglePost";
 
 const ShowProfile = () => {
   const [imageUrls, setImageUrls] = useState([]);
@@ -15,31 +16,34 @@ const ShowProfile = () => {
   } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const { getProfilePostData } = useSelector((store) => store.post);
-  const { author } = useSelector((store) => store.profile);
+  const {
+    author,
+    ProfileData: { fullName, Gender, Date, Bio, image },
+  } = useSelector((store) => store.profile);
 
-  console.log(getProfilePostData);
   useEffect(() => {
     profilePost(author, dispatch);
-    fetchImageUrls(getProfilePostData, setImageUrls);
+    getAuthorProfile(getProfilePostData[0]?.uid, dispatch);
+    // fetchImageUrls(getProfilePostData, setImageUrls);
   }, []);
   const navigate = useNavigate();
 
   return (
     <ProfilePageStyles key={userData.id}>
-      {/* <div className="Profile_Container">
+      <div className="Profile_Container">
         <div>
-          {userData?.photoURL && (
-            <img src={userData?.photoURL} alt="" className="BigPhotoUrl" />
-          )}
-          <span>{userData?.displayName}</span>
+          {image && <img src={image} alt="" className="BigPhotoUrl" />}
+          <span>{fullName}</span>
         </div>
-    
-
-          <button type="button" className="lightBtn links CreatePost">
-            <Link to={"/CreatePost"}> Create Post</Link>
-          </button>
-    
-      </div> */}
+        <div className="authorDetails">
+          <article>Bio : {Bio}</article>
+          <h4>Gender: {Gender}</h4>
+          <h4>Age: {Date}</h4>
+        </div>
+        <button type="button" className="lightBtn links CreatePost">
+          <Link to={"/CreatePost"}> Create Post</Link>
+        </button>
+      </div>
 
       <section className="profile_post_container">
         {getProfilePostData.length === 0 && (
