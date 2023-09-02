@@ -47,6 +47,8 @@ const MainCard = ({
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+
   const [userLiked, setUserLiked] = useState(likes);
   const {
     // userData: { uid },
@@ -76,26 +78,27 @@ const MainCard = ({
   //   }
   // }
   function liked() {
-    if (!ifLiked) {
+    // if (!ifLiked) {
       setUserLiked((prev) => prev + 1);
-      setIfLiked(true);
-      updatePost(id, {
-        subtitle,
-        category,
-        author,
-        paragraphs,
-        comments,
-        title,
-        likes: userLiked,
-        imageBucket,
-        views,
-        created_at,
-        author_image,
-        id,
-      });
-    }
+      // updatePost(id, {
+      //   subtitle,
+      //   category,
+      //   author,
+      //   paragraphs,
+      //   comments,
+      //   title,
+      //   likes: userLiked,
+      //   imageBucket,
+      //   views,
+      //   created_at,
+      //   author_image,
+      //   id,
+      // });
+    // }
+    setIfLiked(true);
   }
-
+  
+  console.log(userLiked);
   return (
     <CartStyle>
       <section
@@ -131,7 +134,7 @@ const MainCard = ({
           {/* <img src={imageUrl} alt={author} /> */}
         </div>
         <div className="comment-like">
-          <span onClick={() => liked()}>
+          <span onClick={ liked}>
             <span className={ifLiked & "LikeBtn"}>
               <FaRegHeart />
             </span>
@@ -182,7 +185,7 @@ const MainCard = ({
               {userData.uid} and {uid}{" "}
             </p> */}
           </div>
-        ) }
+        )}
       </section>
     </CartStyle>
   );
