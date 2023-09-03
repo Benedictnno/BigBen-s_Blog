@@ -50,6 +50,7 @@ const Profile = () => {
       dispatch(postData({ name, value }));
     }
   }
+  
   function handleFileChange(e) {
     if (e.target.files[0]) {
       let value = e.target.files[0];

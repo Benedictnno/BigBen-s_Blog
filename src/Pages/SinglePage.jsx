@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
 import { SinglePageStyles } from "../Styles/SinglePageStyles";
 import { getProfilePost } from "../Helpers/getProfilePost";
 import { Link } from "react-router-dom";
 import { BiLogIn, BiLogOut } from "react-icons/bi";
 import { motion, useScroll } from "framer-motion";
-import { fetchSingleUrls } from "../Helpers/SingleImageProcessing";
+import { Comment, submitComment } from "../Slices/MainCardSlice";
+import { updateComment, updatePost } from "../Helpers/UpdateDoc";
 
 const SinglePage = () => {
   const {
@@ -19,16 +20,17 @@ const SinglePage = () => {
       imageBucket,
       views,
       id,
+      likes,
+      category,
       author_image,
     },
   } = useSelector((store) => store.post);
   const [ifViewed, setIfViewed] = useState(false);
   const [userView, setUserView] = useState(views);
   const { scrollYProgress } = useScroll();
-  const [SingleImage, setImageUrl] = useState("");
+
   // const q = query(postCollectionRef, where("id", "==", id));
   // console.log(q);
-
   // function Viewed() {
   //   if (!ifViewed) {
   //     setUserView((prev) => prev + 1);
@@ -50,20 +52,26 @@ const SinglePage = () => {
   //   }
   // }
 
-  // console.log(ifViewed);
-  // console.log(userView);
-  // useEffect(() => {
-  //   Viewed();
-  // }, []);
-  useEffect(() => {
-   setImageUrl("");
-    // fetchSingleUrls(imageBucket, setImageUrl);
-    // return () => {
-    //   setImageUrl('');
-    // };
-  }, []);
+  console.log(id);
+  const dispatch = useDispatch();
   const { userAuth, userData } = useSelector((store) => store.auth);
-  console.log(SingleImage);
+  const { comment } = useSelector((store) => store.mainCard);
+
+  function handleChange(e) {
+    dispatch(Comment(e.target.value));
+  }
+
+  function handleSubmit() {
+    if (comment.commentText) {
+      dispatch(
+        submitComment({ image: userData.photoURL, name: userData.displayName })
+      );
+      updateComment(id, {
+        comment,
+      });
+    }
+  }
+
   return (
     <SinglePageStyles>
       <motion.div
@@ -118,8 +126,19 @@ const SinglePage = () => {
       </div>
       <div>
         <h4>Leave a comment</h4>
-        <textarea name="" id="" cols="50" rows="20"></textarea>
-        <button type="button">Submit</button>
+        <label htmlFor="">
+          Name <input type="text" defaultValue={userData.displayName} />
+        </label>
+        <textarea
+          name=""
+          id=""
+          cols="50"
+          rows="20"
+          onChange={handleChange}
+        ></textarea>
+        <button type="button" onClick={handleSubmit}>
+          Submit Comment
+        </button>
       </div>
     </SinglePageStyles>
   );

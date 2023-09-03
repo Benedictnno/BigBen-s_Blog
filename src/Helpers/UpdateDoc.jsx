@@ -29,25 +29,44 @@ export function updatePostDatas(
   navigate("/CreatePost");
 }
 
-export async function updatePost(
+export async function updateComment(
   id,
-  { category, paragraphs, subtitle, title, likes, views }
+  { comment}
 ) {
   const postUpdateRef = doc(db, "blog-posts", id);
   try {
     await updateDoc(postUpdateRef, {
-      "category": category,
-      //  "Sports": Sports,
-      "paragraphs": paragraphs,
-      "subtitle": subtitle,
-      "title": title,
-      "likes": likes,
+    
+      comment: comment,
       // "views": views,
     });
     
   } catch (error) {
     console.error(error);
   }
-console.log(likes);
+console.log(comment);
+  // toast.success("post updated successfully");
+}
+export async function updatePost(
+  id,
+  { category, paragraphs, subtitle, title, likes, views ,comment}
+) {
+  const postUpdateRef = doc(db, "blog-posts", id);
+  try {
+    await updateDoc(postUpdateRef, {
+      category: category,
+      //  "Sports": Sports,
+      paragraphs: paragraphs,
+      subtitle: subtitle,
+      title: title,
+      likes: likes,
+      comment: comment,
+      // "views": views,
+    });
+    
+  } catch (error) {
+    console.error(error);
+  }
+console.log(comment);
   // toast.success("post updated successfully");
 }

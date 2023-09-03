@@ -5,21 +5,32 @@ const initialState = {
   ifViewed: false,
   userView: 0,
   ifLiked: false,
+
+  comment: {
+    image: "",
+    name: "",
+    commentText: "",
+  },
 };
 
 const MainCardSlice = createSlice({
   name: "mainCard",
   initialState,
-  reducers:{
-    setUpInitialState:(state, {payload:{views,likes}})=>{
-        state.userLiked= likes
-        state.userView = views;
-
-    }
-  }
+  reducers: {
+    setUpInitialState: (state, { payload: { views, likes } }) => {
+      state.userLiked = likes;
+      state.userView = views;
+    },
+    Comment: (state, { payload }) => {
+      state.comment.commentText = payload;
+    },
+    submitComment: (state, { payload: { image, name } }) => {
+      state.comment.image = image;
+      state.comment.name = name;
+    },
+  },
 });
 
-export const { loginAuth, setUserData, loadUser, authForm } =
-  MainCardSlice.actions;
+export const { Comment, submitComment } = MainCardSlice.actions;
 
 export default MainCardSlice.reducer;

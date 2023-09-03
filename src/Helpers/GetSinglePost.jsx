@@ -9,7 +9,8 @@ export async function get(id, dispatch) {
 
   if (docSnap.exists()) {
     dispatch(singlePage(docSnap.data()));
-    // console.log("Document data:", docSnap.data());
+    console.log("Document data:", docSnap.data());
+    console.log("Document data2:", docSnap);
   } else {
     // docSnap.data() will be undefined in this case
     console.log("No such document!");
