@@ -103,11 +103,11 @@ h4 {
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
 }
 
 h2 {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 h3 {
@@ -327,7 +327,6 @@ body{
   border-radius: 50%;
 }
 .BigPhotoUrl{
- 
   margin-right: 0.5rem ;
   border-radius: 50%;
 }

@@ -8,6 +8,9 @@ import { BiLogIn, BiLogOut } from "react-icons/bi";
 import { motion, useScroll } from "framer-motion";
 import { Comment, submitComment } from "../Slices/MainCardSlice";
 import { updateComment, updatePost } from "../Helpers/UpdateDoc";
+import { postCollectionRef } from "../FirebaseConfig";
+import { getDocs, query, where } from "firebase/firestore";
+import { get } from "../Helpers/GetSinglePost";
 
 const SinglePage = () => {
   const {
@@ -30,6 +33,7 @@ const SinglePage = () => {
   } = useSelector((store) => store.post);
   const [ifViewed, setIfViewed] = useState(false);
   const [userView, setUserView] = useState(views);
+  const [Similar, setSimilar] = useState([]);
   const { scrollYProgress } = useScroll();
 
   // const q = query(postCollectionRef, where("id", "==", id));
@@ -55,10 +59,11 @@ const SinglePage = () => {
   //   }
   // }
 
-  console.log(comments);
   const dispatch = useDispatch();
   const { userAuth, userData } = useSelector((store) => store.auth);
   const { comment } = useSelector((store) => store.mainCard);
+
+  console.log(Similar);
 
   function handleChange(e) {
     dispatch(
@@ -77,6 +82,26 @@ const SinglePage = () => {
       });
     }
   }
+
+  async function GetSimilarPost() {
+    try {
+      const q = query(postCollectionRef, where("category", "==", category));
+
+      let ProfilePostData = [];
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        ProfilePostData.push({ data: doc.data(), id: doc.id });
+        setSimilar(ProfilePostData.slice(0, 2));
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  console.log(Similar);
+
+  useEffect(() => {
+    GetSimilarPost();
+  }, []);
 
   return (
     <SinglePageStyles>
@@ -115,7 +140,7 @@ const SinglePage = () => {
           </div>
         )}
       </div>
-      <section>
+      <section className="SinglePage_Details">
         <hr />
         <h1>{title}</h1>
         <hr />
@@ -126,43 +151,104 @@ const SinglePage = () => {
       <div>
         <h3>Author :</h3>
         <div>
-          <img src={author_image} alt={author} className="single_page_img" />
+          <img src={author_image} alt={author} className="PhotoUrl" />
           <p>{author}</p>
         </div>
       </div>
-      <div>
-        <h4>Leave a comment</h4>
-        <label htmlFor="">
-          Name <input type="text" defaultValue={userData.displayName} />
-        </label>
-        <textarea
-          name=""
-          id=""
-          cols="50"
-          rows="20"
-          onChange={handleChange}
-        ></textarea>
-        <button type="button" onClick={handleSubmit}>
-          Submit Comment
-        </button>
-      </div>
-
-      <div>
-        <h2>Comment Section</h2>
-        <div>
-          {comments.map(({ image, commentText, name }) => {
-            return (
-              <div key={commentText}>
-                <div>
-                  <img src={image} alt={name} />
-                  <h4>{name}</h4>
-                </div>
-                <p>{commentText}</p>
+      <section className="comments-similar">
+        <div className="comments_container">
+          <div>
+            <h4>Leave a comment</h4>
+            <textarea
+              name=""
+              id=""
+              cols="50"
+              rows="20"
+              onChange={handleChange}
+            ></textarea>
+            <button type="button" onClick={handleSubmit}>
+              Submit Comment
+            </button>
+          </div>
+          {comments !== 0 && (
+            <div>
+              <h2>Comment Section</h2>
+              <div>
+                {comments?.map(({ image, commentText, name }) => {
+                  return (
+                    <div key={commentText}>
+                      <div className="comments-similar-detail">
+                        <img src={image} alt={name} className="PhotoUrl" />
+                        <h4>
+                          {" "}
+                          {name} <span>Says</span>
+                        </h4>
+                      </div>
+                      <p>{commentText}</p>
+                    </div>
+                  );
+                })}
               </div>
-            );
-          })}
+            </div>
+          )}
         </div>
-      </div>
+
+        {Similar !== 0 && (
+          <div>
+            <h3>Similar Post</h3>
+
+            <div>
+              {Similar.map(
+                ({
+                  data: {
+                    subtitle,
+                    author,
+                    paragraphs,
+                    title,
+                    imageUrl,
+                    imageBucket,
+                    views,
+                    likes,
+                    category,
+                    author_image,
+                    comments,
+                  },
+                  id,
+                }) => {
+                  return (
+                    <div className="similar_container">
+                      <div className="comments-similar-detail">
+                        <img
+                          src={author_image}
+                          alt=""
+                          className="PhotoUrl similar-author"
+                        />
+                        <h3>{author}</h3>
+                      </div>
+
+                      <div className="similar_details">
+                        <Link
+                          to={`/Details`}
+                          className="title "
+                          onClick={() => get(id, dispatch)}
+                        >
+                          {title}
+                        </Link>
+                        <img
+                          src={imageBucket}
+                          alt=""
+                          className="similar_mainImg"
+                        />
+                        <p>{category}</p>
+                      </div>
+                    </div>
+                  );
+                }
+              )}
+            </div>
+          </div>
+        )}
+      </section>
     </SinglePageStyles>
   );
 };

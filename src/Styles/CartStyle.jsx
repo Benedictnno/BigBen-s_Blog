@@ -39,6 +39,10 @@ export const CartStyle = styled.div`
 
   .profile_name {
     margin: 0.3rem 0.5rem;
+    font-weight: 600;
+    font-size: 20px;
+    color: #fff;
+    text-decoration: none;
   }
   .title {
     font-size: 20px;
@@ -48,6 +52,8 @@ export const CartStyle = styled.div`
     color: #fff;
     text-decoration: none;
     transition: all 0.35s ease-in;
+    text-overflow: ellipsis;
+    text-transform: capitalize;
   }
 
   .title:hover {
@@ -112,6 +118,5 @@ export const CartStyle = styled.div`
   .LikeBtn {
     background-color: red;
     color: red;
-    
   }
 `;
