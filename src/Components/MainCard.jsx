@@ -114,7 +114,10 @@ const MainCard = ({
               className="profile_name"
               onClick={() => dispatch(authorName(author))}
             >
-              <Link to={"/Profile"}>{author}</Link>
+              <Link to={"/Profile"}>
+                {" "}
+                <p>{author}</p>{" "}
+              </Link>
             </span>
           </div>
           <span>{moment(created_at.nanoseconds).format("LLLL")}</span>

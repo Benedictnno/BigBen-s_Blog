@@ -19,7 +19,7 @@ import { updatePost } from "../Helpers/UpdateDoc";
 import moment from "moment";
 import { userProfilePost } from "../Helpers/userProfilePost";
 import { fetchSingleUrls } from "../Helpers/SingleImageProcessing";
-
+import { AiOutlineClose } from "react-icons/ai";
 const Profile = () => {
   const {
     userData: { photoURL, displayName, uid },
@@ -36,11 +36,11 @@ const Profile = () => {
     { name: "title", value: title || update.title },
     { name: "subtitle", value: subtitle || update.subtitle },
   ];
-  
+
   const postCollectionRef = collection(db, "blog-posts");
   let navigate = useNavigate();
   const dispatch = useDispatch();
-  const [imageUrl, setImageUrl] = useState("");
+  const [OpenForm, setOpenForm] = useState(false);
 
   function handleChange(e) {
     let value = e.target.value;
@@ -66,7 +66,7 @@ const Profile = () => {
         dispatch(setPage(false));
 
         const bucket = await UploadImage(image, uid, dispatch);
-    
+
         console.log(bucket);
         await addDoc(postCollectionRef, {
           author: displayName,
@@ -104,85 +104,108 @@ const Profile = () => {
   if (isLoading) {
     return <Loading />;
   }
-
+console.log(OpenForm);
   return (
     <CreatePostStyles>
+      <button
+        type="button"
+        className="button"
+        onClick={() => setOpenForm(true)}
+      >
+        Open form
+      </button>
       <section className="markdown">
-        <form action="">
-          <div className="title_container">
-            {form.map(({ name, value }) => {
-              return (
-                <div>
-                  <h4 htmlFor="">{name}</h4>
-                  <input
-                    key={name}
-                    name={name}
-                    value={value}
-                    onChange={handleChange}
-                  />
-                </div>
-              );
-            })}
-            <div>
-              <h4>Categories</h4>
-              <select name="category" id="" onChange={handleChange}>
-                <option value="News">News</option>
-                <option value="Sports">Sports</option>
-                <option value="Entertainment">Entertainment</option>
-                <option value="Music">Music</option>
-                <option value="Movies">Movies</option>
-              </select>
+        {OpenForm && (
+          <form className="createPost_form">
+            <div className="title_container">
+              {form.map(({ name, value }) => {
+                return (
+                  <div>
+                    <h4 htmlFor="">{name}</h4>
+                    <input
+                      key={name}
+                      name={name}
+                      value={value}
+                      onChange={handleChange}
+                      className="fullName"
+                    />
+                  </div>
+                );
+              })}
+              <div>
+                <h4>Categories</h4>
+                <select name="category" id="" onChange={handleChange}>
+                  <option value="News">News</option>
+                  <option value="Sports">Sports</option>
+                  <option value="Entertainment">Entertainment</option>
+                  <option value="Music">Music</option>
+                  <option value="Movies">Movies</option>
+                </select>
+              </div>
+              <div>
+                <h4>add main image</h4>
+
+                <input
+                  type="file"
+                  accept="image"
+                  name="image"
+                  required
+                  onChange={handleFileChange}
+                />
+              </div>
+              <button type="button" onClick={() => setOpenForm(false)}>
+                <AiOutlineClose />
+              </button>
             </div>
 
-            <input
-              type="file"
-              accept="image"
-              name="image"
-              required
-              onChange={handleFileChange}
-            />
-          </div>
+            <textarea
+              className="input"
+              name={"paragraphs"}
+              value={paragraphs || update.paragraphs}
+              onChange={handleChange}
+            ></textarea>
+            <article className="result"></article>
+            {isEditing ? (
+              <button
+                type="button"
+                onClick={() => {
+                  updatePost(update.id, update);
+                }}
+              >
+                Submit Edited Post
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  CreatePost(),
+                    userProfilePost(image, dispatch, {
+                      displayName,
+                      category,
+                      paragraphs,
+                      subtitle,
+                      title,
+                      uid,
+                    });
+                }}
+              >
+                Submit Post
+              </button>
+            )}
+          </form>
+        )}
+        <div className="Markdown_container">
+          <a href="https://benmarkdown-app.netlify.app/" target="_blank">
+            {" "}
+            View Example web page{" "}
+          </a>
 
-          <textarea
-            className="input"
-            name={"paragraphs"}
-            value={paragraphs || update.paragraphs}
-            onChange={handleChange}
-          ></textarea>
-          <article className="result"></article>
-          {isEditing ? (
-            <button
-              type="button"
-              onClick={() => {
-                updatePost(update.id, update);
-              }}
-            >
-              Submit Edited Post
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={() => {
-                CreatePost(),
-                  userProfilePost(image, dispatch, {
-                    displayName,
-                    category,
-                    paragraphs,
-                    subtitle,
-                    title,
-                    uid,
-                  });
-              }}
-            >
-              Submit Post
-            </button>
-          )}
-        </form>
-        <div>
           <img src={image?.name || update.image} alt="" />
           <h1>{title || update.title}</h1>
           <h4>{subtitle || update.subtitle}</h4>
-          <ReactMarkdown>{paragraphs || update.paragraphs}</ReactMarkdown>
+          <ReactMarkdown className="markDown_text">
+            {paragraphs || update.paragraphs}
+          </ReactMarkdown>
         </div>
       </section>
     </CreatePostStyles>

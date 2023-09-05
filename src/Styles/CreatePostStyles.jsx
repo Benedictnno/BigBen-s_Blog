@@ -1,24 +1,42 @@
 import styled from "styled-components";
 
-
 export const CreatePostStyles = styled.div`
-  display: flex;
-
+  .Markdown_container {
+    display: flex;
+    flex-direction: column;
+  }
   form {
     display: flex;
     flex-direction: column;
-}
+  }
 
-.title_container {
+  .title_container {
     display: flex;
-    margin-bottom: 1rem; 
+    margin-bottom: 1rem;
   }
   .markdown {
     padding: 4rem;
     display: grid;
     row-gap: 4rem;
+    position: relative;
   }
 
+  .createPost_form {
+    position: fixed;
+    top: 0;
+    left: 20%;
+    padding: 1rem;
+    margin: 2em;
+    border-radius: 1rem;
+    background: var(--clr-grey-9);
+  }
+  .markDown_text {
+    width: 20px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    color: red;
+  }
   .input {
     border-color: transparent;
     border-radius: var(--radius);
@@ -31,6 +49,10 @@ export const CreatePostStyles = styled.div`
   .input,
   .result {
     padding: 1rem 2rem;
+  }
+
+  .button{
+    font-size: 1.2rem ;
   }
 
   @media screen and (min-width: 992px) {

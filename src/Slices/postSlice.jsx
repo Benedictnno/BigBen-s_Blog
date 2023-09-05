@@ -52,7 +52,7 @@ const postSlice = createSlice({
       state.setPage = payload;
     },
     clearValues: (state) => {
-      return { ...state, ...state.post };
+    state.post = {...initialState.post}
     },
     search: (state) => {
       const Filtered = state.filteredPost.filter((item) => {

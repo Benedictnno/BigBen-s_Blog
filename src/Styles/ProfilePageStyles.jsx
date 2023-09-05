@@ -51,12 +51,7 @@ export const ProfilePageStyles = styled.section`
    height: 2rem;
    padding : 5px;
   } */
-  .fullName {
-    width: 17rem;
-    padding: 0.5rem;
-    border-radius: 7px;
-    font-size: var(--main-font-size);
-  }
+ 
   .authorDetails{
     color: #fff;
   }

@@ -11,7 +11,7 @@ import {
 } from "../src/Pages";
 import "firebase/firestore";
 import Nav from "./Components/Nav";
-import Profile from "./Pages/Profile";
+import CreatePost from "./Pages/CreatePost";
 import { loadUser } from "./Slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ProtectedRoute from "./Components/ProtectedRoute";
@@ -81,7 +81,7 @@ function App() {
         <Route path="*" element={<ErrorPage />} />
 
         <Route element={<ProtectedRoute />}>
-          <Route path="/CreatePost" element={<Profile />} />
+          <Route path="/CreatePost" element={<CreatePost />} />
           <Route path="/SetUpProfile" element={<SetUpProfile />} />
           <Route path="/ProfilePage" element={<ProfilePage />} />
         </Route>

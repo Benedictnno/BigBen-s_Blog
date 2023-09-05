@@ -115,7 +115,9 @@ h3 {
 }
 
 h4 {
-  font-size: 0.875rem;
+  font-size: 1.1rem;
+ 
+
 }
 
 p {
@@ -325,6 +327,7 @@ body{
   height: 50px;
   margin-right: 0.5rem ;
   border-radius: 50%;
+
 }
 .BigPhotoUrl{
   margin-right: 0.5rem ;
@@ -345,3 +348,12 @@ body{
   height: 20rem;
   margin: 0 0 0 1rem;
 }
+
+.fullName {
+   width: 17rem;
+   padding: 0.5rem;
+   border-radius: 7px;
+   font-size: var(--main-font-size);
+   word-break: break-all;
+   margin-right: 1rem;
+ }
