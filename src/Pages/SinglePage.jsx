@@ -12,17 +12,20 @@ import { updateComment, updatePost } from "../Helpers/UpdateDoc";
 const SinglePage = () => {
   const {
     singlePageData: {
-      subtitle,
-      author,
-      paragraphs,
-      title,
-      imageUrl,
-      imageBucket,
-      views,
+      data: {
+        subtitle,
+        author,
+        paragraphs,
+        title,
+        imageUrl,
+        imageBucket,
+        views,
+        likes,
+        category,
+        author_image,
+        comments,
+      },
       id,
-      likes,
-      category,
-      author_image,
     },
   } = useSelector((store) => store.post);
   const [ifViewed, setIfViewed] = useState(false);
@@ -52,20 +55,23 @@ const SinglePage = () => {
   //   }
   // }
 
-  console.log(id);
+  console.log(comments);
   const dispatch = useDispatch();
   const { userAuth, userData } = useSelector((store) => store.auth);
   const { comment } = useSelector((store) => store.mainCard);
 
   function handleChange(e) {
-    dispatch(Comment(e.target.value));
+    dispatch(
+      Comment({
+        commentText: e.target.value,
+        image: userData.photoURL,
+        name: userData.displayName,
+      })
+    );
   }
 
   function handleSubmit() {
     if (comment.commentText) {
-      dispatch(
-        submitComment({ image: userData.photoURL, name: userData.displayName })
-      );
       updateComment(id, {
         comment,
       });
@@ -139,6 +145,23 @@ const SinglePage = () => {
         <button type="button" onClick={handleSubmit}>
           Submit Comment
         </button>
+      </div>
+
+      <div>
+        <h2>Comment Section</h2>
+        <div>
+          {comments.map(({ image, commentText, name }) => {
+            return (
+              <div key={commentText}>
+                <div>
+                  <img src={image} alt={name} />
+                  <h4>{name}</h4>
+                </div>
+                <p>{commentText}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </SinglePageStyles>
   );

@@ -1,4 +1,4 @@
-import { doc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 import updateSlice, { updatePostData } from "../Slices/updateSlice";
 import { useNavigate } from "react-router-dom";
 import { db } from "../FirebaseConfig";
@@ -36,16 +36,15 @@ export async function updateComment(
   const postUpdateRef = doc(db, "blog-posts", id);
   try {
     await updateDoc(postUpdateRef, {
-    
-      comment: comment,
+      comments: arrayUnion(comment),
       // "views": views,
     });
+    toast.success("post updated successfully");
     
   } catch (error) {
     console.error(error);
   }
-console.log(comment);
-  // toast.success("post updated successfully");
+
 }
 export async function updatePost(
   id,

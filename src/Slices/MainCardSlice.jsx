@@ -18,13 +18,16 @@ const MainCardSlice = createSlice({
   initialState,
   reducers: {
     setUpInitialState: (state, { payload: { views, likes } }) => {
+      console.log(views, likes);
       state.userLiked = likes;
       state.userView = views;
     },
-    Comment: (state, { payload }) => {
-      state.comment.commentText = payload;
-    },
     submitComment: (state, { payload: { image, name } }) => {
+      state.comment.image = image;
+      state.comment.name = name;
+    },
+    Comment: (state, { payload: { commentText, image, name } }) => {
+      state.comment.commentText = commentText;
       state.comment.image = image;
       state.comment.name = name;
     },

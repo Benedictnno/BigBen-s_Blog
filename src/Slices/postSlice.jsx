@@ -16,7 +16,10 @@ const initialState = {
   getProfilePostData: [],
   filteredPostDatas: [],
   filteredPost: [],
-  singlePageData: {},
+  singlePageData: {
+    data:{},
+    id:''
+  },
 };
 const postSlice = createSlice({
   name: "post",
@@ -33,9 +36,11 @@ const postSlice = createSlice({
       state.getProfilePostData = payload;
       // state.filteredPost = payload;
     },
-    singlePage: (state, { payload }) => {
-      console.log({ ...payload[0], payload });
-      state.singlePageData = {...payload[0],...payload[1] };
+    singlePage: (state, { payload:{data,id} }) => {
+      console.log(data,id );
+      state.singlePageData.data = data ;
+      state.singlePageData.id = id;
+
     },
     searchValues: (state, { payload }) => {
       state.searchValue = payload;

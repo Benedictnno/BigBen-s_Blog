@@ -8,7 +8,7 @@ export async function get(id, dispatch) {
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
-    dispatch(singlePage([docSnap.data(), docSnap.id]));
+    dispatch(singlePage({ data: docSnap.data(), id: docSnap.id }));
     console.log("Document data:", docSnap.data());
     console.log("Document data2:");
   } else {
