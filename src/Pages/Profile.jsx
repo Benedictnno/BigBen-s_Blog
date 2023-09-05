@@ -36,6 +36,7 @@ const Profile = () => {
     { name: "title", value: title || update.title },
     { name: "subtitle", value: subtitle || update.subtitle },
   ];
+  
   const postCollectionRef = collection(db, "blog-posts");
   let navigate = useNavigate();
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ const Profile = () => {
       dispatch(postData({ name, value }));
     }
   }
-  
+
   function handleFileChange(e) {
     if (e.target.files[0]) {
       let value = e.target.files[0];

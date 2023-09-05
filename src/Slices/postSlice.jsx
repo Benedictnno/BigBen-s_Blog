@@ -6,7 +6,7 @@ const initialState = {
     paragraphs: "",
     subtitle: "",
     title: "",
-    views:0,
+    views: 0,
     image: null,
   },
   isLoading: false,
@@ -34,15 +34,16 @@ const postSlice = createSlice({
       // state.filteredPost = payload;
     },
     singlePage: (state, { payload }) => {
-      state.singlePageData = { ...payload };
+      console.log({ ...payload[0], payload });
+      state.singlePageData = {...payload[0],...payload[1] };
     },
     searchValues: (state, { payload }) => {
       state.searchValue = payload;
     },
-    setLoading : (state, { payload }) => {
+    setLoading: (state, { payload }) => {
       state.isLoading = payload;
     },
-    setPage : (state, { payload }) => {
+    setPage: (state, { payload }) => {
       state.setPage = payload;
     },
     clearValues: (state) => {
