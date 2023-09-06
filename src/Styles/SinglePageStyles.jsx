@@ -17,8 +17,13 @@ export const SinglePageStyles = styled.div`
   }
   .single_page_img {
     width: 80%;
-    height: auto;
+
+    height: 70vh;
     margin: 2rem;
+    background-size: cover;
+    background-position: center;
+
+    filter: brightness(110%);
   }
   .SinglePage_nav > h1 {
     color: #fff;

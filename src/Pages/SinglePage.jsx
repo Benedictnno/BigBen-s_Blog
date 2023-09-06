@@ -13,9 +13,9 @@ import { getDocs, query, where } from "firebase/firestore";
 import { getSinglePage } from "../Helpers/GetSinglePost";
 import { doc, getDoc } from "firebase/firestore";
 
-const SinglePage = (idt) => {
+const SinglePage = () => {
+  const single = sessionStorage.getItem("singlePageData");
   const {
-    singlePageData: {
       data: {
         subtitle,
         author,
@@ -30,14 +30,13 @@ const SinglePage = (idt) => {
         comments,
       },
       id,
-    },
-  } = useSelector((store) => store.post);
-     console.log(idt);
+    } = JSON.parse(single);
+
 
   const [ifViewed, setIfViewed] = useState(false);
   const [userView, setUserView] = useState(views);
   const [Similar, setSimilar] = useState([]);
-  const [SinglePageDetails, setSinglePageDetails] = useState({});
+  
   const { scrollYProgress } = useScroll();
 
   // const q = query(postCollectionRef, where("id", "==", id));
@@ -67,12 +66,9 @@ const SinglePage = (idt) => {
   const { userAuth, userData } = useSelector((store) => store.auth);
   const { comment } = useSelector((store) => store.mainCard);
 
-   useEffect(() => {
-    
-     getSinglePage(id, dispatch);
-    //  GetSimilarPost();
-   }, []);
- 
+  useEffect(() => {
+     GetSimilarPost();
+  }, []);
 
   function handleChange(e) {
     dispatch(
@@ -104,10 +100,9 @@ const SinglePage = (idt) => {
       });
     } catch (error) {
       console.error(error);
-    }  
+    }
   }
-  
- 
+
   return (
     <SinglePageStyles>
       <motion.div
