@@ -280,7 +280,7 @@ body{
   display: flex;
     justify-content: space-around;
     padding: 1rem;
-   
+ 
     font-family: var(--main-fontFamily);
     background-color: var(--main-color);
     cursor: pointer;
@@ -357,3 +357,20 @@ body{
    word-break: break-all;
    margin-right: 1rem;
  }
+
+    .createPostSubmit {
+      margin: 0 auto;
+      padding: 10px;
+      font-size: 1.2rem;
+      border: none;
+  
+      background: var(--clr-grey-3);
+      color: #fff;
+      cursor: pointer;
+    }
+
+         .markDown_text {
+           overflow-wrap: break-word;
+           word-wrap: break-word;
+           word-break: break-word;
+         }

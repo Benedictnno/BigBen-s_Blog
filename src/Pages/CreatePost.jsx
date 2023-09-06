@@ -40,7 +40,7 @@ const Profile = () => {
   const postCollectionRef = collection(db, "blog-posts");
   let navigate = useNavigate();
   const dispatch = useDispatch();
-  const [OpenForm, setOpenForm] = useState(false);
+  const [OpenForm, setOpenForm] = useState(true);
 
   function handleChange(e) {
     let value = e.target.value;
@@ -109,11 +109,19 @@ console.log(OpenForm);
     <CreatePostStyles>
       <button
         type="button"
-        className="button"
-        onClick={() => setOpenForm(true)}
+        className="darkBtn "
+        onClick={() => setOpenForm(!OpenForm)}
       >
-        Open form
+       {OpenForm? 'Close Form ' : 'Open Form'}
       </button>
+      <a
+        href="https://benmarkdown-app.netlify.app/"
+        className="lightBtn"
+        target="_blank"
+      >
+        {" "}
+        View Example web page{" "}
+      </a>
       <section className="markdown">
         {OpenForm && (
           <form className="createPost_form">
@@ -153,7 +161,11 @@ console.log(OpenForm);
                   onChange={handleFileChange}
                 />
               </div>
-              <button type="button" onClick={() => setOpenForm(false)}>
+              <button
+                type="button"
+                className="button"
+                onClick={() => setOpenForm(false)}
+              >
                 <AiOutlineClose />
               </button>
             </div>
@@ -188,6 +200,7 @@ console.log(OpenForm);
                       uid,
                     });
                 }}
+                className="createPostSubmit"
               >
                 Submit Post
               </button>
@@ -195,11 +208,6 @@ console.log(OpenForm);
           </form>
         )}
         <div className="Markdown_container">
-          <a href="https://benmarkdown-app.netlify.app/" target="_blank">
-            {" "}
-            View Example web page{" "}
-          </a>
-
           <img src={image?.name || update.image} alt="" />
           <h1>{title || update.title}</h1>
           <h4>{subtitle || update.subtitle}</h4>

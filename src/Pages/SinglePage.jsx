@@ -147,7 +147,7 @@ const SinglePage = () => {
         <img src={imageBucket} alt={author} className="single_page_img" />
         <h3>{subtitle}</h3>
       </section>
-      <ReactMarkdown className="Single_text">{paragraphs}</ReactMarkdown>
+      <ReactMarkdown className="markDown_text">{paragraphs}</ReactMarkdown>
       <div>
         <h3>Author :</h3>
         <div>
@@ -166,7 +166,11 @@ const SinglePage = () => {
               rows="20"
               onChange={handleChange}
             ></textarea>
-            <button type="button" onClick={handleSubmit}>
+            <button
+              type="button"
+              className="createPostSubmit"
+              onClick={handleSubmit}
+            >
               Submit Comment
             </button>
           </div>

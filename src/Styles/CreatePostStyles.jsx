@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 export const CreatePostStyles = styled.div`
+  margin: 2em;
+
   .Markdown_container {
     display: flex;
     flex-direction: column;
@@ -30,13 +32,7 @@ export const CreatePostStyles = styled.div`
     border-radius: 1rem;
     background: var(--clr-grey-9);
   }
-  .markDown_text {
-    width: 20px;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    word-break: break-word;
-    color: red;
-  }
+ 
   .input {
     border-color: transparent;
     border-radius: var(--radius);
@@ -51,10 +47,15 @@ export const CreatePostStyles = styled.div`
     padding: 1rem 2rem;
   }
 
-  .button{
-    font-size: 1.2rem ;
+  .button {
+    font-size: 2rem;
+    border: none;
+    background: inherit;
+    color: red;
+    cursor: pointer;
   }
 
+ 
   @media screen and (min-width: 992px) {
     .markdown {
       min-height: 100vh;

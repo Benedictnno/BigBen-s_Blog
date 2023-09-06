@@ -1,15 +1,16 @@
 import React, { useMemo } from "react";
 import { search, searchValues } from "../Slices/postSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BsSearch } from "react-icons/bs";
 
 const SearchComponent = () => {
+ const dispatch = useDispatch();
+
   const { searchValue } = useSelector((store) => store.post);
-  // function handleSearch(e) {
-  //   dispatch(searchValues(e.target.value));
-  //   dispatch(search());
-  // }
-  
+  function handleSearch(e) {
+    dispatch(searchValues(e.target.value));
+    dispatch(search());
+  }
 
   function debounce() {
     let timeOutId;
