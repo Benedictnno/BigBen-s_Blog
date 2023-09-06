@@ -3,20 +3,22 @@ import { db, profileCollectionRef } from "../FirebaseConfig";
 import { singlePage } from "../Slices/postSlice";
 import { SetProfileData } from "../Slices/ProfileSlice";
 
-export async function get(id, dispatch) {
-  const docRef = doc(db, "blog-posts", id);
-  const docSnap = await getDoc(docRef);
+export async function getSinglePage(id, dispatch) {
+  console.log(id);
+  try {
+    const docRef = doc(db, "blog-posts", id);
+    const docSnap = await getDoc(docRef);
 
-  if (docSnap.exists()) {
-    dispatch(singlePage({ data: docSnap.data(), id: docSnap.id }));
-    console.log("Document data:", docSnap.data());
-    console.log("Document data2:");
-  } else {
-    // docSnap.data() will be undefined in this case
-    console.log("No such document!");
+    if (docSnap.exists()) {
+      dispatch(singlePage({ data: docSnap.data(), id: docSnap.id }));
+    } else {
+      // docSnap.data() will be undefined in this case
+      console.log("No such document!");
+    }
+  } catch (error) {
+    console.error(error);
   }
 }
-
 export async function getAuthorProfile(uid, dispatch) {
   console.log(uid);
   const q = query(profileCollectionRef, where("uid", "==", uid));

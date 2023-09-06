@@ -17,8 +17,8 @@ const initialState = {
   filteredPostDatas: [],
   filteredPost: [],
   singlePageData: {
-    data:{},
-    id:''
+    data: {},
+    id: "",
   },
 };
 const postSlice = createSlice({
@@ -36,11 +36,13 @@ const postSlice = createSlice({
       state.getProfilePostData = payload;
       // state.filteredPost = payload;
     },
-    singlePage: (state, { payload:{data,id} }) => {
-      console.log(data,id );
-      state.singlePageData.data = data ;
+    singlePage: (state, { payload: { data, id } }) => {
+      sessionStorage.clear()
+      state.singlePageData.data = data;
       state.singlePageData.id = id;
 
+      const serializedData = JSON.stringify(data);
+      sessionStorage.setItem("singlePageData", serializedData);
     },
     searchValues: (state, { payload }) => {
       state.searchValue = payload;
@@ -52,7 +54,7 @@ const postSlice = createSlice({
       state.setPage = payload;
     },
     clearValues: (state) => {
-    state.post = {...initialState.post}
+      state.post = { ...initialState.post };
     },
     search: (state) => {
       const Filtered = state.filteredPost.filter((item) => {

@@ -10,9 +10,10 @@ import { Comment, submitComment } from "../Slices/MainCardSlice";
 import { updateComment, updatePost } from "../Helpers/UpdateDoc";
 import { postCollectionRef } from "../FirebaseConfig";
 import { getDocs, query, where } from "firebase/firestore";
-import { get } from "../Helpers/GetSinglePost";
+import { getSinglePage } from "../Helpers/GetSinglePost";
+import { doc, getDoc } from "firebase/firestore";
 
-const SinglePage = () => {
+const SinglePage = (idt) => {
   const {
     singlePageData: {
       data: {
@@ -31,9 +32,12 @@ const SinglePage = () => {
       id,
     },
   } = useSelector((store) => store.post);
+     console.log(idt);
+
   const [ifViewed, setIfViewed] = useState(false);
   const [userView, setUserView] = useState(views);
   const [Similar, setSimilar] = useState([]);
+  const [SinglePageDetails, setSinglePageDetails] = useState({});
   const { scrollYProgress } = useScroll();
 
   // const q = query(postCollectionRef, where("id", "==", id));
@@ -63,7 +67,12 @@ const SinglePage = () => {
   const { userAuth, userData } = useSelector((store) => store.auth);
   const { comment } = useSelector((store) => store.mainCard);
 
-  console.log(Similar);
+   useEffect(() => {
+    
+     getSinglePage(id, dispatch);
+    //  GetSimilarPost();
+   }, []);
+ 
 
   function handleChange(e) {
     dispatch(
@@ -95,14 +104,10 @@ const SinglePage = () => {
       });
     } catch (error) {
       console.error(error);
-    }
+    }  
   }
-  console.log(Similar);
-
-  useEffect(() => {
-    GetSimilarPost();
-  }, []);
-
+  
+ 
   return (
     <SinglePageStyles>
       <motion.div

@@ -12,7 +12,7 @@ export function updatePostDatas(
   { category, paragraphs, subtitle, title, imageUrls, id, likes },
   dispatch,
   navigate
-) {
+) {s
   console.log(category, paragraphs, subtitle, title, imageUrls);
 
   dispatch(

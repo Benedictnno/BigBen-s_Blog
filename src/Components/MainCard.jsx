@@ -6,12 +6,12 @@ import { urlArr } from "../utils";
 import { CartStyle } from "../Styles/CartStyle";
 import { FaRegEye, FaRegHeart, FaRegCommentDots } from "react-icons/fa";
 import moment from "moment/moment";
-import { updatePost, updatePostDatas } from "../Helpers/UpdateDoc";
-import { get } from "../Helpers/GetSinglePost";
+import { updatePostDatas } from "../Helpers/UpdateDoc";
+import { getSinglePage } from "../Helpers/GetSinglePost";
 import { profilePost } from "../Helpers/getProfilePost";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import ShowProfile from "../Pages/ShowProfile";
 import { authorName } from "../Slices/ProfileSlice";
+import SinglePage from "../Pages/SinglePage";
 
 const MainCard = ({
   subtitle,
@@ -97,13 +97,13 @@ const MainCard = ({
     setIfLiked(true);
   }
 
-  console.log(userLiked);
   return (
     <CartStyle>
       <section
         className="post-card"
         onClick={() => {
-          get(id, dispatch);
+        
+          getSinglePage(id, dispatch), (<SinglePage idt={id} />);
         }}
       >
         <div className="profile_container" onClick={() => profilePost(author)}>

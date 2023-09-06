@@ -7,10 +7,10 @@ const SearchComponent = () => {
  const dispatch = useDispatch();
 
   const { searchValue } = useSelector((store) => store.post);
-  function handleSearch(e) {
-    dispatch(searchValues(e.target.value));
-    dispatch(search());
-  }
+  // function handleSearch(e) {
+  //   dispatch(searchValues(e.target.value));
+  //   dispatch(search());
+  // }
 
   function debounce() {
     let timeOutId;
