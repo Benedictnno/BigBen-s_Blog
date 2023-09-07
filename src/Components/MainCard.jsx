@@ -97,13 +97,11 @@ const MainCard = ({
     setIfLiked(true);
   }
 
-  
   return (
     <CartStyle>
       <section
         className="post-card"
         onClick={() => {
-        
           getSinglePage(id, dispatch);
         }}
       >
@@ -123,7 +121,7 @@ const MainCard = ({
           </div>
           <span>{moment(created_at.nanoseconds).format("LLLL")}</span>
         </div>
-        <Link to={`/${urlArr(title)}`} className="title">
+        <Link to={`/Details`} className="title">
           {title}
         </Link>
         <span className="datetime">{category}</span>

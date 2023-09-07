@@ -12,8 +12,8 @@ export function updatePostDatas(
   { category, paragraphs, subtitle, title, imageUrls, id, likes },
   dispatch,
   navigate
-) {s
-  console.log(category, paragraphs, subtitle, title, imageUrls);
+) {
+  
 
   dispatch(
     updatePostData({
@@ -39,7 +39,7 @@ export async function updateComment(
       comments: arrayUnion(comment),
       // "views": views,
     });
-    toast.success("post updated successfully");
+    toast.success("Your comment has been added successfully");
     
   } catch (error) {
     console.error(error);
@@ -48,7 +48,7 @@ export async function updateComment(
 }
 export async function updatePost(
   id,
-  { category, paragraphs, subtitle, title, likes, views ,comment}
+  { category, paragraphs, subtitle, title, likes, views }
 ) {
   const postUpdateRef = doc(db, "blog-posts", id);
   try {
@@ -59,13 +59,12 @@ export async function updatePost(
       subtitle: subtitle,
       title: title,
       likes: likes,
-      comment: comment,
       // "views": views,
     });
     
   } catch (error) {
     console.error(error);
   }
-console.log(comment);
+
   // toast.success("post updated successfully");
 }

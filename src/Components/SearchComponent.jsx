@@ -4,13 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { BsSearch } from "react-icons/bs";
 
 const SearchComponent = () => {
- const dispatch = useDispatch();
-
+  const dispatch = useDispatch();
   const { searchValue } = useSelector((store) => store.post);
-  // function handleSearch(e) {
-  //   dispatch(searchValues(e.target.value));
-  //   dispatch(search());
-  // }
 
   function debounce() {
     let timeOutId;
@@ -19,7 +14,7 @@ const SearchComponent = () => {
       clearTimeout(timeOutId);
       timeOutId = setTimeout(() => {
         dispatch(search());
-      }, 1500);
+      }, 1000);
     };
   }
 

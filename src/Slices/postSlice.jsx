@@ -16,8 +16,7 @@ const initialState = {
   getProfilePostData: [],
   filteredPostDatas: [],
   filteredPost: [],
-  singlePageData: {
-  },
+  singlePageData: {},
   // data: {},
   // id: "",
 };
@@ -37,10 +36,9 @@ const postSlice = createSlice({
       // state.filteredPost = payload;
     },
     singlePage: (state, { payload: { data, id } }) => {
-      sessionStorage.clear()
-      const serializedData = JSON.stringify({data,id});
+      sessionStorage.clear();
+      const serializedData = JSON.stringify({ data, id });
       sessionStorage.setItem("singlePageData", serializedData);
-
     },
     searchValues: (state, { payload }) => {
       state.searchValue = payload;

@@ -1,11 +1,15 @@
 import styled from "styled-components";
 
 export const CreatePostStyles = styled.div`
-  margin: 2em;
+  margin: 2em 0.5rem;
 
   .Markdown_container {
     display: flex;
     flex-direction: column;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+    overflow: wrap;
   }
   form {
     display: flex;
@@ -26,13 +30,13 @@ export const CreatePostStyles = styled.div`
   .createPost_form {
     position: fixed;
     top: 0;
-    left: 20%;
+    left: 10%;
     padding: 1rem;
     margin: 2em;
     border-radius: 1rem;
     background: var(--clr-grey-9);
   }
- 
+
   .input {
     border-color: transparent;
     border-radius: var(--radius);
@@ -55,7 +59,6 @@ export const CreatePostStyles = styled.div`
     cursor: pointer;
   }
 
- 
   @media screen and (min-width: 992px) {
     .markdown {
       min-height: 100vh;

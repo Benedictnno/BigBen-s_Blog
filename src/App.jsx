@@ -48,9 +48,9 @@ function App() {
   }
 
   const single = sessionStorage.getItem("singlePageData");
-  const {
-    data: { title },
-  } = JSON.parse(single);
+
+
+
 
   useEffect(() => {
     dispatch(loadUser());
@@ -76,7 +76,7 @@ function App() {
         </Route>
 
         <Route path="/Profile" element={<ShowProfile />} />
-        <Route path={`/${urlArr(title)}`} element={<SinglePage />} />
+        <Route path={`/Details`} element={<SinglePage />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="*" element={<ErrorPage />} />

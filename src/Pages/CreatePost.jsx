@@ -66,8 +66,6 @@ const Profile = () => {
         dispatch(setPage(false));
 
         const bucket = await UploadImage(image, uid, dispatch);
-
-        console.log(bucket);
         await addDoc(postCollectionRef, {
           author: displayName,
           category,
@@ -78,7 +76,8 @@ const Profile = () => {
           title,
           imageBucket: bucket,
           author_image: photoURL,
-          created_at: moment(new Date()).format("MMMM Do YYYY, h:mm:ss a"),
+          view: 0,
+          created_at: new Date(),
           uid,
         });
         toast.success("Post added successfully");
@@ -104,7 +103,7 @@ const Profile = () => {
   if (isLoading) {
     return <Loading />;
   }
-console.log(OpenForm);
+  console.log(OpenForm);
   return (
     <CreatePostStyles>
       <button
@@ -112,7 +111,7 @@ console.log(OpenForm);
         className="darkBtn "
         onClick={() => setOpenForm(!OpenForm)}
       >
-       {OpenForm? 'Close Form ' : 'Open Form'}
+        {OpenForm ? "Close Form " : "Open Form"}
       </button>
       <a
         href="https://benmarkdown-app.netlify.app/"
@@ -176,7 +175,7 @@ console.log(OpenForm);
               value={paragraphs || update.paragraphs}
               onChange={handleChange}
             ></textarea>
-            <article className="result"></article>
+            {/* <article className="result"></article> */}
             {isEditing ? (
               <button
                 type="button"

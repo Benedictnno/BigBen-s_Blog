@@ -29,9 +29,6 @@ const Nav = () => {
     });
   }
 
-  
-
-  
   // console.log(optimizedDebounce);
   // useEffect(() => {
   //   optimizedDebounce()
@@ -48,7 +45,6 @@ const Nav = () => {
               </span>
               Log In / Sign Up
             </Link>
-     
           </div>
         ) : (
           <div>
