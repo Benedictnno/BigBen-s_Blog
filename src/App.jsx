@@ -47,9 +47,10 @@ function App() {
     dispatch(setLoading(false));
   }
 
+  const single = sessionStorage.getItem("singlePageData");
   const {
-    singlePageData: { title },
-  } = useSelector((store) => store.post);
+    data: { title },
+  } = JSON.parse(single);
 
   useEffect(() => {
     dispatch(loadUser());
@@ -75,7 +76,7 @@ function App() {
         </Route>
 
         <Route path="/Profile" element={<ShowProfile />} />
-        <Route path={`/Details`} element={<SinglePage />} />
+        <Route path={`/${urlArr(title)}`} element={<SinglePage />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="*" element={<ErrorPage />} />

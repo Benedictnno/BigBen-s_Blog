@@ -16,27 +16,26 @@ import { doc, getDoc } from "firebase/firestore";
 const SinglePage = () => {
   const single = sessionStorage.getItem("singlePageData");
   const {
-      data: {
-        subtitle,
-        author,
-        paragraphs,
-        title,
-        imageUrl,
-        imageBucket,
-        views,
-        likes,
-        category,
-        author_image,
-        comments,
-      },
-      id,
-    } = JSON.parse(single);
-
+    data: {
+      subtitle,
+      author,
+      paragraphs,
+      title,
+      imageUrl,
+      imageBucket,
+      views,
+      likes,
+      category,
+      author_image,
+      comments,
+    },
+    id,
+  } = JSON.parse(single);
 
   const [ifViewed, setIfViewed] = useState(false);
   const [userView, setUserView] = useState(views);
   const [Similar, setSimilar] = useState([]);
-  
+
   const { scrollYProgress } = useScroll();
 
   // const q = query(postCollectionRef, where("id", "==", id));
@@ -67,7 +66,7 @@ const SinglePage = () => {
   const { comment } = useSelector((store) => store.mainCard);
 
   useEffect(() => {
-     GetSimilarPost();
+    GetSimilarPost();
   }, []);
 
   function handleChange(e) {
@@ -96,7 +95,7 @@ const SinglePage = () => {
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         ProfilePostData.push({ data: doc.data(), id: doc.id });
-        setSimilar(ProfilePostData.slice(0, 2));
+        setSimilar(ProfilePostData.slice(0, 3));
       });
     } catch (error) {
       console.error(error);
@@ -147,112 +146,114 @@ const SinglePage = () => {
         <img src={imageBucket} alt={author} className="single_page_img" />
         <h3>{subtitle}</h3>
       </section>
-      <ReactMarkdown className="markDown_text">{paragraphs}</ReactMarkdown>
-      <div>
-        <h3>Author :</h3>
+      <div className="similar_container">
+        <ReactMarkdown className="markDown_text">{paragraphs}</ReactMarkdown>
         <div>
-          <img src={author_image} alt={author} className="PhotoUrl" />
-          <p>{author}</p>
-        </div>
-      </div>
-      <section className="comments-similar">
-        <div className="comments_container">
+          <h3>Author :</h3>
           <div>
-            <h4>Leave a comment</h4>
-            <textarea
-              name=""
-              id=""
-              cols="50"
-              rows="20"
-              onChange={handleChange}
-            ></textarea>
-            <button
-              type="button"
-              className="createPostSubmit"
-              onClick={handleSubmit}
-            >
-              Submit Comment
-            </button>
+            <img src={author_image} alt={author} className="PhotoUrl" />
+            <p>{author}</p>
           </div>
-          {comments !== 0 && (
-            <div>
-              <h2>Comment Section</h2>
+        </div>
+        <section className="comments-similar">
+          <div className="">
+            <div className="comment">
+              <h4>Leave a comment</h4>
+              <textarea
+                name=""
+                id=""
+                cols="50"
+                rows="20"
+                onChange={handleChange}
+              ></textarea>
+              <button
+                type="button"
+                className="createPostSubmit"
+                onClick={handleSubmit}
+              >
+                Submit Comment
+              </button>
+            </div>
+            {comments != 0 && (
               <div>
-                {comments?.map(({ image, commentText, name }) => {
-                  return (
-                    <div key={commentText}>
-                      <div className="comments-similar-detail">
-                        <img src={image} alt={name} className="PhotoUrl" />
-                        <h4>
-                          {" "}
-                          {name} <span>Says</span>
-                        </h4>
+                <h2>Comment Section</h2>
+                <div>
+                  {comments?.map(({ image, commentText, name }) => {
+                    return (
+                      <div key={commentText} className="comment_container">
+                        <div className="comments-similar-detail">
+                          <img src={image} alt={name} className="PhotoUrl" />
+                          <h4> {name}</h4>
+                        </div>
+                        <div className="commentText_container">
+                          <span>Says</span>
+                          <p className="commentText title">{commentText}</p>
+                        </div>
                       </div>
-                      <p>{commentText}</p>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {Similar != 0 && (
+            <div>
+              <h3>Similar Post</h3>
+
+              <div>
+                {Similar.map(
+                  ({
+                    data: {
+                      subtitle,
+                      author,
+                      paragraphs,
+                      title,
+                      imageUrl,
+                      imageBucket,
+                      views,
+                      likes,
+                      category,
+                      author_image,
+                      comments,
+                    },
+                    id,
+                  }) => {
+                    return (
+                      <div className="">
+                        <div className="comments-similar-detail">
+                          <img
+                            src={author_image}
+                            alt=""
+                            className="PhotoUrl similar-author"
+                          />
+                          <h3>{author}</h3>
+                        </div>
+
+                        <div className="similar_details">
+                          <Link
+                            to={`/Details`}
+                            className="title "
+                            onClick={() => get(id, dispatch)}
+                          >
+                            {title}
+                          </Link>
+                          <img
+                            src={imageBucket}
+                            alt=""
+                            className="similar_mainImg"
+                          />
+                          <p>{category}</p>
+                        </div>
+                      </div>
+                    );
+                  }
+                )}
               </div>
             </div>
           )}
-        </div>
-
-        {Similar !== 0 && (
-          <div>
-            <h3>Similar Post</h3>
-
-            <div>
-              {Similar.map(
-                ({
-                  data: {
-                    subtitle,
-                    author,
-                    paragraphs,
-                    title,
-                    imageUrl,
-                    imageBucket,
-                    views,
-                    likes,
-                    category,
-                    author_image,
-                    comments,
-                  },
-                  id,
-                }) => {
-                  return (
-                    <div className="similar_container">
-                      <div className="comments-similar-detail">
-                        <img
-                          src={author_image}
-                          alt=""
-                          className="PhotoUrl similar-author"
-                        />
-                        <h3>{author}</h3>
-                      </div>
-
-                      <div className="similar_details">
-                        <Link
-                          to={`/Details`}
-                          className="title "
-                          onClick={() => get(id, dispatch)}
-                        >
-                          {title}
-                        </Link>
-                        <img
-                          src={imageBucket}
-                          alt=""
-                          className="similar_mainImg"
-                        />
-                        <p>{category}</p>
-                      </div>
-                    </div>
-                  );
-                }
-              )}
-            </div>
-          </div>
-        )}
-      </section>
+        </section>
+      </div>
     </SinglePageStyles>
   );
 };

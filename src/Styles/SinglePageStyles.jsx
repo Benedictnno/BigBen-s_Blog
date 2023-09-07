@@ -63,11 +63,11 @@ margin-top: -3rem;
   }
 
   .similar_mainImg {
-    width: 85%;
+    width: 300px;
   }
 
   .similar_container {
-    margin: 2rem 2rem;
+    margin: 2rem;
   }
 
   .title {
@@ -75,5 +75,30 @@ margin-top: -3rem;
     text-transform: capitalize;
     text-overflow: ellipsis;
     font-size: var(--main-font-size);
+  }
+  .commentText_container {
+    display: flex;
+  }
+  .commentText_container > span {
+    margin: -1rem 0.1rem 0 3.7rem;
+  }
+  .comment_container {
+    margin: 1rem 0;
+  }
+
+  .commentText {
+    /* margin: -0.75rem auto 0 ; */
+    padding: 0.3rem;
+    width: 500px;
+    /* background: #fff; */
+  }
+
+  .comment {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .comment > button {
+    margin: 1rem 0 5rem;
   }
 `;
