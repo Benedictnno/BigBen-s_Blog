@@ -54,36 +54,11 @@ const MainCard = ({
     userAuth,
   } = useSelector((store) => store.auth);
 
-  // function Viewed() {
-  //   if (!ifLiked) {
-  //     setUserView((prev) => prev + 1);
-  //     setIfViewed(true);
-  //     updatePost(id, {
-  //       subtitle,
-  //       category,
-  //       author,
-  //       paragraphs,
-  //       comments,
-  //       title,
-  //       likes: userLiked,
-  //       views: userView,
-  //       imageBucket,
 
-  //       created_at,
-  //       author_image,
-  //       id,
-  //     });
-  //   }
-  // }
  
   return (
     <CartStyle>
-      <section
-        className="post-card"
-        onClick={() => {
-          getSinglePage(id, dispatch);
-        }}
-      >
+      <section className="post-card">
         <div className="profile_container" onClick={() => profilePost(author)}>
           <div className="profile">
             <img src={author_image} className="avatar" />
@@ -101,7 +76,13 @@ const MainCard = ({
           <span>{moment(created_at.nanoseconds).format("LLLL")}</span>
         </div>
         <Link to={`/Details`} className="title">
-          {title}
+          <p
+            onClick={() => {
+              getSinglePage(id, dispatch);
+            }}
+          >
+            {title}
+          </p>
         </Link>
         <span className="datetime">{category}</span>
         <div className="image-preview">
@@ -114,7 +95,7 @@ const MainCard = ({
           {/* <img src={imageUrl} alt={author} /> */}
         </div>
         <div className="comment-like">
-          <span >
+          <span>
             <span className={ifLiked & "LikeBtn"}>
               <FaRegHeart />
             </span>

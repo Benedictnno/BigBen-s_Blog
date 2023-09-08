@@ -10,12 +10,10 @@ import { Comment, submitComment } from "../Slices/MainCardSlice";
 import { updateComment, updatePost } from "../Helpers/UpdateDoc";
 import { postCollectionRef } from "../FirebaseConfig";
 import { getDocs, query, where } from "firebase/firestore";
-import { getSinglePage } from "../Helpers/GetSinglePost";
-import { doc, getDoc } from "firebase/firestore";
-
-
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
-import { liked } from "../Helpers/LikesHelper";
+import {  liked } from "../Helpers/LikesAndViewsHelper";
+import { getSinglePage } from "../Helpers/GetSinglePost";
+
 const SinglePage = () => {
   const single = sessionStorage.getItem("singlePageData");
   const {
@@ -39,31 +37,7 @@ const SinglePage = () => {
   const [userView, setUserView] = useState(views);
   const [userLike, setUserLike] = useState(likes);
   const [Similar, setSimilar] = useState([]);
-
   const { scrollYProgress } = useScroll();
-
-  // const q = query(postCollectionRef, where("id", "==", id));
-  // console.log(q);
-  // function Viewed() {
-  //   if (!ifViewed) {
-  //     setUserView((prev) => prev + 1);
-  //     setIfViewed(true);
-  //     updatePost(id, {
-  //       subtitle,
-  //       category,
-  //       author,
-  //       paragraphs,
-  //       comments,
-  //       title,
-  //       likes,
-  //       views: userView,
-  //       imageBucket,
-  //       created_at,
-  //       author_image,
-  //       id,
-  //     });
-  //   }
-  // }
 
   const dispatch = useDispatch();
   const { userAuth, userData } = useSelector((store) => store.auth);
@@ -71,6 +45,7 @@ const SinglePage = () => {
 
   useEffect(() => {
     GetSimilarPost();
+    // Viewed(id, ifViewed, setIfViewed, userView, setUserView, setIfViewed);
   }, []);
 
   function handleChange(e) {
@@ -106,8 +81,6 @@ const SinglePage = () => {
     }
   }
 
-  
-
   return (
     <SinglePageStyles>
       <motion.div
@@ -115,19 +88,17 @@ const SinglePage = () => {
         style={{ scaleX: scrollYProgress }}
       />
       <div className="SinglePage_nav">
-        <h1>BigBen's Blog</h1>
+        <Link to="/" className=" links">
+          <h1>BigBen's Blog</h1>
+        </Link>
 
         {userAuth ? (
-          <Link
-            to="ProfilePage"
-            className="darkBtn links"
-            onClick={() => getProfilePost(userData.uid, dispatch)}
-          >
+          <h3 className="darkBtn links">
             {userData?.photoURL && (
               <img src={userData?.photoURL} alt="" className="PhotoUrl" />
             )}
             <span>{userData?.displayName}</span>
-          </Link>
+          </h3>
         ) : (
           <div>
             <Link to={"/Login"} className="lightBtn links">
@@ -242,7 +213,13 @@ const SinglePage = () => {
                             className="title "
                             onClick={() => get(id, dispatch)}
                           >
-                            {title}
+                            <p
+                              onClick={() => {
+                                getSinglePage(id, dispatch);
+                              }}
+                            >
+                              {title}
+                            </p>
                           </Link>
                           <img
                             src={imageBucket}
@@ -267,13 +244,14 @@ const SinglePage = () => {
           {!IfLiked ? (
             <span
               onClick={() => {
-                setIfLiked(true), liked(id, userLike, setUserLike, IfLiked,{type: 'inc'});
+                setIfLiked(true),
+                  liked(id, userLike, setUserLike, IfLiked, { type: "inc" });
               }}
             >
               <AiOutlineLike />
             </span>
           ) : (
-            <span 
+            <span
               onClick={() => {
                 setIfLiked(false),
                   liked(id, userLike, setUserLike, IfLiked, { type: "dec" });
