@@ -46,11 +46,19 @@ export const SinglePageStyles = styled.div`
     justify-self: start;
   }
 
-  /* .similar-author {
-    display: flex;
-margin-top: -3rem;
-    justify-self: self-start;
-  } */
+  .likeBtn_container {
+    position: fixed;
+    left: 2rem;
+    bottom: 5rem;
+    cursor: pointer;
+    background: #fff;
+    padding: 5px;
+    border-radius: 5px;
+  }
+  .likeBtn {
+    display: grid;
+    place-content: center;
+  }
   .comments-similar-Profile_img {
     width: 50px;
     height: 50px;

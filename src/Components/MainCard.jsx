@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { DeletePostImage, deletePost, fetchImageUrls } from "../Hooks";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { urlArr } from "../utils";
 import { CartStyle } from "../Styles/CartStyle";
 import { FaRegEye, FaRegHeart, FaRegCommentDots } from "react-icons/fa";
 import moment from "moment/moment";
@@ -11,7 +10,7 @@ import { getSinglePage } from "../Helpers/GetSinglePost";
 import { profilePost } from "../Helpers/getProfilePost";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { authorName } from "../Slices/ProfileSlice";
-import SinglePage from "../Pages/SinglePage";
+
 
 const MainCard = ({
   subtitle,
@@ -50,7 +49,7 @@ const MainCard = ({
 
   const [userLiked, setUserLiked] = useState(likes);
   const {
-    // userData: { uid },
+   
     userData,
     userAuth,
   } = useSelector((store) => store.auth);
@@ -76,27 +75,7 @@ const MainCard = ({
   //     });
   //   }
   // }
-  function liked() {
-    // if (!ifLiked) {
-    setUserLiked((prev) => prev + 1);
-    // updatePost(id, {
-    //   subtitle,
-    //   category,
-    //   author,
-    //   paragraphs,
-    //   comments,
-    //   title,
-    //   likes: userLiked,
-    //   imageBucket,
-    //   views,
-    //   created_at,
-    //   author_image,
-    //   id,
-    // });
-    // }
-    setIfLiked(true);
-  }
-
+ 
   return (
     <CartStyle>
       <section
@@ -135,7 +114,7 @@ const MainCard = ({
           {/* <img src={imageUrl} alt={author} /> */}
         </div>
         <div className="comment-like">
-          <span onClick={liked}>
+          <span >
             <span className={ifLiked & "LikeBtn"}>
               <FaRegHeart />
             </span>

@@ -13,7 +13,6 @@ export function updatePostDatas(
   dispatch,
   navigate
 ) {
-  
 
   dispatch(
     updatePostData({
@@ -29,10 +28,7 @@ export function updatePostDatas(
   navigate("/CreatePost");
 }
 
-export async function updateComment(
-  id,
-  { comment}
-) {
+export async function updateComment(id, { comment }) {
   const postUpdateRef = doc(db, "blog-posts", id);
   try {
     await updateDoc(postUpdateRef, {
@@ -40,11 +36,20 @@ export async function updateComment(
       // "views": views,
     });
     toast.success("Your comment has been added successfully");
-    
   } catch (error) {
     console.error(error);
   }
-
+}
+export async function updateLike(id, { like }) {
+  const postUpdateRef = doc(db, "blog-posts", id);
+  try {
+    await updateDoc(postUpdateRef, {
+      likes: like,
+      // "views": views,
+    });
+  } catch (error) {
+    console.error(error);
+  }
 }
 export async function updatePost(
   id,
@@ -61,7 +66,6 @@ export async function updatePost(
       likes: likes,
       // "views": views,
     });
-    
   } catch (error) {
     console.error(error);
   }

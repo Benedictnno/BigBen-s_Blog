@@ -13,6 +13,9 @@ import { getDocs, query, where } from "firebase/firestore";
 import { getSinglePage } from "../Helpers/GetSinglePost";
 import { doc, getDoc } from "firebase/firestore";
 
+
+import { AiOutlineLike, AiFillLike } from "react-icons/ai";
+import { liked } from "../Helpers/LikesHelper";
 const SinglePage = () => {
   const single = sessionStorage.getItem("singlePageData");
   const {
@@ -21,7 +24,6 @@ const SinglePage = () => {
       author,
       paragraphs,
       title,
-      imageUrl,
       imageBucket,
       views,
       likes,
@@ -33,7 +35,9 @@ const SinglePage = () => {
   } = JSON.parse(single);
 
   const [ifViewed, setIfViewed] = useState(false);
+  const [IfLiked, setIfLiked] = useState(false);
   const [userView, setUserView] = useState(views);
+  const [userLike, setUserLike] = useState(likes);
   const [Similar, setSimilar] = useState([]);
 
   const { scrollYProgress } = useScroll();
@@ -101,6 +105,8 @@ const SinglePage = () => {
       console.error(error);
     }
   }
+
+  
 
   return (
     <SinglePageStyles>
@@ -253,6 +259,30 @@ const SinglePage = () => {
             </div>
           )}
         </section>
+      </div>
+
+      <div className="likeBtn_container">
+        <h4>{!IfLiked ? "Like Post" : "Post Liked"} </h4>
+        <h2 className="likeBtn">
+          {!IfLiked ? (
+            <span
+              onClick={() => {
+                setIfLiked(true), liked(id, userLike, setUserLike, IfLiked,{type: 'inc'});
+              }}
+            >
+              <AiOutlineLike />
+            </span>
+          ) : (
+            <span 
+              onClick={() => {
+                setIfLiked(false),
+                  liked(id, userLike, setUserLike, IfLiked, { type: "dec" });
+              }}
+            >
+              <AiFillLike />
+            </span>
+          )}
+        </h2>
       </div>
     </SinglePageStyles>
   );
