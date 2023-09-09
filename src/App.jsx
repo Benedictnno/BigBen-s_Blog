@@ -33,7 +33,9 @@ import ShowProfile from "./Pages/ShowProfile";
 function App() {
   const dispatch = useDispatch();
   const postCollectionRef = collection(db, "blog-posts");
-  const { isLoading, setPage } = useSelector((store) => store.post);
+  const { isLoading, setPage, searchValue } = useSelector(
+    (store) => store.post
+  );
   async function getPost() {
     const data = await getDocs(postCollectionRef);
     /*
@@ -45,18 +47,18 @@ function App() {
     }));
     dispatch(getPostData(getData));
     dispatch(setLoading(false));
-  }
-
-  const single = sessionStorage.getItem("singlePageData");
-
-
-
+  }``
 
   useEffect(() => {
     dispatch(loadUser());
     getPost();
     dispatch(setLoading(true));
-  }, [setPage]);
+  }, [setPage, searchValue]);
+
+
+  useEffect(() => {
+    getPost();
+  }, [searchValue]);
   // console.log(urlArr(title));
 
   if (isLoading) {
@@ -76,7 +78,7 @@ function App() {
         </Route>
 
         <Route path="/Profile" element={<ShowProfile />} />
-        <Route path={`/Details`} element={<SinglePage />} />
+        <Route path={`/Detailed`} element={<SinglePage />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/SignUp" element={<SignUp />} />
         <Route path="*" element={<ErrorPage />} />

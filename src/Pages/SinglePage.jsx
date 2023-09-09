@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactMarkdown from "react-markdown";
 import { SinglePageStyles } from "../Styles/SinglePageStyles";
-import { getProfilePost } from "../Helpers/getProfilePost";
 import { Link } from "react-router-dom";
 import { BiLogIn, BiLogOut } from "react-icons/bi";
 import { motion, useScroll } from "framer-motion";
@@ -11,7 +10,7 @@ import { updateComment, updatePost } from "../Helpers/UpdateDoc";
 import { postCollectionRef } from "../FirebaseConfig";
 import { getDocs, query, where } from "firebase/firestore";
 import { AiOutlineLike, AiFillLike } from "react-icons/ai";
-import {  liked } from "../Helpers/LikesAndViewsHelper";
+import { Viewed, liked } from "../Helpers/LikesAndViewsHelper";
 import { getSinglePage } from "../Helpers/GetSinglePost";
 
 const SinglePage = () => {
@@ -32,20 +31,19 @@ const SinglePage = () => {
     id,
   } = JSON.parse(single);
 
-  const [ifViewed, setIfViewed] = useState(false);
   const [IfLiked, setIfLiked] = useState(false);
-  const [userView, setUserView] = useState(views);
   const [userLike, setUserLike] = useState(likes);
   const [Similar, setSimilar] = useState([]);
   const { scrollYProgress } = useScroll();
-
+  const [ifViewed, setIfViewed] = useState(false);
+  const [userView, setUserView] = useState(views);
   const dispatch = useDispatch();
   const { userAuth, userData } = useSelector((store) => store.auth);
   const { comment } = useSelector((store) => store.mainCard);
 
   useEffect(() => {
     GetSimilarPost();
-    // Viewed(id, ifViewed, setIfViewed, userView, setUserView, setIfViewed);
+    Viewed(id, ifViewed, setIfViewed, userView, setUserView);
   }, []);
 
   function handleChange(e) {
@@ -182,17 +180,11 @@ const SinglePage = () => {
                 {Similar.map(
                   ({
                     data: {
-                      subtitle,
                       author,
-                      paragraphs,
                       title,
-                      imageUrl,
                       imageBucket,
-                      views,
-                      likes,
                       category,
                       author_image,
-                      comments,
                     },
                     id,
                   }) => {

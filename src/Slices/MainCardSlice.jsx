@@ -22,6 +22,20 @@ const MainCardSlice = createSlice({
       state.userLiked = likes;
       state.userView = views;
     },
+    setUpLikes: (state, { payload: { likes } }) => {
+      if (likes >= 0) {
+        state.userLiked = likes + 1;
+      } else {
+        state.userLiked = 0;
+      }
+    },
+    setViews: (state, { payload: { views } }) => {
+      if (views >= 0) {
+        state.userView = views + 1;
+      } else {
+        state.userView = 0;
+      }
+    },
     submitComment: (state, { payload: { image, name } }) => {
       state.comment.image = image;
       state.comment.name = name;
@@ -34,6 +48,6 @@ const MainCardSlice = createSlice({
   },
 });
 
-export const { Comment, submitComment } = MainCardSlice.actions;
+export const { Comment, submitComment, setViews } = MainCardSlice.actions;
 
 export default MainCardSlice.reducer;

@@ -10,7 +10,7 @@ import { getSinglePage } from "../Helpers/GetSinglePost";
 import { profilePost } from "../Helpers/getProfilePost";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { authorName } from "../Slices/ProfileSlice";
-
+import { urlArr } from "../utils";
 
 const MainCard = ({
   subtitle,
@@ -29,6 +29,8 @@ const MainCard = ({
 }) => {
   const [imageUrl, setImageUrls] = useState("");
   const [ifLiked, setIfLiked] = useState(false);
+ 
+ 
   const eachPost = [
     {
       subtitle,
@@ -47,15 +49,8 @@ const MainCard = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [userLiked, setUserLiked] = useState(likes);
-  const {
-   
-    userData,
-    userAuth,
-  } = useSelector((store) => store.auth);
+  const { userData, userAuth } = useSelector((store) => store.auth);
 
-
- 
   return (
     <CartStyle>
       <section className="post-card">
@@ -75,7 +70,7 @@ const MainCard = ({
           </div>
           <span>{moment(created_at.nanoseconds).format("LLLL")}</span>
         </div>
-        <Link to={`/Details`} className="title">
+        <Link to={`/Detailed`} className="title">
           <p
             onClick={() => {
               getSinglePage(id, dispatch);
@@ -100,7 +95,7 @@ const MainCard = ({
               <FaRegHeart />
             </span>
 
-            {userLiked}
+            {likes}
           </span>
           <span>
             <FaRegCommentDots />

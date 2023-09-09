@@ -53,12 +53,15 @@ const postSlice = createSlice({
       state.post = { ...initialState.post };
     },
     search: (state) => {
+      if (state.searchValue) {
       const Filtered = state.filteredPost.filter((item) => {
-        const itemName = item.title.toLowerCase();
-        return itemName.includes(state.searchValue);
-      });
+          const itemName = item.title.toLowerCase();
+          return itemName.includes(state.searchValue);
+          
+        });
+        state.filteredPost = Filtered;
+      }
 
-      state.filteredPost = Filtered;
     },
     filterPostData: (state, { payload }) => {
       let filterPostData;
