@@ -70,18 +70,11 @@ export const CartStyle = styled.div`
     min-height: 150px;
     width: 100%;
     border-radius: 20px;
-    /* background-color: blueviolet; */
-    /* background-image: linear-gradient(
-      to top left,
-      blueviolet,
-      rgb(73, 31, 112)
-    ); */
     margin-bottom: 4px;
   }
 
   .image-preview > img {
     width: 100%;
-    /* height: 100%; */
   }
   .comment-like {
     display: flex;
@@ -119,4 +112,11 @@ export const CartStyle = styled.div`
     background-color: red;
     color: red;
   }
+
+@media screen and (max-width: 425px) {
+  .post-card{
+    width: 90%;
+  }
+
+}
 `;

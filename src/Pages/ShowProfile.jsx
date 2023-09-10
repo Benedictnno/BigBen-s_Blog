@@ -39,14 +39,14 @@ const ShowProfile = () => {
           <h4>Gender: {Gender}</h4>
           <h4>Age: {Date}</h4>
         </div>
-        {
-          userAuth&&
-        <button type="button" className="lightBtn links CreatePost">
-          <Link to={"/CreatePost"}> Create Post</Link>
-        </button>}
+        {userAuth && (
+          <button type="button" className="lightBtn links CreatePost">
+            <Link to={"/CreatePost"}> Create Post</Link>
+          </button>
+        )}
       </div>
 
-      <section className="profile_post_container">
+      <section className="card_container">
         {getProfilePostData.length === 0 && (
           <>
             <h2>You haven't Made a post yet </h2>

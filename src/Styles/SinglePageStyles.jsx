@@ -109,4 +109,12 @@ export const SinglePageStyles = styled.div`
   .comment > button {
     margin: 1rem 0 5rem;
   }
+
+  @media screen and (max-width: 768px) {
+    .comments-similar {
+      display: flex;
+      flex-direction: column;
+      /* justify-content: space-between; */
+    }
+  }
 `;

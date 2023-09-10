@@ -10,20 +10,18 @@ import {
   Latest,
 } from "../src/Pages";
 import "firebase/firestore";
-import Nav from "./Components/Nav";
 import CreatePost from "./Pages/CreatePost";
 import { loadUser } from "./Slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ProtectedRoute from "./Components/ProtectedRoute";
-import { deleteDoc, getDocs, doc, collection } from "firebase/firestore";
+import {  getDocs, collection } from "firebase/firestore";
 import { db } from "./FirebaseConfig";
 import { getPostData, setLoading } from "./Slices/postSlice";
 import Home from "./Pages/Home";
 import SinglePage from "./Pages/SinglePage";
 import ProfilePage from "./Pages/ProfilePage";
 import Loading from "../src/Components/Loading";
-import { ToastContainer, toast } from "react-toastify";
-import { urlArr } from "./utils";
+import { ToastContainer } from "react-toastify";
 import SignUp from "./Pages/SignUp";
 import SetUpProfile from "./Pages/SetUpProfile";
 import "react-toastify/dist/ReactToastify.css";
@@ -47,7 +45,7 @@ function App() {
     }));
     dispatch(getPostData(getData));
     dispatch(setLoading(false));
-  }``
+  }
 
   useEffect(() => {
     dispatch(loadUser());

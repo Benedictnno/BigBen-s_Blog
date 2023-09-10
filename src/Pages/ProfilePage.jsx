@@ -28,6 +28,9 @@ const ProfilePage = () => {
   }, []);
   const navigate = useNavigate();
 
+  const page = sessionStorage.getItem("ProfilePostData");
+  const data = JSON.parse(page);
+
   function handleChange(e) {
     let value = e.target.value;
     let name = e.target.name;
@@ -118,15 +121,15 @@ const ProfilePage = () => {
       </div>
 
       <section className="profile_post_container">
-        {getProfilePostData.length === 0 && (
+        {data.length === 0 && (
           <>
-            <h2>You haven't Made a post yet </h2>
+            <h2>User haven't Made a post yet </h2>
             <button type="button" className="lightBtn links">
               <Link to={"/CreatePost"}> Create Post</Link>
             </button>
           </>
         )}
-        {getProfilePostData.map((detail, index) => {
+        {data.map((detail, index) => {
           return <MainCard key={index} {...detail} />;
         })}
       </section>

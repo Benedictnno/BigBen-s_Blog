@@ -32,6 +32,9 @@ const postSlice = createSlice({
       state.filteredPost = payload;
     },
     getProfilePostData: (state, { payload }) => {
+      sessionStorage.clear();
+      const serializedData = JSON.stringify(payload);
+      sessionStorage.setItem("ProfilePostData", serializedData);
       state.getProfilePostData = payload;
       // state.filteredPost = payload;
     },

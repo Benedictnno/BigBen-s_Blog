@@ -64,7 +64,7 @@ const MainCard = ({
             >
               <Link to={"/Profile"}>
                 {" "}
-                <p>{author}</p>{" "}
+                <p>{author}</p>
               </Link>
             </span>
           </div>
