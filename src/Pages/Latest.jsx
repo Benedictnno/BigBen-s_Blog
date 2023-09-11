@@ -8,7 +8,7 @@ const Latest = () => {
 
   return (
     <>
-      <h1>Latest</h1>
+      {/* <h1>Latest</h1> */}
       <section className="card_container">
         {filteredPost.map((details, index) => {
           return <MainCard key={index} {...details} />;

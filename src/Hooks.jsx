@@ -22,7 +22,7 @@ export async function UploadImage(image, uid, dispatch) {
   bucket = await getDownloadURL(fileRef);
   
   dispatch(setLoading(true));
-  alert("Image uploaded");
+  
 
 
   // fetchSingleUrls(bucket, setImageUrl);

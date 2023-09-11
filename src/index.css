@@ -460,5 +460,10 @@ margin-bottom: 2rem;
 }
 .burger{
   display: block;
+  margin-left: -2rem;
+}
+
+.close{
+  margin-bottom: 2rem;
 }
 }

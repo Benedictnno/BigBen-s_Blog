@@ -37,16 +37,6 @@ const Burger = () => {
             </div>
           ) : (
             <div className="userAuth">
-              <button
-                type="button"
-                className="lightBtn links"
-                onClick={() => LogOut(dispatch, navigate)}
-              >
-                <span>
-                  <BiLogIn />
-                </span>
-                Log Out
-              </button>
               <Link
                 to="ProfilePage"
                 className="darkBtn links"
@@ -60,7 +50,10 @@ const Burger = () => {
             </div>
           )}
         </div>
-        <div className="burger" onClick={() => dispatch(setBurger(false))}>
+        <div
+          className="burger close"
+          onClick={() => dispatch(setBurger(false))}
+        >
           {open && (
             <button type="button" className="button fixed">
               <AiOutlineClose />
@@ -83,6 +76,19 @@ const Burger = () => {
           );
         })}
       </div>
+
+      {userAuth && (
+        <button
+          type="button"
+          className="lightBtn links"
+          onClick={() => LogOut(dispatch, navigate)}
+        >
+          <span>
+            <BiLogIn />
+          </span>
+          Log Out
+        </button>
+      )}
     </div>
   );
 };

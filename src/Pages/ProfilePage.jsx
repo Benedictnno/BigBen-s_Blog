@@ -87,6 +87,7 @@ const ProfilePage = () => {
               onChange={handleChange}
               value={Gender}
               disabled={userAuth ? false : true}
+              className="Selector"
             >
               <option value="Male">Male</option>
               <option value="Female">Female</option>
@@ -115,10 +116,7 @@ const ProfilePage = () => {
           </button>
 
           <button type="button" className="lightBtn links CreatePost">
-            <Link to={"/CreatePost"}>
-              
-               Create Post
-               </Link>
+            <Link to={"/CreatePost"}>Create Post</Link>
           </button>
         </div>
       </div>

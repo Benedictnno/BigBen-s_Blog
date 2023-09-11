@@ -63,9 +63,6 @@ export const CreatePostStyles = styled.div`
     .title_container {
       display: flex;
       flex-direction: column;
-      position: fixed;
-      top: 0;
-      left: 0;
     }
 
     .top_btn_container {

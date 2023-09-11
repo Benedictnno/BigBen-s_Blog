@@ -45,20 +45,21 @@ export const ProfilePageStyles = styled.section`
     display: flex;
     flex-direction: column;
   }
- 
+
   .authorDetails {
     color: #fff;
   }
 
   @media screen and (max-width: 425px) {
-    margin:2rem 0;
+    margin: 2rem 0 0 1.5rem;
 
     .Profile_Container {
       display: flex;
       flex-direction: column;
     }
-
-    .Profile_Form {
+    .Selector{
+      width: 5rem;
+    } .Profile_Form {
       display: flex;
       flex-direction: column;
       margin: 1rem 0;

@@ -18,7 +18,6 @@ import { updatePostDataEdit } from "../Slices/updateSlice";
 import { updatePost } from "../Helpers/UpdateDoc";
 import moment from "moment";
 import { userProfilePost } from "../Helpers/userProfilePost";
-import { fetchSingleUrls } from "../Helpers/SingleImageProcessing";
 import { AiOutlineClose } from "react-icons/ai";
 const Profile = () => {
   const {
@@ -103,25 +102,24 @@ const Profile = () => {
   if (isLoading) {
     return <Loading />;
   }
-  console.log(OpenForm);
+
   return (
     <CreatePostStyles>
       <div className="top_btn_container">
-
-      <button
-        type="button"
-        className="darkBtn "
-        onClick={() => setOpenForm(!OpenForm)}
-      >
-        {OpenForm ? "Close Form " : "Open Form"}
-      </button>
-      <a
-        href="https://benmarkdown-app.netlify.app/"
-        className="lightBtn"
-        target="_blank"
-      >
-        View Example web page
-      </a>
+        <button
+          type="button"
+          className="darkBtn "
+          onClick={() => setOpenForm(!OpenForm)}
+        >
+          {OpenForm ? "Close Form " : "Open Form"}
+        </button>
+        <a
+          href="https://benmarkdown-app.netlify.app/"
+          className="lightBtn"
+          target="_blank"
+        >
+          View Example web page
+        </a>
       </div>
       <section className="markdown">
         {OpenForm && (
@@ -162,16 +160,14 @@ const Profile = () => {
                   onChange={handleFileChange}
                 />
               </div>
-
             </div>
-              <button
-                type="button"
-                className="button"
-                onClick={() => setOpenForm(false)}
-              >
-                <AiOutlineClose />
-              </button>
-              
+            <button
+              type="button"
+              className="button"
+              onClick={() => setOpenForm(false)}
+            >
+              <AiOutlineClose />
+            </button>
 
             <textarea
               className="input"
