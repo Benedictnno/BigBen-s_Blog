@@ -115,7 +115,10 @@ const ProfilePage = () => {
           </button>
 
           <button type="button" className="lightBtn links CreatePost">
-            <Link to={"/CreatePost"}> Create Post</Link>
+            <Link to={"/CreatePost"}>
+              
+               Create Post
+               </Link>
           </button>
         </div>
       </div>
@@ -129,9 +132,11 @@ const ProfilePage = () => {
             </button>
           </>
         )}
-        {data.map((detail, index) => {
-          return <MainCard key={index} {...detail} />;
-        })}
+        <div className="card_container">
+          {data.map((detail, index) => {
+            return <MainCard key={index} {...detail} />;
+          })}
+        </div>
       </section>
     </ProfilePageStyles>
   );

@@ -29,8 +29,7 @@ const MainCard = ({
 }) => {
   const [imageUrl, setImageUrls] = useState("");
   const [ifLiked, setIfLiked] = useState(false);
- 
- 
+
   const eachPost = [
     {
       subtitle,

@@ -1,13 +1,9 @@
-import React, { useEffect, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BiLogIn, BiLogOut } from "react-icons/bi";
-import { auth } from "../FirebaseConfig";
-import { signOut } from "firebase/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { loginAuth } from "../Slices/authSlice";
 import { getProfilePost } from "../Helpers/getProfilePost";
 import SearchComponent from "./SearchComponent";
-import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { AiOutlineMenu } from "react-icons/ai";
 import { setBurger } from "../Slices/MainCardSlice";
 import Burger from "./Burger";
 import { LogOut } from "../Helpers/Logout";

@@ -51,13 +51,26 @@ export const CreatePostStyles = styled.div`
     padding: 1rem 2rem;
   }
 
-  
-
   @media screen and (min-width: 992px) {
     .markdown {
       min-height: 100vh;
       grid-template-columns: 1fr 1fr;
       column-gap: 4rem;
+    }
+  }
+
+  @media screen and (max-width: 425px) {
+    .title_container {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    .top_btn_container {
+      display: flex;
+      /* flex-direction: column; */
     }
   }
 

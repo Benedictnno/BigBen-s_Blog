@@ -115,7 +115,7 @@ export const CartStyle = styled.div`
 
 @media screen and (max-width: 425px) {
   .post-card{
-    width: 90%;
+    width: 90vw;
   }
 
 }

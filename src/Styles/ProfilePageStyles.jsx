@@ -16,7 +16,7 @@ export const ProfilePageStyles = styled.section`
   .profile_post_container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    margin: 3rem auto;
+    margin: 3rem 0;
   }
   .CreatePost {
     margin: 4rem 0.3rem;
@@ -31,7 +31,7 @@ export const ProfilePageStyles = styled.section`
     color: #fff;
     padding: 1rem;
     border-radius: 7px;
-    margin:-2rem;
+    margin: -2rem;
   }
 
   .Profile_Form {
@@ -45,14 +45,23 @@ export const ProfilePageStyles = styled.section`
     display: flex;
     flex-direction: column;
   }
-  /* .Profile_Form > button {
-   margin:0 2rem;
-   width: auto;
-   height: 2rem;
-   padding : 5px;
-  } */
  
-  .authorDetails{
+  .authorDetails {
     color: #fff;
+  }
+
+  @media screen and (max-width: 425px) {
+    margin:2rem 0;
+
+    .Profile_Container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .Profile_Form {
+      display: flex;
+      flex-direction: column;
+      margin: 1rem 0;
+    }
   }
 `;

@@ -106,6 +106,8 @@ const Profile = () => {
   console.log(OpenForm);
   return (
     <CreatePostStyles>
+      <div className="top_btn_container">
+
       <button
         type="button"
         className="darkBtn "
@@ -118,16 +120,16 @@ const Profile = () => {
         className="lightBtn"
         target="_blank"
       >
-        {" "}
-        View Example web page{" "}
+        View Example web page
       </a>
+      </div>
       <section className="markdown">
         {OpenForm && (
           <form className="createPost_form">
             <div className="title_container">
               {form.map(({ name, value }) => {
                 return (
-                  <div>
+                  <div className="">
                     <h4 htmlFor="">{name}</h4>
                     <input
                       key={name}
@@ -160,6 +162,8 @@ const Profile = () => {
                   onChange={handleFileChange}
                 />
               </div>
+
+            </div>
               <button
                 type="button"
                 className="button"
@@ -167,7 +171,7 @@ const Profile = () => {
               >
                 <AiOutlineClose />
               </button>
-            </div>
+              
 
             <textarea
               className="input"
@@ -175,13 +179,13 @@ const Profile = () => {
               value={paragraphs || update.paragraphs}
               onChange={handleChange}
             ></textarea>
-            {/* <article className="result"></article> */}
             {isEditing ? (
               <button
                 type="button"
                 onClick={() => {
                   updatePost(update.id, update);
                 }}
+                className="createPostSubmit"
               >
                 Submit Edited Post
               </button>
