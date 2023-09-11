@@ -22,7 +22,7 @@ const SearchComponent = () => {
   useEffect(() => {}, [searchValue]);
   const optimizedDebounce = useMemo(() => debounce(), []);
   return (
-    <>
+    <section className="search">
       <h2>BigBen's Blog</h2>
 
       <div className="Search_container">
@@ -38,7 +38,7 @@ const SearchComponent = () => {
           onChange={optimizedDebounce}
         />
       </div>
-    </>
+    </section>
   );
 };
 

@@ -1,18 +1,13 @@
-import React, { useEffect, useMemo } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { BiLogIn, BiLogOut } from "react-icons/bi";
-import { auth } from "../FirebaseConfig";
-import { signOut } from "firebase/auth";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginAuth } from "../Slices/authSlice";
-import { getProfilePost } from "../Helpers/getProfilePost";
-import SearchComponent from "./SearchComponent";
-import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
-import { setBurger } from "../Slices/MainCardSlice";
-import Burger from "./Burger";
+import { Link, useNavigate } from "react-router-dom";
+import { BiLogOut, BiLogIn } from "react-icons/bi";
 import { LogOut } from "../Helpers/Logout";
+import { getProfilePost } from "../Helpers/getProfilePost";
+import { setBurger } from "../Slices/MainCardSlice";
+import { AiOutlineClose } from "react-icons/ai";
 
-const Nav = () => {
+const Burger = () => {
   const data = [
     { text: "Latest", link: "/" },
     { text: "News", link: "News" },
@@ -21,22 +16,16 @@ const Nav = () => {
     { text: "Music", link: "Music" },
     { text: "Movies", link: "Movies" },
   ];
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const { userAuth, userData } = useSelector((store) => store.auth);
   const { open } = useSelector((store) => store.mainCard);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   return (
-    <section>
-      <nav className="Nav">
-        <SearchComponent />
-
-        {open && <Burger />}
-
-        <div className="burger" onClick={() => dispatch(setBurger(true))}>
-          {!open && <AiOutlineMenu />}
-        </div>
-        <div className="hamburger">
+    <div className="Res_Nav fixed">
+      <div className="flex_auth">
+        <div className="userAuth_container">
           {!userAuth ? (
             <div>
               <Link to={"Login"} className="lightBtn links">
@@ -47,7 +36,7 @@ const Nav = () => {
               </Link>
             </div>
           ) : (
-            <div>
+            <div className="userAuth">
               <button
                 type="button"
                 className="lightBtn links"
@@ -71,18 +60,31 @@ const Nav = () => {
             </div>
           )}
         </div>
-      </nav>
-      <div className="sections hamburger">
+        <div className="burger" onClick={() => dispatch(setBurger(false))}>
+          {open && (
+            <button type="button" className="button fixed">
+              <AiOutlineClose />
+            </button>
+          )}
+        </div>
+      </div>
+
+      <div className="Nav_Link ">
         {data.map(({ text, link }) => {
           return (
-            <Link to={link} className="links" key={link}>
+            <Link
+              to={link}
+              className="links link"
+              key={link}
+              onClick={() => dispatch(setBurger(false))}
+            >
               {text}
             </Link>
           );
         })}
       </div>
-    </section>
+    </div>
   );
 };
 
-export default Nav;
+export default Burger;

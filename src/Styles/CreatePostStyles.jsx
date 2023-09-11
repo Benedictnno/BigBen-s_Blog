@@ -51,13 +51,7 @@ export const CreatePostStyles = styled.div`
     padding: 1rem 2rem;
   }
 
-  .button {
-    font-size: 2rem;
-    border: none;
-    background: inherit;
-    color: red;
-    cursor: pointer;
-  }
+  
 
   @media screen and (min-width: 992px) {
     .markdown {

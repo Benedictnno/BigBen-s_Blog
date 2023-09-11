@@ -5,7 +5,7 @@ const initialState = {
   ifViewed: false,
   userView: 0,
   ifLiked: false,
-
+  open: false,
   comment: {
     image: "",
     name: "",
@@ -40,6 +40,9 @@ const MainCardSlice = createSlice({
       state.comment.image = image;
       state.comment.name = name;
     },
+    setBurger: (state, { payload }) => {
+      state.open=payload
+    },
     Comment: (state, { payload: { commentText, image, name } }) => {
       state.comment.commentText = commentText;
       state.comment.image = image;
@@ -48,6 +51,6 @@ const MainCardSlice = createSlice({
   },
 });
 
-export const { Comment, submitComment, setViews } = MainCardSlice.actions;
+export const { Comment, submitComment, setViews, setBurger } = MainCardSlice.actions;
 
 export default MainCardSlice.reducer;
